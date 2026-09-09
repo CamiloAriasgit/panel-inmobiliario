@@ -7,6 +7,7 @@ type CreateLeadInput = {
   agencyId: string;
   name: string;
   phone: string;
+  acceptedPrivacyPolicy: boolean; // <- nuevo
 };
 
 type CreateLeadResult =
@@ -19,8 +20,6 @@ export async function createLead(
   const name = input.name.trim();
   const phone = input.phone.trim();
 
-  // Validación básica en el servidor — nunca confiar solo en la
-  // validación del formulario del navegador, que se puede saltar.
   if (name.length < 2) {
     return { success: false, error: "Nombre inválido." };
   }
@@ -30,12 +29,18 @@ export async function createLead(
     return { success: false, error: "Número de teléfono inválido." };
   }
 
+  // Validación en el servidor, no solo en el checkbox del navegador:
+  // sin este control, alguien podría llamar a este server action
+  // directamente (saltándose la UI) y crear un lead sin consentimiento.
+  if (!input.acceptedPrivacyPolicy) {
+    return {
+      success: false,
+      error: "Debes aceptar la Política de Tratamiento de Datos.",
+    };
+  }
+
   const supabase = createServiceClient();
 
-  // Se obtiene el número de WhatsApp y el título de la propiedad
-  // desde la propia base de datos (no desde el formulario), para
-  // que el mensaje de WhatsApp sea siempre confiable y no se pueda
-  // manipular desde el navegador.
   const { data: property, error: propertyError } = await supabase
     .from("properties")
     .select("id, title, agency_id, agencies(whatsapp_number)")
@@ -53,6 +58,7 @@ export async function createLead(
     property_id: input.propertyId,
     name,
     phone: phoneDigits,
+    privacy_accepted_at: new Date().toISOString(),
   });
 
   if (insertError) {

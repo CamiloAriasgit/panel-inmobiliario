@@ -95,6 +95,7 @@ export type Database = {
           id: string
           name: string
           phone: string
+          privacy_accepted_at: string
           property_id: string
         }
         Insert: {
@@ -103,6 +104,7 @@ export type Database = {
           id?: string
           name: string
           phone: string
+          privacy_accepted_at?: string
           property_id: string
         }
         Update: {
@@ -111,6 +113,7 @@ export type Database = {
           id?: string
           name?: string
           phone?: string
+          privacy_accepted_at?: string
           property_id?: string
         }
         Relationships: [

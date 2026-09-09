@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import { X } from "lucide-react";
 import { createLead } from "@/lib/actions/leads";
 import { brandConfig } from "@/lib/config/brand.config";
@@ -15,6 +16,7 @@ export function WhatsappLeadModal({
 }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [acceptedPolicy, setAcceptedPolicy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -28,6 +30,7 @@ export function WhatsappLeadModal({
         agencyId: brandConfig.agencyId,
         name,
         phone,
+        acceptedPrivacyPolicy: acceptedPolicy,
       });
 
       if (!result.success) {
@@ -35,7 +38,6 @@ export function WhatsappLeadModal({
         return;
       }
 
-      // Abre WhatsApp en una pestaña nueva y cierra el modal.
       window.open(result.whatsappUrl, "_blank");
       onClose();
     });
@@ -91,6 +93,27 @@ export function WhatsappLeadModal({
               placeholder="Ej. 3001234567"
             />
           </div>
+
+          <label className="flex items-start gap-2 text-xs text-gray-600">
+            <input
+              type="checkbox"
+              required
+              checked={acceptedPolicy}
+              onChange={(event) => setAcceptedPolicy(event.target.checked)}
+              className="mt-0.5"
+            />
+            <span>
+              He leído y acepto la{" "}
+              <Link
+                href="/politica-de-privacidad"
+                target="_blank"
+                className="underline"
+              >
+                Política de Tratamiento de Datos
+              </Link>{" "}
+              de {brandConfig.name}.
+            </span>
+          </label>
 
           {error && <p className="text-sm text-red-600">{error}</p>}
 
