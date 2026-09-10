@@ -30,7 +30,7 @@ export default async function HomePage({
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-8">
-      <section className="mb-6 space-y-4">
+      <section className="mb-6 flex items-start justify-center gap-1">
         <SearchBar defaultValue={params.q} />
         <FilterPanel currentFilters={params} />
       </section>

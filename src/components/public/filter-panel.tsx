@@ -2,19 +2,43 @@
 
 import { useState, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { SlidersHorizontal, X } from "lucide-react";
+import {
+  SlidersHorizontal,
+  X,
+  LayoutGrid,
+  Building2,
+  Home,
+  Trees,
+  Store,
+  Briefcase,
+} from "lucide-react";
 
 const PROPERTY_TYPES = [
-  { value: "apartamento", label: "Apartamento" },
-  { value: "casa", label: "Casa" },
-  { value: "lote", label: "Lote" },
-  { value: "local", label: "Local comercial" },
-  { value: "oficina", label: "Oficina" },
+  { value: "", label: "Todos", icon: LayoutGrid },
+  { value: "apartamento", label: "Apartamento", icon: Building2 },
+  { value: "casa", label: "Casa", icon: Home },
+  { value: "lote", label: "Lote", icon: Trees },
+  { value: "local", label: "Local comercial", icon: Store },
+  { value: "oficina", label: "Oficina", icon: Briefcase },
 ];
 
-type Filters = {
+// Forma en que llegan los filtros desde la URL (todo son strings planos,
+// property_type es una lista separada por comas, ej. "apartamento,casa").
+type RawFilters = {
   listing_type?: string;
   property_type?: string;
+  city?: string;
+  min_price?: string;
+  max_price?: string;
+  min_area?: string;
+  max_area?: string;
+};
+
+// Forma del estado interno del formulario mientras el usuario edita
+// (property_type ya convertido a array para las pills seleccionables).
+type Filters = {
+  listing_type?: string;
+  property_type?: string[];
   city?: string;
   min_price?: string;
   max_price?: string;
@@ -25,10 +49,15 @@ type Filters = {
 export function FilterPanel({
   currentFilters,
 }: {
-  currentFilters: Filters;
+  currentFilters: RawFilters;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [draft, setDraft] = useState<Filters>(currentFilters);
+  const [draft, setDraft] = useState<Filters>(() => ({
+    ...currentFilters,
+    property_type: currentFilters.property_type
+      ? currentFilters.property_type.split(",").filter(Boolean)
+      : undefined,
+  }));
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -39,13 +68,41 @@ export function FilterPanel({
     setDraft((prev) => ({ ...prev, [key]: value || undefined }));
   }
 
+  function togglePropertyType(value: string) {
+    setDraft((prev) => {
+      const current = prev.property_type ?? [];
+
+      // "Todos" (value === "") limpia cualquier selección específica.
+      if (value === "") {
+        return { ...prev, property_type: undefined };
+      }
+
+      const next = current.includes(value)
+        ? current.filter((item) => item !== value)
+        : [...current, value];
+
+      return { ...prev, property_type: next.length > 0 ? next : undefined };
+    });
+  }
+
   function applyFilters() {
     const params = new URLSearchParams(searchParams.toString());
 
     (Object.keys(draft) as (keyof Filters)[]).forEach((key) => {
       const value = draft[key];
+
+      if (key === "property_type") {
+        const types = value as string[] | undefined;
+        if (types && types.length > 0) {
+          params.set("property_type", types.join(","));
+        } else {
+          params.delete("property_type");
+        }
+        return;
+      }
+
       if (value) {
-        params.set(key, value);
+        params.set(key, value as string);
       } else {
         params.delete(key);
       }
@@ -81,13 +138,13 @@ export function FilterPanel({
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex items-center gap-2 rounded-lg border border-gray-300
-                   px-4 py-2 text-sm font-medium hover:bg-gray-50"
+        aria-label="Filtros"
+        className="relative flex items-center justify-center rounded-full bg-gray-200/60
+                   p-4 hover:bg-gray-200"
       >
-        <SlidersHorizontal size={16} />
-        Filtros
+        <SlidersHorizontal size={18} />
         {activeCount > 0 && (
-          <span className="rounded-full bg-[var(--color-primary)] px-2 py-0.5 text-xs text-white">
+          <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[var(--color-primary)] text-xs font-medium text-white">
             {activeCount}
           </span>
         )}
@@ -129,23 +186,33 @@ export function FilterPanel({
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium">
+              <label className="mb-2 block text-sm font-medium">
                 Tipo de propiedad
               </label>
-              <select
-                value={draft.property_type ?? ""}
-                onChange={(event) =>
-                  updateDraft("property_type", event.target.value)
-                }
-                className="w-full rounded-md border border-gray-300 p-2 text-sm"
-              >
-                <option value="">Todos</option>
-                {PROPERTY_TYPES.map((type) => (
-                  <option key={type.value} value={type.value}>
-                    {type.label}
-                  </option>
-                ))}
-              </select>
+              <div className="flex flex-wrap gap-2">
+                {PROPERTY_TYPES.map((type) => {
+                  const isActive =
+                    type.value === ""
+                      ? !draft.property_type || draft.property_type.length === 0
+                      : (draft.property_type ?? []).includes(type.value);
+
+                  return (
+                    <button
+                      key={type.value || "all"}
+                      type="button"
+                      onClick={() => togglePropertyType(type.value)}
+                      className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm ${
+                        isActive
+                          ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white"
+                          : "border-gray-300 text-gray-700 hover:bg-gray-50"
+                      }`}
+                    >
+                      <type.icon size={14} />
+                      {type.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             <div>

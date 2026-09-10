@@ -10,7 +10,7 @@ export type BrandConfig = {
   siteSubtitle: string;
   whatsappNumber: string;
 
-   legalName: string;
+  legalName: string;
   taxId: string;
   contactEmail: string;
   address: string;
@@ -32,7 +32,7 @@ export const brandConfig: BrandConfig = {
 
   whatsappNumber: "573001234567",
 
-    legalName: "Inmobiliaria Ejemplo S.A.S.",
+  legalName: "Inmobiliaria Ejemplo S.A.S.",
   taxId: "900.000.000-0",
   contactEmail: "contacto@inmobiliariaejemplo.com",
   address: "Calle 00 # 00-00, Medellín, Colombia",
