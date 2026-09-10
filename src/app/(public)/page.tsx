@@ -29,17 +29,20 @@ export default async function HomePage({
   const view = params.view === "map" ? "map" : "list";
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-8">
+    <main className="mx-auto px-4 lg:px-20 py-8 pb-28 sm:pb-8">
       <section className="mb-6 flex items-start justify-center gap-1">
         <SearchBar defaultValue={params.q} />
         <FilterPanel currentFilters={params} />
       </section>
 
-      <div className="mb-4 flex justify-end">
-        <div className="inline-flex rounded-lg border border-gray-300 p-1">
-          <ViewToggleLink view="list" currentView={view} icon={List} label="Lista" />
-          <ViewToggleLink view="map" currentView={view} icon={MapIcon} label="Mapa" />
-        </div>
+      {/* Desktop: pill inline, alineada a la derecha, como antes */}
+      <div className="mb-4 hidden justify-end sm:flex">
+        <ViewTogglePill view={view} />
+      </div>
+
+      {/* Mobile: pill fija sobre la barra inferior del navegador, con blur */}
+      <div className="fixed inset-x-0 bottom-4 z-30 flex justify-center sm:hidden">
+        <ViewTogglePill view={view} />
       </div>
 
       {properties.length === 0 ? (
@@ -49,13 +52,25 @@ export default async function HomePage({
       ) : view === "map" ? (
         <PropertiesMapView properties={properties} />
       ) : (
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <section className="grid grid-cols-1 lg:grid-cols-5 gap-6">
           {properties.map((property) => (
             <PropertyCard key={property.id} property={property} />
           ))}
         </section>
       )}
     </main>
+  );
+}
+
+function ViewTogglePill({ view }: { view: "list" | "map" }) {
+  return (
+    <div
+      className="inline-flex rounded-full border border-neutral-700
+                 bg-black/70 p-1 shadow-lg backdrop-blur-md"
+    >
+      <ViewToggleLink view="list" currentView={view} icon={List} label="Lista" />
+      <ViewToggleLink view="map" currentView={view} icon={MapIcon} label="Mapa" />
+    </div>
   );
 }
 
@@ -73,10 +88,10 @@ function ViewToggleLink({
   return (
     <a
       href={`?view=${view}`}
-      className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm ${
+      className={`flex items-center gap-1.5 rounded-full px-4 py-3 text-sm ${
         currentView === view
-          ? "bg-[var(--color-primary)] text-white"
-          : "text-gray-600"
+          ? "bg-white text-black"
+          : "text-neutral-300"
       }`}
     >
       <Icon size={16} />
@@ -109,7 +124,10 @@ async function getProperties(
   }
 
   if (params.property_type) {
-    query = query.eq("property_type", params.property_type);
+    const types = params.property_type.split(",").filter(Boolean);
+    if (types.length > 0) {
+      query = query.in("property_type", types);
+    }
   }
 
   if (params.city) {
