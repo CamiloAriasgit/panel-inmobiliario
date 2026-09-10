@@ -151,8 +151,10 @@ export function FilterPanel({
       </button>
 
       {isOpen && (
-        <div className="absolute z-10 mt-2 w-full max-w-md rounded-lg border
-                        border-gray-200 bg-white p-4 shadow-lg sm:w-96">
+        <div className="fixed inset-x-4 top-24 z-20 max-h-[80vh] overflow-y-auto rounded-lg
+                     border border-gray-200 bg-white p-4 shadow-lg
+                     sm:absolute sm:inset-x-auto sm:left-0 sm:top-full sm:mt-2
+                     sm:max-h-none sm:w-96 sm:max-w-md sm:overflow-visible">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold">Filtrar propiedades</h3>
             <button type="button" onClick={() => setIsOpen(false)}>
@@ -175,7 +177,7 @@ export function FilterPanel({
                     onClick={() => updateDraft("listing_type", option.value)}
                     className={`rounded-md border px-3 py-1.5 text-sm ${
                       (draft.listing_type ?? "") === option.value
-                        ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white"
+                        ? "border-none bg-gray-200 text-black"
                         : "border-gray-300"
                     }`}
                   >
@@ -203,7 +205,7 @@ export function FilterPanel({
                       onClick={() => togglePropertyType(type.value)}
                       className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm ${
                         isActive
-                          ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white"
+                          ? "border-none bg-gray-200 text-black"
                           : "border-gray-300 text-gray-700 hover:bg-gray-50"
                       }`}
                     >
@@ -222,7 +224,7 @@ export function FilterPanel({
                 value={draft.city ?? ""}
                 onChange={(event) => updateDraft("city", event.target.value)}
                 placeholder="Ej. Medellín"
-                className="w-full rounded-md border border-gray-300 p-2 text-sm"
+                className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/10"
               />
             </div>
 
@@ -237,7 +239,7 @@ export function FilterPanel({
                   onChange={(event) =>
                     updateDraft("min_price", event.target.value)
                   }
-                  className="w-full rounded-md border border-gray-300 p-2 text-sm"
+                  className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/10"
                 />
               </div>
               <div>
@@ -250,7 +252,7 @@ export function FilterPanel({
                   onChange={(event) =>
                     updateDraft("max_price", event.target.value)
                   }
-                  className="w-full rounded-md border border-gray-300 p-2 text-sm"
+                  className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/10"
                 />
               </div>
             </div>
@@ -266,7 +268,7 @@ export function FilterPanel({
                   onChange={(event) =>
                     updateDraft("min_area", event.target.value)
                   }
-                  className="w-full rounded-md border border-gray-300 p-2 text-sm"
+                  className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/10"
                 />
               </div>
               <div>
@@ -279,7 +281,7 @@ export function FilterPanel({
                   onChange={(event) =>
                     updateDraft("max_area", event.target.value)
                   }
-                  className="w-full rounded-md border border-gray-300 p-2 text-sm"
+                  className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/10"
                 />
               </div>
             </div>
