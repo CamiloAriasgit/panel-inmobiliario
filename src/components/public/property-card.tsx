@@ -19,19 +19,19 @@ export function PropertyCard({
 
   return (
     <>
-      <article className="group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:shadow-md">
+      <article className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition hover:shadow-md">
         <Link href={`/propiedades/${property.slug}`}>
-          <div className="relative aspect-[4/3] w-full overflow-hidden">
+          <div className="relative aspect-[4/3]  m-3 overflow-hidden">
             <Image
               src={coverImage}
               alt={property.title}
               fill
-              className="object-cover transition group-hover:scale-105"
+              className="object-cover transition rounded-2xl"
             />
             <span
-              className="absolute left-3 top-3 rounded-md px-2 py-1 text-xs
-                         font-medium text-white"
-              style={{ backgroundColor: "var(--color-primary)" }}
+              className="absolute left-3 top-3 rounded-full px-3 py-1.5 text-xs
+                         font-medium text-black/70 backdrop:blur-sm"
+              style={{ backgroundColor: "white" }}
             >
               {property.listing_type === "venta" ? "Venta" : "Renta"}
             </span>
@@ -61,7 +61,7 @@ export function PropertyCard({
             )}
           </p>
 
-          <div className="mb-4 flex items-center gap-4 text-sm text-gray-600">
+          <div className="mb-4 flex items-center justify-between text-sm text-gray-600">
             {property.bedrooms !== null && (
               <span className="flex items-center gap-1">
                 <BedDouble size={16} />
@@ -83,11 +83,10 @@ export function PropertyCard({
           <button
             type="button"
             onClick={() => setIsModalOpen(true)}
-            className="flex w-full items-center justify-center gap-2 rounded-lg
-                       bg-green-600 py-2.5 text-sm font-medium text-white
-                       hover:bg-green-700"
+            className="flex w-full items-center justify-center rounded-full
+                       bg-neutral-800 py-2.5 text-sm font-medium text-white
+                       hover:bg-neutral-700"
           >
-            <MessageCircle size={18} />
             Contactar por WhatsApp
           </button>
         </div>
