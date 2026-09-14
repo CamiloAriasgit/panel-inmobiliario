@@ -40,7 +40,7 @@ export function SearchBar({ defaultValue }: { defaultValue?: string }) {
         type="submit"
         disabled={isPending}
         className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full
-                   bg-[var(--color-primary)] p-2 text-white
+                   bg-neutral-800 p-2 text-white
                    disabled:opacity-60"
         aria-label="Buscar"
       >

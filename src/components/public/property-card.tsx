@@ -19,14 +19,14 @@ export function PropertyCard({
 
   return (
     <>
-      <article className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition hover:shadow-md">
+      <article className="overflow-hidden rounded-4xl border border-gray-200 bg-white shadow-sm transition hover:shadow-md">
         <Link href={`/propiedades/${property.slug}`}>
-          <div className="relative aspect-[4/3]  m-3 overflow-hidden">
+          <div className="relative aspect-[4/3]  m-2 overflow-hidden">
             <Image
               src={coverImage}
               alt={property.title}
               fill
-              className="object-cover transition rounded-2xl"
+              className="object-cover transition rounded-3xl"
             />
             <span
               className="absolute left-3 top-3 rounded-full px-3 py-1.5 text-xs
@@ -84,7 +84,7 @@ export function PropertyCard({
             type="button"
             onClick={() => setIsModalOpen(true)}
             className="flex w-full items-center justify-center rounded-full
-                       bg-neutral-800 py-2.5 text-sm font-medium text-white
+                       bg-neutral-800 py-3 text-sm font-medium text-white
                        hover:bg-neutral-700"
           >
             Contactar por WhatsApp
