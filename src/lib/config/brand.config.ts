@@ -14,6 +14,7 @@ export type BrandConfig = {
   taxId: string;
   contactEmail: string;
   address: string;
+
 };
 
 export const brandConfig: BrandConfig = {
@@ -24,7 +25,7 @@ export const brandConfig: BrandConfig = {
   primaryColor: "#0f172a",
   secondaryColor: "#f8fafc",
 
-  logoUrl: "/brand/logo.svg",
+  logoUrl: "/brand/logo.png",
   faviconUrl: "/brand/favicon.ico",
 
   siteTitle: "Encuentra tu próximo hogar",

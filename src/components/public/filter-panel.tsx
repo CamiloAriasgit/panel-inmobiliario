@@ -139,8 +139,8 @@ export function FilterPanel({
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         aria-label="Filtros"
-        className="relative flex items-center justify-center rounded-full bg-gray-200/60
-                   p-4 hover:bg-gray-200"
+        className="relative flex items-center justify-center rounded-full bg-white border border-gray-300
+                   p-4 hover:bg-gray-100"
       >
         <SlidersHorizontal size={18} />
         {activeCount > 0 && (

@@ -33,7 +33,7 @@ export function SearchBar({ defaultValue }: { defaultValue?: string }) {
         value={value}
         onChange={(event) => setValue(event.target.value)}
         placeholder="Busca por ubicación, título o descripción..."
-        className="w-full rounded-full border border-gray-300 py-3 pl-4 pr-14
+        className="bg-white w-full rounded-full border border-gray-300 py-3 pl-4 pr-14
                    focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/10"
       />
       <button

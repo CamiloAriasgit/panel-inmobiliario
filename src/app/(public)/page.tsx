@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { List, Map as MapIcon } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { brandConfig } from "@/lib/config/brand.config";
@@ -29,36 +30,55 @@ export default async function HomePage({
   const view = params.view === "map" ? "map" : "list";
 
   return (
-    <main className="mx-auto px-4 lg:px-20 py-8 pb-28 sm:pb-8">
-      <section className="mb-6 flex items-start justify-center gap-1">
-        <SearchBar defaultValue={params.q} />
-        <FilterPanel currentFilters={params} />
-      </section>
+    <>
+      <header
+        className="sticky top-0 z-40 border-b border-gray-100 bg-white/80
+                   px-4 py-4 backdrop-blur-md lg:px-20"
+      >
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex justify-center sm:justify-start">
+            <Image
+              src={brandConfig.logoUrl}
+              alt={brandConfig.name}
+              width={140}
+              height={40}
+              className="h-13 w-auto"
+              priority
+            />
+          </div>
 
-      {/* Desktop: pill inline, alineada a la derecha, como antes */}
-      <div className="mb-4 hidden justify-end sm:flex">
-        <ViewTogglePill view={view} />
-      </div>
+          <div className="flex items-start justify-center gap-1 sm:flex-1 sm:px-6">
+            <SearchBar defaultValue={params.q} />
+            <FilterPanel currentFilters={params} />
+          </div>
 
-      {/* Mobile: pill fija sobre la barra inferior del navegador, con blur */}
-      <div className="fixed inset-x-0 bottom-4 z-30 flex justify-center sm:hidden">
-        <ViewTogglePill view={view} />
-      </div>
+          <div className="hidden sm:flex sm:justify-end">
+            <ViewTogglePill view={view} />
+          </div>
+        </div>
+      </header>
 
-      {properties.length === 0 ? (
-        <p className="text-center text-gray-500 py-12">
-          No encontramos propiedades con esos criterios.
-        </p>
-      ) : view === "map" ? (
-        <PropertiesMapView properties={properties} />
-      ) : (
-        <section className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-          {properties.map((property) => (
-            <PropertyCard key={property.id} property={property} />
-          ))}
-        </section>
-      )}
-    </main>
+      <main className="mx-auto px-4 pb-28 pt-8 sm:pb-8 lg:px-20">
+        {/* Mobile: pill fija sobre la barra inferior del navegador, con blur */}
+        <div className="fixed inset-x-0 bottom-4 z-30 flex justify-center sm:hidden">
+          <ViewTogglePill view={view} />
+        </div>
+
+        {properties.length === 0 ? (
+          <p className="text-center text-gray-500 py-12">
+            No encontramos propiedades con esos criterios.
+          </p>
+        ) : view === "map" ? (
+          <PropertiesMapView properties={properties} />
+        ) : (
+          <section className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+            {properties.map((property) => (
+              <PropertyCard key={property.id} property={property} />
+            ))}
+          </section>
+        )}
+      </main>
+    </>
   );
 }
 
@@ -66,7 +86,7 @@ function ViewTogglePill({ view }: { view: "list" | "map" }) {
   return (
     <div
       className="inline-flex rounded-full border border-neutral-700
-                 bg-black/70 p-1 shadow-lg backdrop-blur-md"
+                 bg-black/70 p-1 shadow-lg backdrop-blur-md lg:bg-white lg:border-gray-300 lg:shadow-none"
     >
       <ViewToggleLink view="list" currentView={view} icon={List} label="Lista" />
       <ViewToggleLink view="map" currentView={view} icon={MapIcon} label="Mapa" />
@@ -88,10 +108,10 @@ function ViewToggleLink({
   return (
     <a
       href={`?view=${view}`}
-      className={`flex items-center gap-1.5 rounded-full px-4 py-3 text-sm ${
+      className={`flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm ${
         currentView === view
-          ? "bg-white text-black"
-          : "text-neutral-300"
+          ? "bg-white text-black lg:bg-gray-200"
+          : "text-neutral-300 lg:text-neutral-900"
       }`}
     >
       <Icon size={16} />
