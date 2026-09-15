@@ -32,8 +32,7 @@ export default async function HomePage({
   return (
     <>
       <header
-        className="sticky top-0 z-40 border-b border-gray-100 bg-white/80
-                   px-4 py-4 backdrop-blur-md lg:px-20"
+        className="sticky top-0 z-40 border-b border-gray-100 bg-white px-4 py-4 lg:px-20"
       >
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex justify-center sm:justify-start">
