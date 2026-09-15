@@ -33,6 +33,7 @@ export default async function HomePage({
         view={view}
         searchDefaultValue={params.q}
         currentFilters={params}
+        allParams={params}
       />
 
       <main
@@ -42,9 +43,8 @@ export default async function HomePage({
             : "mx-auto px-4 pb-28 pt-8 sm:pb-8 lg:px-20"
         }
       >
-        {/* Mobile: pill fija sobre la barra inferior del navegador, con blur */}
         <div className="fixed inset-x-0 bottom-4 z-30 flex justify-center sm:hidden">
-          <ViewTogglePill view={view} />
+          <ViewTogglePill view={view} params={params} />
         </div>
 
         {properties.length === 0 ? (
@@ -52,7 +52,7 @@ export default async function HomePage({
             No encontramos propiedades con esos criterios.
           </p>
         ) : view === "map" ? (
-          <div className="relative isolate h-[calc(100vh-88px)] w-full">
+          <div className="relative isolate h-[calc(100vh-136px)] w-full sm:h-[calc(100vh-80px)]">
             <PropertiesMapView properties={properties} />
           </div>
         ) : (
