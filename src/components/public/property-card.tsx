@@ -84,8 +84,8 @@ export function PropertyCard({
             type="button"
             onClick={() => setIsModalOpen(true)}
             className="flex w-full items-center justify-center rounded-full
-                       bg-neutral-800 py-3 text-sm font-medium text-white
-                       hover:bg-neutral-700"
+                       bg-[var(--color-primary)] py-3 text-sm font-medium text-white
+                       hover:bg-[var(--color-primary)]/80"
           >
             Contactar por WhatsApp
           </button>
