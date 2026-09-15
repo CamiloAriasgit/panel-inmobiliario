@@ -1,11 +1,9 @@
-import Image from "next/image";
-import { List, Map as MapIcon } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { brandConfig } from "@/lib/config/brand.config";
-import { SearchBar } from "@/components/public/search-bar";
-import { FilterPanel } from "@/components/public/filter-panel";
+import { SiteHeader } from "@/components/public/site-header";
 import { PropertyCard } from "@/components/public/property-card";
 import { PropertiesMapView } from "@/components/public/properties-map-view";
+import { ViewTogglePill } from "@/components/public/view-toggle-pill";
 import type { Tables } from "@/types/database.types";
 
 type SearchParams = {
@@ -31,33 +29,19 @@ export default async function HomePage({
 
   return (
     <>
-      <header
-        className="sticky top-0 z-40 border-b border-gray-100 bg-white px-4 py-4 lg:px-20"
+      <SiteHeader
+        view={view}
+        searchDefaultValue={params.q}
+        currentFilters={params}
+      />
+
+      <main
+        className={
+          view === "map"
+            ? "relative"
+            : "mx-auto px-4 pb-28 pt-8 sm:pb-8 lg:px-20"
+        }
       >
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex justify-center sm:justify-start">
-            <Image
-              src={brandConfig.logoUrl}
-              alt={brandConfig.name}
-              width={140}
-              height={40}
-              className="h-13 w-auto"
-              priority
-            />
-          </div>
-
-          <div className="flex items-start justify-center gap-1 sm:flex-1 sm:px-6">
-            <SearchBar defaultValue={params.q} />
-            <FilterPanel currentFilters={params} />
-          </div>
-
-          <div className="hidden sm:flex sm:justify-end">
-            <ViewTogglePill view={view} />
-          </div>
-        </div>
-      </header>
-
-      <main className="mx-auto px-4 pb-28 pt-8 sm:pb-8 lg:px-20">
         {/* Mobile: pill fija sobre la barra inferior del navegador, con blur */}
         <div className="fixed inset-x-0 bottom-4 z-30 flex justify-center sm:hidden">
           <ViewTogglePill view={view} />
@@ -68,7 +52,9 @@ export default async function HomePage({
             No encontramos propiedades con esos criterios.
           </p>
         ) : view === "map" ? (
-          <PropertiesMapView properties={properties} />
+          <div className="relative isolate h-[calc(100vh-88px)] w-full">
+            <PropertiesMapView properties={properties} />
+          </div>
         ) : (
           <section className="grid grid-cols-1 lg:grid-cols-5 gap-6">
             {properties.map((property) => (
@@ -78,44 +64,6 @@ export default async function HomePage({
         )}
       </main>
     </>
-  );
-}
-
-function ViewTogglePill({ view }: { view: "list" | "map" }) {
-  return (
-    <div
-      className="inline-flex rounded-full border border-neutral-700
-                 bg-black/70 p-1 shadow-lg backdrop-blur-md lg:bg-white lg:border-gray-300 lg:shadow-none"
-    >
-      <ViewToggleLink view="list" currentView={view} icon={List} label="Lista" />
-      <ViewToggleLink view="map" currentView={view} icon={MapIcon} label="Mapa" />
-    </div>
-  );
-}
-
-function ViewToggleLink({
-  view,
-  currentView,
-  icon: Icon,
-  label,
-}: {
-  view: "list" | "map";
-  currentView: "list" | "map";
-  icon: typeof List;
-  label: string;
-}) {
-  return (
-    <a
-      href={`?view=${view}`}
-      className={`flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm ${
-        currentView === view
-          ? "bg-white text-black lg:bg-gray-200"
-          : "text-neutral-300 lg:text-neutral-900"
-      }`}
-    >
-      <Icon size={16} />
-      {label}
-    </a>
   );
 }
 

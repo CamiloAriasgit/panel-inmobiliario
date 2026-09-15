@@ -24,7 +24,7 @@ const PROPERTY_TYPES = [
 
 // Forma en que llegan los filtros desde la URL (todo son strings planos,
 // property_type es una lista separada por comas, ej. "apartamento,casa").
-type RawFilters = {
+export type RawFilters = {
   listing_type?: string;
   property_type?: string;
   city?: string;

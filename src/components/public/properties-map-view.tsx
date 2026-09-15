@@ -9,7 +9,7 @@ const PropertiesMapLeaflet = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-[500px] items-center justify-center rounded-xl bg-gray-100 text-sm text-gray-500">
+      <div className="flex h-full items-center justify-center rounded-xl bg-gray-100 text-sm text-gray-500">
         Cargando mapa...
       </div>
     ),
