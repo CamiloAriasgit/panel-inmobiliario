@@ -22,7 +22,7 @@ export const brandConfig: BrandConfig = {
   name: "Inmobiliaria Ejemplo",
   slug: "inmobiliaria-ejemplo",
 
-  primaryColor: "#0f172a",
+  primaryColor: "#2b80ff",
   secondaryColor: "#f8fafc",
 
   logoUrl: "/brand/logo.png",
