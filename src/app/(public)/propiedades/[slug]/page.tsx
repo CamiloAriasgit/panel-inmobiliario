@@ -7,6 +7,8 @@ import { formatPrice, formatArea } from "@/lib/utils/format";
 import { PropertyMap } from "@/components/public/property-map";
 import { ShareButton } from "@/components/public/share-button";
 import { WhatsappContactButton } from "@/components/public/whatsapp-contact-button";
+import { PropertyGalleryMobile } from "@/components/public/property-gallery-mobile";
+import { BackButton } from "@/components/public/back-button";
 import type { Metadata } from "next";
 import type { Tables } from "@/types/database.types";
 
@@ -36,148 +38,194 @@ export default async function PropertyDetailPage({ params }: Props) {
     notFound();
   }
 
-  // Se registra el clic al cargar el detalle. No se espera (await)
-  // el resultado a propósito: si falla, no debe bloquear ni retrasar
-  // la carga de la página para el visitante.
   registerClick(property.id);
 
+  const images = property.images?.length
+    ? property.images
+    : ["/placeholder-property.jpg"];
+  const hasLocation = property.latitude !== null && property.longitude !== null;
+
   return (
-    <main className="mx-auto max-w-5xl px-4 py-8">
-      <div className="mb-6 grid grid-cols-1 gap-2 sm:grid-cols-2">
-        {(property.images?.length ? property.images : ["/placeholder-property.jpg"]).map(
-          (image, index) => (
-            <div
-              key={image + index}
-              className={`relative aspect-[4/3] overflow-hidden rounded-xl ${
-                index === 0 ? "sm:col-span-2 sm:aspect-[16/9]" : ""
-              }`}
-            >
-              <Image
-                src={image}
-                alt={`${property.title} - foto ${index + 1}`}
-                fill
-                className="object-cover"
-                priority={index === 0}
-              />
+    <>
+      <main className="sm:flex sm:h-screen">
+        {/* Columna izquierda: contenido, scrollea de forma independiente en desktop */}
+        <div className="sm:h-screen sm:w-1/2 sm:overflow-y-auto">
+          {/* Mobile: carrusel a todo el ancho, hasta el borde superior */}
+          <div className="relative sm:hidden">
+            <BackButton />
+            <ShareButton title={property.title} slug={property.slug} variant="icon" />
+            <PropertyGalleryMobile images={images} title={property.title} />
+          </div>
+
+          {/* Desktop: galería original en grid */}
+          <div className="hidden sm:block sm:px-8 sm:pt-8 lg:pl-20 lg:pr-10">
+            <div className="mb-6 grid grid-cols-2 gap-2">
+              {images.map((image, index) => (
+                <div
+                  key={image + index}
+                  className={`relative aspect-[4/3] overflow-hidden rounded-xl ${
+                    index === 0 ? "col-span-2 aspect-[16/9]" : ""
+                  }`}
+                >
+                  <Image
+                    src={image}
+                    alt={`${property.title} - foto ${index + 1}`}
+                    fill
+                    className="object-cover"
+                    priority={index === 0}
+                  />
+                </div>
+              ))}
             </div>
-          )
-        )}
-      </div>
-
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <div className="mb-2 flex items-center gap-2">
-            <span
-              className="rounded-md px-2 py-1 text-xs font-medium text-white"
-              style={{ backgroundColor: "var(--color-primary)" }}
-            >
-              {property.listing_type === "venta" ? "Venta" : "Renta"}
-            </span>
-            <span className="text-sm capitalize text-gray-500">
-              {property.property_type}
-            </span>
           </div>
 
-          <h1 className="mb-2 text-2xl font-bold text-gray-900">
-            {property.title}
-          </h1>
-
-          {property.city && (
-            <p className="mb-4 flex items-center gap-1 text-gray-500">
-              <MapPin size={16} />
-              {[property.address, property.neighborhood, property.city]
-                .filter(Boolean)
-                .join(", ")}
-            </p>
-          )}
-
-          <div className="mb-6 flex items-center gap-6 border-y border-gray-200 py-4 text-gray-700">
-            {property.bedrooms !== null && (
-              <span className="flex items-center gap-2">
-                <BedDouble size={20} /> {property.bedrooms} hab.
+          <div className="px-4 pb-32 pt-4 sm:px-8 sm:pb-8 sm:pt-0 lg:pl-20 lg:pr-10">
+            <div className="mb-2 flex items-center gap-2">
+              <span
+                className="rounded-md px-2 py-1 text-xs font-medium text-white"
+                style={{ backgroundColor: "var(--color-primary)" }}
+              >
+                {property.listing_type === "venta" ? "Venta" : "Renta"}
               </span>
-            )}
-            {property.bathrooms !== null && (
-              <span className="flex items-center gap-2">
-                <Bath size={20} /> {property.bathrooms} baños
+              <span className="text-sm capitalize text-gray-500">
+                {property.property_type}
               </span>
-            )}
-            {property.parking_spots !== null && (
-              <span className="flex items-center gap-2">
-                <Car size={20} /> {property.parking_spots} parqueaderos
-              </span>
-            )}
-            <span className="flex items-center gap-2">
-              <Ruler size={20} /> {formatArea(property.area_m2)}
-            </span>
-          </div>
+            </div>
 
-          <section className="mb-6">
-            <h2 className="mb-2 font-semibold text-gray-900">Descripción</h2>
-            <p className="whitespace-pre-line text-gray-700">
-              {property.description}
-            </p>
-          </section>
+            <h1 className="mb-2 text-2xl font-bold text-gray-900">
+              {property.title}
+            </h1>
 
-          {property.features && property.features.length > 0 && (
-            <section className="mb-6">
-              <h2 className="mb-2 font-semibold text-gray-900">
-                Características
-              </h2>
-              <ul className="grid grid-cols-2 gap-2 text-sm text-gray-700">
-                {property.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-primary)]" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-
-          {property.conditions && (
-            <section className="mb-6">
-              <h2 className="mb-2 font-semibold text-gray-900">
-                Condiciones
-              </h2>
-              <p className="whitespace-pre-line text-gray-700">
-                {property.conditions}
+            {property.city && (
+              <p className="mb-4 flex items-center gap-1 text-gray-500">
+                <MapPin size={16} />
+                {[property.address, property.neighborhood, property.city]
+                  .filter(Boolean)
+                  .join(", ")}
               </p>
-            </section>
-          )}
+            )}
 
-          {property.latitude && property.longitude && (
-            <section>
-              <h2 className="mb-2 font-semibold text-gray-900">Ubicación</h2>
-              <PropertyMap
-                latitude={property.latitude}
-                longitude={property.longitude}
-              />
-            </section>
-          )}
-        </div>
-
-        <aside className="lg:col-span-1">
-          <div className="sticky top-4 rounded-xl border border-gray-200 p-5 shadow-sm">
-            <p className="mb-4 text-2xl font-bold text-gray-900">
+            {/* Precio visible arriba en mobile (el aside con precio no se muestra ahí) */}
+            <p className="mb-4 text-2xl font-bold text-gray-900 sm:hidden">
               {formatPrice(property.price)}
               {property.listing_type === "renta" && (
                 <span className="text-sm font-normal text-gray-500">/mes</span>
               )}
             </p>
 
-            <WhatsappContactButton property={property} />
+            {/* Specs: grid 2x2 en mobile, fila en desktop */}
+            <div className="mb-6 grid grid-cols-2 gap-3 border-y border-gray-200 py-4 sm:flex sm:items-center sm:gap-6">
+              {property.bedrooms !== null && (
+                <div className="flex items-center gap-2 rounded-lg bg-gray-50 p-3 text-gray-700 sm:bg-transparent sm:p-0">
+                  <BedDouble size={20} />
+                  <span>{property.bedrooms} hab.</span>
+                </div>
+              )}
+              {property.bathrooms !== null && (
+                <div className="flex items-center gap-2 rounded-lg bg-gray-50 p-3 text-gray-700 sm:bg-transparent sm:p-0">
+                  <Bath size={20} />
+                  <span>{property.bathrooms} baños</span>
+                </div>
+              )}
+              {property.parking_spots !== null && (
+                <div className="flex items-center gap-2 rounded-lg bg-gray-50 p-3 text-gray-700 sm:bg-transparent sm:p-0">
+                  <Car size={20} />
+                  <span>{property.parking_spots} parqueaderos</span>
+                </div>
+              )}
+              <div className="flex items-center gap-2 rounded-lg bg-gray-50 p-3 text-gray-700 sm:bg-transparent sm:p-0">
+                <Ruler size={20} />
+                <span>{formatArea(property.area_m2)}</span>
+              </div>
+            </div>
 
-            <div className="mt-3">
-              <ShareButton
-                title={property.title}
-                slug={property.slug}
-              />
+            <section className="mb-6">
+              <h2 className="mb-2 font-semibold text-gray-900">Descripción</h2>
+              <p className="whitespace-pre-line text-gray-700">
+                {property.description}
+              </p>
+            </section>
+
+            {property.features && property.features.length > 0 && (
+              <section className="mb-6">
+                <h2 className="mb-2 font-semibold text-gray-900">
+                  Características
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {property.features.map((feature) => (
+                    <span
+                      key={feature}
+                      className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700"
+                    >
+                      {feature}
+                    </span>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {property.conditions && (
+              <section className="mb-6">
+                <h2 className="mb-2 font-semibold text-gray-900">
+                  Condiciones
+                </h2>
+                <p className="whitespace-pre-line text-gray-700">
+                  {property.conditions}
+                </p>
+              </section>
+            )}
+
+            {/* Mobile: mapa en el flujo normal, a todo el ancho de la pantalla */}
+            {hasLocation && (
+              <section className="-mx-4 mb-6 sm:hidden">
+                <h2 className="mb-2 px-4 font-semibold text-gray-900">
+                  Ubicación
+                </h2>
+                <PropertyMap
+                  latitude={property.latitude!}
+                  longitude={property.longitude!}
+                  className="h-72 w-full"
+                />
+              </section>
+            )}
+
+            {/* Desktop: precio + contacto + compartir, en el flujo de la columna izquierda */}
+            <div className="hidden sm:sticky sm:top-8 sm:mt-8 sm:block sm:rounded-xl sm:border sm:border-gray-200 sm:p-5 sm:shadow-sm">
+              <p className="mb-4 text-2xl font-bold text-gray-900">
+                {formatPrice(property.price)}
+                {property.listing_type === "renta" && (
+                  <span className="text-sm font-normal text-gray-500">/mes</span>
+                )}
+              </p>
+              <WhatsappContactButton property={property} />
+              <div className="mt-3">
+                <ShareButton title={property.title} slug={property.slug} />
+              </div>
             </div>
           </div>
-        </aside>
+        </div>
+
+        {/* Desktop: mapa a pantalla completa, sin margen, hasta el borde derecho */}
+        <div className="relative isolate hidden sm:block sm:h-screen sm:w-1/2">
+          {hasLocation ? (
+            <PropertyMap
+              latitude={property.latitude!}
+              longitude={property.longitude!}
+              className="h-full w-full"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center bg-gray-100 text-sm text-gray-500">
+              Ubicación no disponible
+            </div>
+          )}
+        </div>
+      </main>
+
+      {/* Mobile: botón de contacto fijo en la base de la pantalla */}
+      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-gray-200 bg-white/90 p-4 backdrop-blur-md sm:hidden">
+        <WhatsappContactButton property={property} />
       </div>
-    </main>
+    </>
   );
 }
 

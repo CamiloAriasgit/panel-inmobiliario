@@ -4,9 +4,6 @@ import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Ícono de marcador personalizado con el color de marca, en vez de
-// usar el ícono por defecto de Leaflet (que da problemas de rutas
-// de imágenes al empaquetarse con Next.js).
 const brandMarkerIcon = L.divIcon({
   className: "",
   html: `<div style="
@@ -23,12 +20,14 @@ const brandMarkerIcon = L.divIcon({
 export function PropertyMapLeaflet({
   latitude,
   longitude,
+  className,
 }: {
   latitude: number;
   longitude: number;
+  className: string;
 }) {
   return (
-    <div className="h-64 w-full overflow-hidden rounded-xl">
+    <div className={`overflow-hidden ${className}`}>
       <MapContainer
         center={[latitude, longitude]}
         zoom={15}

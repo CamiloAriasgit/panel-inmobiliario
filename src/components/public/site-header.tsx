@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { brandConfig } from "@/lib/config/brand.config";
 import { SearchBar } from "./search-bar";
@@ -21,6 +21,31 @@ export function SiteHeader({
   const [collapsed, setCollapsed] = useState(false);
   const lastY = useRef(0);
   const ticking = useRef(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
+
+  // Mide la altura REAL del header cada vez que cambia (logo
+  // visible/oculto, colapsado/expandido, mobile/desktop) y la publica
+  // como variable CSS. Nada más en la app vuelve a adivinar un número.
+  useLayoutEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+
+    function updateHeight() {
+      const height = el!.offsetHeight;
+      setHeaderHeight(height);
+      document.documentElement.style.setProperty(
+        "--header-height",
+        `${height}px`
+      );
+    }
+
+    updateHeight();
+
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     function update() {
@@ -48,17 +73,22 @@ export function SiteHeader({
   }, []);
 
   const isMapView = view === "map";
+  // Mobile: el logo solo tiene sentido si hay scroll para colapsarlo;
+  // en modo mapa no hay scroll, así que se oculta directamente.
   const showMobileLogo = !isMapView && !collapsed;
-  const showDesktopLogo = !isMapView;
+  // Desktop: el logo vive en su propia columna de ancho fijo y nunca
+  // afecta la altura de la fila, así que se muestra siempre.
+  const showDesktopLogo = true;
 
   return (
     <>
-      {/* Reserva el espacio del header (que ahora es "fixed", fuera del
-          flujo). Usa la altura MÁXIMA (con logo visible) para que el
-          header nunca tape contenido al reaparecer. */}
-      <div className="h-[136px] sm:h-[80px]" />
+      {/* Reserva exactamente la altura medida del header real. */}
+      <div style={{ height: headerHeight || undefined }} className="sm:block" />
 
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-gray-100 bg-white px-4 py-4 lg:px-20">
+      <header
+        ref={headerRef}
+        className="fixed inset-x-0 top-0 z-50 border-b border-gray-100 bg-white px-4 py-4 lg:px-20"
+      >
         <div className="sm:hidden">
           <div
             className={`overflow-hidden transition-all duration-300 ${

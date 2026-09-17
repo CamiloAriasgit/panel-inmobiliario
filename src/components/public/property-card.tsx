@@ -29,9 +29,8 @@ export function PropertyCard({
               className="object-cover transition rounded-3xl"
             />
             <span
-              className="absolute left-3 top-3 rounded-full px-3 py-1.5 text-xs
-                         font-medium text-black/70 backdrop:blur-sm"
-              style={{ backgroundColor: "white" }}
+              className="absolute bg-white/70 left-3 top-3 rounded-full px-3 py-1.5 text-xs
+                         font-medium text-black/70 backdrop-blur-md border border-white/60"
             >
               {property.listing_type === "venta" ? "Venta" : "Renta"}
             </span>

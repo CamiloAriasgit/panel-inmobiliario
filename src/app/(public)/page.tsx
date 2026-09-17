@@ -51,8 +51,11 @@ export default async function HomePage({
           <p className="text-center text-gray-500 py-12">
             No encontramos propiedades con esos criterios.
           </p>
-        ) : view === "map" ? (
-          <div className="relative isolate h-[calc(100vh-136px)] w-full sm:h-[calc(100vh-80px)]">
+                ) : view === "map" ? (
+          <div
+            className="relative isolate w-full"
+            style={{ height: "calc(100vh - var(--header-height))" }}
+          >
             <PropertiesMapView properties={properties} />
           </div>
         ) : (

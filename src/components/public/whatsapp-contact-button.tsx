@@ -17,9 +17,9 @@ export function WhatsappContactButton({
       <button
         type="button"
         onClick={() => setIsModalOpen(true)}
-        className="flex w-full items-center justify-center gap-2 rounded-lg
-                   bg-green-600 py-3 text-sm font-medium text-white
-                   hover:bg-green-700"
+        className="flex w-full items-center justify-center gap-2 rounded-full
+                   bg-[var(--color-primary)] py-3 text-sm font-medium text-white
+                   hover:bg-[var(--color-primary)]/80"
       >
         <MessageCircle size={18} />
         Contactar por WhatsApp
