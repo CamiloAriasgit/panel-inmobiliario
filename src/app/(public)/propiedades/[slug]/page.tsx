@@ -49,9 +49,9 @@ export default async function PropertyDetailPage({ params }: Props) {
     <>
       <main className="sm:flex sm:h-screen">
         {/* Columna izquierda: contenido, scrollea de forma independiente en desktop */}
-        <div className="sm:h-screen sm:w-1/2 sm:overflow-y-auto">
+        <div className="sm:h-screen sm:w-1/2 sm:overflow-y-auto scrollbar-hide">
           {/* Mobile: carrusel a todo el ancho, hasta el borde superior */}
-                    {/* Mobile: carrusel cuadrado, sin flechas (gesto de deslizar) */}
+          {/* Mobile: carrusel cuadrado, sin flechas (gesto de deslizar) */}
           <div className="relative sm:hidden">
             <BackButton />
             <ShareButton title={property.title} slug={property.slug} variant="icon" />
@@ -105,24 +105,24 @@ export default async function PropertyDetailPage({ params }: Props) {
             {/* Specs: grid 2x2 en mobile, fila en desktop */}
             <div className="mb-6 grid grid-cols-2 gap-3 border-y border-gray-200 py-4 sm:flex sm:items-center sm:gap-6">
               {property.bedrooms !== null && (
-                <div className="flex items-center gap-2 rounded-lg bg-gray-50 p-3 text-gray-700 sm:bg-transparent sm:p-0">
+                <div className="flex items-center gap-2 rounded-lg bg-gray-100 p-3 text-gray-700 sm:bg-transparent sm:p-0">
                   <BedDouble size={20} />
                   <span>{property.bedrooms} hab.</span>
                 </div>
               )}
               {property.bathrooms !== null && (
-                <div className="flex items-center gap-2 rounded-lg bg-gray-50 p-3 text-gray-700 sm:bg-transparent sm:p-0">
+                <div className="flex items-center gap-2 rounded-lg bg-gray-100 p-3 text-gray-700 sm:bg-transparent sm:p-0">
                   <Bath size={20} />
                   <span>{property.bathrooms} baños</span>
                 </div>
               )}
               {property.parking_spots !== null && (
-                <div className="flex items-center gap-2 rounded-lg bg-gray-50 p-3 text-gray-700 sm:bg-transparent sm:p-0">
+                <div className="flex items-center gap-2 rounded-lg bg-gray-100 p-3 text-gray-700 sm:bg-transparent sm:p-0">
                   <Car size={20} />
-                  <span>{property.parking_spots} parqueaderos</span>
+                  <span>{property.parking_spots} parq.</span>
                 </div>
               )}
-              <div className="flex items-center gap-2 rounded-lg bg-gray-50 p-3 text-gray-700 sm:bg-transparent sm:p-0">
+              <div className="flex items-center gap-2 rounded-lg bg-gray-100 p-3 text-gray-700 sm:bg-transparent sm:p-0">
                 <Ruler size={20} />
                 <span>{formatArea(property.area_m2)}</span>
               </div>
@@ -173,7 +173,7 @@ export default async function PropertyDetailPage({ params }: Props) {
                 <PropertyMap
                   latitude={property.latitude!}
                   longitude={property.longitude!}
-                  className="h-72 w-full"
+                  className="relative isolate h-72 w-full"
                 />
               </section>
             )}
@@ -211,7 +211,7 @@ export default async function PropertyDetailPage({ params }: Props) {
       </main>
 
       {/* Mobile: botón de contacto fijo en la base de la pantalla */}
-      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-gray-200 bg-white/90 p-4 backdrop-blur-md sm:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-30 bg-gradient-to-t from-white via-white/80 to-transparent p-4 sm:hidden">
         <WhatsappContactButton property={property} />
       </div>
     </>

@@ -88,7 +88,7 @@ export function PropertyGallery({
       </div>
 
       {images.length > 1 && (
-        <div className="flex gap-2 overflow-x-auto scrollbar-hide px-4 py-3">
+        <div className="flex gap-2 overflow-x-auto scrollbar-hide px-4 lg:pl-0 py-3">
           {images.map((image, index) => (
             <button
               key={image + index}
