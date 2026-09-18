@@ -1,5 +1,6 @@
 "use server";
 
+import { headers } from "next/headers";
 import { createServiceClient } from "@/lib/supabase/service";
 
 type CreateLeadInput = {
@@ -7,7 +8,7 @@ type CreateLeadInput = {
   agencyId: string;
   name: string;
   phone: string;
-  acceptedPrivacyPolicy: boolean; // <- nuevo
+  acceptedPrivacyPolicy: boolean;
 };
 
 type CreateLeadResult =
@@ -29,9 +30,6 @@ export async function createLead(
     return { success: false, error: "Número de teléfono inválido." };
   }
 
-  // Validación en el servidor, no solo en el checkbox del navegador:
-  // sin este control, alguien podría llamar a este server action
-  // directamente (saltándose la UI) y crear un lead sin consentimiento.
   if (!input.acceptedPrivacyPolicy) {
     return {
       success: false,
@@ -43,7 +41,7 @@ export async function createLead(
 
   const { data: property, error: propertyError } = await supabase
     .from("properties")
-    .select("id, title, agency_id, agencies(whatsapp_number)")
+    .select("id, title, slug, agency_id, agencies(whatsapp_number)")
     .eq("id", input.propertyId)
     .eq("agency_id", input.agencyId)
     .eq("status", "published")
@@ -66,8 +64,14 @@ export async function createLead(
   }
 
   const agencyWhatsapp = property.agencies.whatsapp_number;
+
+  const headersList = await headers();
+  const host = headersList.get("host");
+  const protocol = host?.includes("localhost") ? "http" : "https";
+  const propertyUrl = `${protocol}://${host}/propiedades/${property.slug}`;
+
   const message = encodeURIComponent(
-    `Hola, soy ${name}. Estoy interesado(a) en la propiedad "${property.title}".`
+    `Hola, soy ${name}. Estoy interesado(a) en la propiedad "${property.title}".\n${propertyUrl}`
   );
   const whatsappUrl = `https://wa.me/${agencyWhatsapp}?text=${message}`;
 

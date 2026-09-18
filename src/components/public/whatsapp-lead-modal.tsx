@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { createLead } from "@/lib/actions/leads";
@@ -19,6 +20,11 @@ export function WhatsappLeadModal({
   const [acceptedPolicy, setAcceptedPolicy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+
+  // El portal solo puede usar `document` una vez montado en el
+  // navegador; en el primer render del servidor `document` no existe.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -43,7 +49,9 @@ export function WhatsappLeadModal({
     });
   }
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
       onClick={onClose}
@@ -120,14 +128,15 @@ export function WhatsappLeadModal({
           <button
             type="submit"
             disabled={isPending}
-            className="flex w-full items-center justify-center gap-2 rounded-lg
-                       bg-green-600 py-2.5 text-sm font-medium text-white
-                       hover:bg-green-700 disabled:opacity-60"
+            className="flex w-full items-center justify-center gap-2 rounded-full
+                       bg-[var(--color-primary)] py-2.5 text-sm font-medium text-white
+                       hover:bg-[var(--color-primary)]/80 disabled:opacity-60"
           >
             {isPending ? "Enviando..." : "Ir a WhatsApp"}
           </button>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

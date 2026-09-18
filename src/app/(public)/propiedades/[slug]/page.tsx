@@ -7,7 +7,7 @@ import { formatPrice, formatArea } from "@/lib/utils/format";
 import { PropertyMap } from "@/components/public/property-map";
 import { ShareButton } from "@/components/public/share-button";
 import { WhatsappContactButton } from "@/components/public/whatsapp-contact-button";
-import { PropertyGalleryMobile } from "@/components/public/property-gallery-mobile";
+import { PropertyGallery } from "@/components/public/property-gallery";
 import { BackButton } from "@/components/public/back-button";
 import type { Metadata } from "next";
 import type { Tables } from "@/types/database.types";
@@ -51,32 +51,21 @@ export default async function PropertyDetailPage({ params }: Props) {
         {/* Columna izquierda: contenido, scrollea de forma independiente en desktop */}
         <div className="sm:h-screen sm:w-1/2 sm:overflow-y-auto">
           {/* Mobile: carrusel a todo el ancho, hasta el borde superior */}
+                    {/* Mobile: carrusel cuadrado, sin flechas (gesto de deslizar) */}
           <div className="relative sm:hidden">
             <BackButton />
             <ShareButton title={property.title} slug={property.slug} variant="icon" />
-            <PropertyGalleryMobile images={images} title={property.title} />
+            <PropertyGallery images={images} title={property.title} aspectClassName="aspect-square" />
           </div>
 
-          {/* Desktop: galería original en grid */}
+          {/* Desktop: mismo carrusel, con flechas, aspecto más panorámico */}
           <div className="hidden sm:block sm:px-8 sm:pt-8 lg:pl-20 lg:pr-10">
-            <div className="mb-6 grid grid-cols-2 gap-2">
-              {images.map((image, index) => (
-                <div
-                  key={image + index}
-                  className={`relative aspect-[4/3] overflow-hidden rounded-xl ${
-                    index === 0 ? "col-span-2 aspect-[16/9]" : ""
-                  }`}
-                >
-                  <Image
-                    src={image}
-                    alt={`${property.title} - foto ${index + 1}`}
-                    fill
-                    className="object-cover"
-                    priority={index === 0}
-                  />
-                </div>
-              ))}
-            </div>
+            <PropertyGallery
+              images={images}
+              title={property.title}
+              showArrows
+              aspectClassName="aspect-[4/3]"
+            />
           </div>
 
           <div className="px-4 pb-32 pt-4 sm:px-8 sm:pb-8 sm:pt-0 lg:pl-20 lg:pr-10">
