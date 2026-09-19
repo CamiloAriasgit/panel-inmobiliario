@@ -60,6 +60,7 @@ export default async function PropertyDetailPage({ params }: Props) {
 
           {/* Desktop: mismo carrusel, con flechas, aspecto más panorámico */}
           <div className="hidden sm:block sm:px-8 sm:pt-8 lg:pl-20 lg:pr-10">
+            <BackButton/>
             <PropertyGallery
               images={images}
               title={property.title}

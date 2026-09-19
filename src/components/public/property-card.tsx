@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { MessageCircle, MapPin, BedDouble, Bath, Ruler } from "lucide-react";
+import { MapPin, BedDouble, Bath, Ruler } from "lucide-react";
 import { formatPrice, formatArea } from "@/lib/utils/format";
 import { WhatsappLeadModal } from "./whatsapp-lead-modal";
 import type { Tables } from "@/types/database.types";
@@ -19,33 +19,45 @@ export function PropertyCard({
 
   return (
     <>
-      <article className="overflow-hidden rounded-4xl border border-gray-200 bg-white shadow-sm transition hover:shadow-md">
-        <Link href={`/propiedades/${property.slug}`}>
-          <div className="relative aspect-[4/3]  m-2 overflow-hidden">
-            <Image
-              src={coverImage}
-              alt={property.title}
-              fill
-              className="object-cover transition rounded-3xl"
-            />
-            <span
-              className="absolute bg-white/70 left-3 top-3 rounded-full px-3 py-1.5 text-xs
-                         font-medium text-black/70 backdrop-blur-md border border-white/60"
-            >
-              {property.listing_type === "venta" ? "Venta" : "Renta"}
-            </span>
-          </div>
-        </Link>
+      <article className="relative overflow-hidden rounded-4xl border border-gray-200 bg-white shadow-sm transition hover:shadow-md">
+        {/* Capa de enlace: cubre toda la card, por detrás del contenido.
+            No envuelve nada — es su propia capa, así el botón de abajo
+            nunca queda anidado dentro de un <a>. */}
+        <Link
+          href={`/propiedades/${property.slug}`}
+          className="absolute inset-0 z-0"
+          aria-label={property.title}
+        />
 
-        <div className="p-4">
-          <Link href={`/propiedades/${property.slug}`}>
-            <h3 className="mb-1 line-clamp-1 font-semibold text-gray-900">
-              {property.title}
-            </h3>
-          </Link>
+        <div className="relative aspect-[4/3] m-2 overflow-hidden">
+          <Image
+            src={coverImage}
+            alt={property.title}
+            fill
+            className="pointer-events-none object-cover transition rounded-3xl"
+          />
+          <span
+            className="absolute bg-white/70 left-3 top-3 rounded-full px-3 py-1.5 text-xs
+                       font-medium text-black/70 backdrop-blur-md border border-white/60"
+          >
+            {property.listing_type === "venta" ? "Venta" : "Renta"}
+          </span>
+        </div>
+
+        <div className="relative p-4">
+          <p className="mb-1 text-lg font-bold text-gray-900">
+            {formatPrice(property.price)}
+            {property.listing_type === "renta" && (
+              <span className="text-sm font-normal text-gray-500">/mes</span>
+            )}
+          </p>
+
+          <h3 className="mb-1 line-clamp-1 text-sm font-medium text-gray-700">
+            {property.title}
+          </h3>
 
           {property.city && (
-            <p className="mb-2 flex items-center gap-1 text-sm text-gray-500">
+            <p className="mb-3 flex items-center gap-1 text-sm text-gray-500">
               <MapPin size={14} />
               {property.neighborhood
                 ? `${property.neighborhood}, ${property.city}`
@@ -53,24 +65,17 @@ export function PropertyCard({
             </p>
           )}
 
-          <p className="mb-3 text-lg font-bold text-gray-900">
-            {formatPrice(property.price)}
-            {property.listing_type === "renta" && (
-              <span className="text-sm font-normal text-gray-500">/mes</span>
-            )}
-          </p>
-
           <div className="mb-4 flex items-center justify-between text-sm text-gray-600">
             {property.bedrooms !== null && (
               <span className="flex items-center gap-1">
                 <BedDouble size={16} />
-                {property.bedrooms}
+                {property.bedrooms} Hab.
               </span>
             )}
             {property.bathrooms !== null && (
               <span className="flex items-center gap-1">
                 <Bath size={16} />
-                {property.bathrooms}
+                {property.bathrooms} Baños
               </span>
             )}
             <span className="flex items-center gap-1">
@@ -82,7 +87,7 @@ export function PropertyCard({
           <button
             type="button"
             onClick={() => setIsModalOpen(true)}
-            className="flex w-full items-center justify-center rounded-full
+            className="relative z-10 flex w-full items-center justify-center rounded-full
                        bg-[var(--color-primary)] py-3 text-sm font-medium text-white
                        hover:bg-[var(--color-primary)]/80"
           >
