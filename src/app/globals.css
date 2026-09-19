@@ -33,3 +33,20 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* Popup personalizado del mapa de propiedades: se le quita el
+   empaquetado visual por defecto de Leaflet para que la mini-card
+   se vea como un componente propio, no "encajonado". */
+.property-popup .leaflet-popup-content-wrapper {
+  padding: 0;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+.property-popup .leaflet-popup-content {
+  margin: 0;
+  width: 220px !important;
+}
+.property-popup .leaflet-popup-tip {
+  box-shadow: none;
+}

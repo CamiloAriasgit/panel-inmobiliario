@@ -62,7 +62,17 @@ export function FilterPanel({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const activeCount = Object.values(currentFilters).filter(Boolean).length;
+    const FILTER_KEYS: (keyof RawFilters)[] = [
+    "listing_type",
+    "property_type",
+    "city",
+    "min_price",
+    "max_price",
+    "min_area",
+    "max_area",
+  ];
+
+  const activeCount = FILTER_KEYS.filter((key) => Boolean(currentFilters[key])).length;
 
   function updateDraft(key: keyof Filters, value: string) {
     setDraft((prev) => ({ ...prev, [key]: value || undefined }));
