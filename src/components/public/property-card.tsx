@@ -20,15 +20,18 @@ export function PropertyCard({
   return (
     <>
       <article className="relative overflow-hidden rounded-4xl border border-gray-200 bg-white shadow-sm transition hover:shadow-md">
-        {/* Capa de enlace: cubre toda la card, por detrás del contenido.
-            No envuelve nada — es su propia capa, así el botón de abajo
-            nunca queda anidado dentro de un <a>. */}
+        {/* z-10 explícito: ahora sí gana el "empate" de pintado contra
+            los contenedores de imagen/contenido que vienen después en
+            el HTML, aunque estos tengan `relative` sin z-index propio. */}
         <Link
           href={`/propiedades/${property.slug}`}
-          className="absolute inset-0 z-0"
+          className="absolute inset-0 z-10"
           aria-label={property.title}
         />
 
+        {/* Ya no necesita `relative`: no tiene hijos absolutos propios
+            aparte de la insignia, que sigue funcionando igual porque
+            sigue estando dentro de un contenedor con `relative`. */}
         <div className="relative aspect-[4/3] m-2 overflow-hidden">
           <Image
             src={coverImage}
@@ -44,7 +47,10 @@ export function PropertyCard({
           </span>
         </div>
 
-        <div className="relative p-4">
+        {/* Sin `relative`: no tiene ningún hijo con `position: absolute`
+            propio, así que no necesitaba generar su propio nivel de
+            apilamiento — era justamente lo que estaba tapando el link. */}
+        <div className="p-4">
           <p className="mb-1 text-lg font-bold text-gray-900">
             {formatPrice(property.price)}
             {property.listing_type === "renta" && (
@@ -84,10 +90,13 @@ export function PropertyCard({
             </span>
           </div>
 
+          {/* z-20: gana tanto al link (z-10) como a cualquier otro
+              elemento, garantizando que el botón siempre sea clickeable
+              de forma independiente al link de fondo. */}
           <button
             type="button"
             onClick={() => setIsModalOpen(true)}
-            className="relative z-10 flex w-full items-center justify-center rounded-full
+            className="relative z-20 flex w-full items-center justify-center rounded-full
                        bg-[var(--color-primary)] py-3 text-sm font-medium text-white
                        hover:bg-[var(--color-primary)]/80"
           >
