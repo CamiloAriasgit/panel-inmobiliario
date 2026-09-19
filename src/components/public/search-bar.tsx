@@ -41,7 +41,7 @@ export function SearchBar({ defaultValue }: { defaultValue?: string }) {
         disabled={isPending}
         className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full
                    bg-[var(--color-primary)] p-2 text-white
-                   disabled:opacity-60"
+                   disabled:opacity-60 cursor-pointer"
         aria-label="Buscar"
       >
         {isPending ? (

@@ -140,7 +140,7 @@ export function FilterPanel({
         onClick={() => setIsOpen((prev) => !prev)}
         aria-label="Filtros"
         className="relative flex items-center justify-center rounded-full bg-white border border-gray-300
-                   p-4 hover:bg-gray-100"
+                   p-4 hover:bg-gray-100 cursor-pointer"
       >
         <SlidersHorizontal size={18} />
         {activeCount > 0 && (
@@ -157,7 +157,7 @@ export function FilterPanel({
                      sm:max-h-none sm:w-96 sm:max-w-md sm:overflow-visible">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold">Filtrar propiedades</h3>
-            <button type="button" onClick={() => setIsOpen(false)}>
+            <button type="button" className="flex bg-gray-100 p-1 rounded-full border border-gray-200 hover:bg-gray-200" onClick={() => setIsOpen(false)}>
               <X size={18} />
             </button>
           </div>

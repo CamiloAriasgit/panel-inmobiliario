@@ -19,8 +19,8 @@ export type BrandConfig = {
 
 export const brandConfig: BrandConfig = {
   agencyId: "e3585152-a432-4e5d-8371-590f8e93b947",
-  name: "Inmobiliaria Ejemplo",
-  slug: "inmobiliaria-ejemplo",
+  name: "Real Estate Agency",
+  slug: "real-estate-agency",
 
   primaryColor: "#2b80ff",
   secondaryColor: "#f8fafc",
@@ -33,8 +33,8 @@ export const brandConfig: BrandConfig = {
 
   whatsappNumber: "573001234567",
 
-  legalName: "Inmobiliaria Ejemplo S.A.S.",
+  legalName: "Real Estate Agency S.A.S.",
   taxId: "900.000.000-0",
-  contactEmail: "contacto@inmobiliariaejemplo.com",
+  contactEmail: "contacto@realestateagency.com",
   address: "Calle 00 # 00-00, Medellín, Colombia",
 };

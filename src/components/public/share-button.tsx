@@ -50,7 +50,7 @@ export function ShareButton({
     <button
       type="button"
       onClick={handleShare}
-      className="flex w-full items-center justify-center gap-2 rounded-lg
+      className="flex w-full items-center justify-center gap-2 rounded-full
                  border border-gray-300 py-2.5 text-sm font-medium text-gray-700
                  hover:bg-gray-50"
     >
