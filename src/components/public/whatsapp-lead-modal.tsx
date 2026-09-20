@@ -6,6 +6,8 @@ import Link from "next/link";
 import { X } from "lucide-react";
 import { createLead } from "@/lib/actions/leads";
 import { brandConfig } from "@/lib/config/brand.config";
+import { CountryCodeSelect } from "./country-code-select";
+import { DEFAULT_COUNTRY_ISO } from "@/lib/data/country-codes";
 import type { Tables } from "@/types/database.types";
 
 export function WhatsappLeadModal({
@@ -17,12 +19,11 @@ export function WhatsappLeadModal({
 }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [countryIso, setCountryIso] = useState(DEFAULT_COUNTRY_ISO);
   const [acceptedPolicy, setAcceptedPolicy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  // El portal solo puede usar `document` una vez montado en el
-  // navegador; en el primer render del servidor `document` no existe.
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
@@ -36,6 +37,7 @@ export function WhatsappLeadModal({
         agencyId: brandConfig.agencyId,
         name,
         phone,
+        countryIso,
         acceptedPrivacyPolicy: acceptedPolicy,
       });
 
@@ -91,15 +93,18 @@ export function WhatsappLeadModal({
             <label className="mb-1 block text-sm font-medium">
               Número de teléfono
             </label>
-            <input
-              type="tel"
-              required
-              value={phone}
-              onChange={(event) => setPhone(event.target.value)}
-              className="w-full rounded-md border border-gray-300 p-2.5 text-sm
-                         focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
-              placeholder="Ej. 3001234567"
-            />
+            <div className="flex gap-2">
+              <CountryCodeSelect value={countryIso} onChange={setCountryIso} />
+              <input
+                type="tel"
+                required
+                value={phone}
+                onChange={(event) => setPhone(event.target.value)}
+                className="w-full min-w-0 rounded-md border border-gray-300 p-2.5 text-sm
+                           focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                placeholder="3001234567"
+              />
+            </div>
           </div>
 
           <label className="flex items-start gap-2 text-xs text-gray-600">
@@ -128,7 +133,7 @@ export function WhatsappLeadModal({
           <button
             type="submit"
             disabled={isPending}
-            className="flex w-full items-center justify-center gap-2 rounded-full
+            className="flex w-full items-center justify-center gap-2 rounded-lg
                        bg-[var(--color-primary)] py-2.5 text-sm font-medium text-white
                        hover:bg-[var(--color-primary)]/80 disabled:opacity-60"
           >

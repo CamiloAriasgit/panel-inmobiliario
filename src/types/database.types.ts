@@ -91,6 +91,7 @@ export type Database = {
       leads: {
         Row: {
           agency_id: string
+          country_code: string
           created_at: string
           id: string
           name: string
@@ -100,6 +101,7 @@ export type Database = {
         }
         Insert: {
           agency_id: string
+          country_code?: string
           created_at?: string
           id?: string
           name: string
@@ -109,6 +111,7 @@ export type Database = {
         }
         Update: {
           agency_id?: string
+          country_code?: string
           created_at?: string
           id?: string
           name?: string

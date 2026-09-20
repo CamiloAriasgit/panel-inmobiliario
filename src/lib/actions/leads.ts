@@ -2,12 +2,14 @@
 
 import { headers } from "next/headers";
 import { createServiceClient } from "@/lib/supabase/service";
+import { getCountryByIso } from "@/lib/data/country-codes";
 
 type CreateLeadInput = {
   propertyId: string;
   agencyId: string;
   name: string;
   phone: string;
+  countryIso: string;
   acceptedPrivacyPolicy: boolean;
 };
 
@@ -19,14 +21,13 @@ export async function createLead(
   input: CreateLeadInput
 ): Promise<CreateLeadResult> {
   const name = input.name.trim();
-  const phone = input.phone.trim();
 
   if (name.length < 2) {
     return { success: false, error: "Nombre inválido." };
   }
 
-  const phoneDigits = phone.replace(/\D/g, "");
-  if (phoneDigits.length < 10) {
+  const localDigits = input.phone.trim().replace(/\D/g, "");
+  if (localDigits.length < 7) {
     return { success: false, error: "Número de teléfono inválido." };
   }
 
@@ -37,9 +38,16 @@ export async function createLead(
     };
   }
 
+  // El código de marcado se resuelve en el servidor a partir del ISO
+  // (no se confía en un dialCode que pudiera venir manipulado desde
+  // el navegador) — el ISO solo selecciona una entrada de una lista
+  // fija que tú controlas.
+  const country = getCountryByIso(input.countryIso);
+  const fullPhoneDigits = `${country.dialCode}${localDigits}`;
+
   const supabase = createServiceClient();
 
-  const { data: property, error: propertyError } = await supabase
+    const { data: property, error: propertyError } = await supabase
     .from("properties")
     .select("id, title, slug, agency_id, agencies(whatsapp_number)")
     .eq("id", input.propertyId)
@@ -55,7 +63,8 @@ export async function createLead(
     agency_id: input.agencyId,
     property_id: input.propertyId,
     name,
-    phone: phoneDigits,
+    phone: fullPhoneDigits,
+    country_code: country.iso,
     privacy_accepted_at: new Date().toISOString(),
   });
 
