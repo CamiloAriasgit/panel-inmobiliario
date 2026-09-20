@@ -82,8 +82,7 @@ function MapMarker({ property }: { property: Tables<"properties"> }) {
           <div className="p-3">
             <div className="mb-1 flex items-center gap-1.5">
               <span
-                className="rounded-full px-2 py-0.5 text-[10px] font-medium text-white"
-                style={{ backgroundColor: "var(--color-primary)" }}
+                className="rounded-full bg-[var(--color-primary)]/20 px-2 py-0.5 text-[10px] font-medium text-[var(--color-primary)]"
               >
                 {property.listing_type === "venta" ? "Venta" : "Renta"}
               </span>
