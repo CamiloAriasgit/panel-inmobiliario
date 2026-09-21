@@ -72,8 +72,7 @@ export default async function PropertyDetailPage({ params }: Props) {
           <div className="px-4 pb-32 pt-4 sm:px-8 sm:pb-8 sm:pt-0 lg:pl-20 lg:pr-10">
             <div className="mb-2 flex items-center gap-2">
               <span
-                className="rounded-md px-2 py-1 text-xs font-medium text-white"
-                style={{ backgroundColor: "var(--color-primary)" }}
+                className="rounded-md bg-[var(--color-primary)]/20 px-2 py-1 text-xs font-medium text-[var(--color-primary)]"
               >
                 {property.listing_type === "venta" ? "Venta" : "Renta"}
               </span>
@@ -82,12 +81,20 @@ export default async function PropertyDetailPage({ params }: Props) {
               </span>
             </div>
 
-            <h1 className="mb-2 text-2xl font-bold text-gray-900">
-              {property.title}
+            {/* Precio visible arriba en mobile (el aside con precio no se muestra ahí) */}
+            <h1 className="mb-2 mt-4 text-2xl font-bold text-gray-900 sm:hidden">
+              {formatPrice(property.price)}
+              {property.listing_type === "renta" && (
+                <span className="text-sm font-normal text-gray-500">/mes</span>
+              )}
             </h1>
+            
+            <h2 className="mb-2 text-2xl font-medium text-gray-800">
+              {property.title}
+            </h2>
 
             {property.city && (
-              <p className="mb-4 flex items-center gap-1 text-gray-500">
+              <p className="mb-5 flex items-center gap-1 text-gray-500">
                 <MapPin size={16} />
                 {[property.address, property.neighborhood, property.city]
                   .filter(Boolean)
@@ -95,13 +102,13 @@ export default async function PropertyDetailPage({ params }: Props) {
               </p>
             )}
 
-            {/* Precio visible arriba en mobile (el aside con precio no se muestra ahí) */}
+            {/* Precio visible arriba en mobile (el aside con precio no se muestra ahí) 
             <p className="mb-4 text-2xl font-bold text-gray-900 sm:hidden">
               {formatPrice(property.price)}
               {property.listing_type === "renta" && (
                 <span className="text-sm font-normal text-gray-500">/mes</span>
               )}
-            </p>
+            </p>*/}
 
             {/* Specs: grid 2x2 en mobile, fila en desktop */}
             <div className="mb-6 grid grid-cols-2 gap-3 border-y border-gray-200 py-4 sm:flex sm:items-center sm:gap-6">
