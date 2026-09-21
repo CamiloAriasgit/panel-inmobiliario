@@ -84,7 +84,7 @@ export function WhatsappLeadModal({
               value={name}
               onChange={(event) => setName(event.target.value)}
               className="w-full rounded-md border border-gray-300 p-2.5 text-sm
-                         focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                         focus:outline-none focus:bg-gray-100"
               placeholder="Tu nombre"
             />
           </div>
@@ -101,7 +101,7 @@ export function WhatsappLeadModal({
                 value={phone}
                 onChange={(event) => setPhone(event.target.value)}
                 className="w-full min-w-0 rounded-r-md border border-gray-300 p-2.5 text-sm
-                           focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                           focus:outline-none focus:bg-gray-100"
                 placeholder="3001234567"
               />
             </div>

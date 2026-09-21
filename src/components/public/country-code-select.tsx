@@ -16,8 +16,8 @@ export function CountryCodeSelect({
         value={value}
         onChange={(event) => onChange(event.target.value)}
         aria-label="Código de país"
-        className="w-full appearance-none rounded-l-md border border-gray-300 bg-white py-2.5 pl-2.5 pr-8 text-sm
-                   focus:outline-none "
+        className="w-full appearance-none rounded-l-md border border-r-0 border-gray-300 bg-white py-2.5 pl-2.5 pr-8 text-sm
+                   focus:outline-none focus:bg-gray-100"
       >
         {COUNTRY_CODES.map((country) => (
           <option key={country.iso} value={country.iso}>
