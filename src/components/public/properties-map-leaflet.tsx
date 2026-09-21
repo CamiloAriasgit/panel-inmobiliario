@@ -128,7 +128,7 @@ export function PropertiesMapLeaflet({
       : [6.2442, -75.5812];
 
   return (
-    <div className="h-full w-full overflow-hidden rounded-xl">
+    <div className="h-full w-full overflow-hidden">
       <MapContainer center={center} zoom={12} className="h-full w-full">
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
