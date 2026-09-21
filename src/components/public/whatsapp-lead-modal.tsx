@@ -93,14 +93,14 @@ export function WhatsappLeadModal({
             <label className="mb-1 block text-sm font-medium">
               Número de teléfono
             </label>
-            <div className="flex gap-2">
+            <div className="flex">
               <CountryCodeSelect value={countryIso} onChange={setCountryIso} />
               <input
                 type="tel"
                 required
                 value={phone}
                 onChange={(event) => setPhone(event.target.value)}
-                className="w-full min-w-0 rounded-md border border-gray-300 p-2.5 text-sm
+                className="w-full min-w-0 rounded-r-md border border-gray-300 p-2.5 text-sm
                            focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
                 placeholder="3001234567"
               />
@@ -133,7 +133,7 @@ export function WhatsappLeadModal({
           <button
             type="submit"
             disabled={isPending}
-            className="flex w-full items-center justify-center gap-2 rounded-lg
+            className="flex w-full items-center justify-center gap-2 rounded-full
                        bg-[var(--color-primary)] py-2.5 text-sm font-medium text-white
                        hover:bg-[var(--color-primary)]/80 disabled:opacity-60"
           >
