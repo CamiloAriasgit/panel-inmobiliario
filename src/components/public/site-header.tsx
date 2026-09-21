@@ -22,26 +22,34 @@ export function SiteHeader({
   const lastY = useRef(0);
   const ticking = useRef(false);
   const headerRef = useRef<HTMLElement>(null);
-  const [headerHeight, setHeaderHeight] = useState(0);
+  const [spacerHeight, setSpacerHeight] = useState(0);
+  const hasMeasuredSpacer = useRef(false);
 
-  // Mide la altura REAL del header cada vez que cambia (logo
-  // visible/oculto, colapsado/expandido, mobile/desktop) y la publica
-  // como variable CSS. Nada más en la app vuelve a adivinar un número.
   useLayoutEffect(() => {
     const el = headerRef.current;
     if (!el) return;
 
     function updateHeight() {
       const height = el!.offsetHeight;
-      setHeaderHeight(height);
-      document.documentElement.style.setProperty(
-        "--header-height",
-        `${height}px`
-      );
+
+      // La variable CSS se mantiene siempre en vivo (la usa el
+      // cálculo de alto del mapa, que no tiene scroll y por lo tanto
+      // no sufre este problema).
+      document.documentElement.style.setProperty("--header-height", `${height}px`);
+
+      // El spacer se mide UNA sola vez, en el primer render — antes
+      // de que exista cualquier scroll, y por lo tanto antes de que
+      // cualquier colapso/transición del logo haya podido empezar.
+      // Nunca se vuelve a remedir después, pase lo que pase con el
+      // colapso — así es imposible que capture un valor intermedio
+      // de una animación a medio terminar.
+      if (!hasMeasuredSpacer.current) {
+        setSpacerHeight(height);
+        hasMeasuredSpacer.current = true;
+      }
     }
 
     updateHeight();
-
     const observer = new ResizeObserver(updateHeight);
     observer.observe(el);
     return () => observer.disconnect();
@@ -73,20 +81,19 @@ export function SiteHeader({
   }, []);
 
   const isMapView = view === "map";
-  // Mobile: el logo solo tiene sentido si hay scroll para colapsarlo;
-  // en modo mapa no hay scroll, así que se oculta directamente.
   const showMobileLogo = !isMapView && !collapsed;
-  // Desktop: el logo vive en su propia columna de ancho fijo y nunca
-  // afecta la altura de la fila, así que se muestra siempre.
   const showDesktopLogo = true;
 
   return (
     <>
-      {/* Reserva exactamente la altura medida del header real. */}
-      <div style={{ height: headerHeight || undefined }} className="sm:block" />
+      <div
+        style={{ height: spacerHeight || undefined, overflowAnchor: "none" }}
+        className="sm:block"
+      />
 
       <header
         ref={headerRef}
+        style={{ overflowAnchor: "none" }}
         className="fixed inset-x-0 top-0 z-50 border-b border-gray-100 bg-white px-4 py-4 lg:px-20"
       >
         <div className="sm:hidden">
