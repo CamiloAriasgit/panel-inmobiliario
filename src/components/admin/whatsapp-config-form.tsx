@@ -38,7 +38,7 @@ export function WhatsappConfigForm({
                 value={value}
                 onChange={(event) => setValue(event.target.value)}
                 placeholder="Ej. 573001234567"
-                className="w-full rounded-md border border-gray-300 p-2.5 text-sm"
+                className="w-full bg-white rounded-md borde border-gray-300 p-2.5 text-sm"
             />
 
             {message && (
@@ -53,7 +53,7 @@ export function WhatsappConfigForm({
             <button
                 type="submit"
                 disabled={isPending}
-                className="rounded-lg bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
+                className="rounded-lg bg-[var(--color-primary)] w-full px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
             >
                 {isPending ? "Guardando..." : "Guardar"}
             </button>
