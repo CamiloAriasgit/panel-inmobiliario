@@ -25,7 +25,7 @@ export default async function AdminLayout({
     .single();
 
   return (
-    <div className="min-h-screen bg-white sm:flex">
+    <div className="min-h-screen bg-gray-200/70 sm:flex">
       <AdminSidebar adminName={profile?.full_name ?? user.email ?? "Admin"} />
       <main className="flex-1 p-6 pb-28 sm:pb-8 lg:p-8">{children}</main>
       <AdminBottomNav />

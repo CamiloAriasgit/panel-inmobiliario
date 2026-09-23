@@ -38,7 +38,7 @@ export function WhatsappConfigForm({
                 value={value}
                 onChange={(event) => setValue(event.target.value)}
                 placeholder="Ej. 573001234567"
-                className="w-full bg-white rounded-md borde border-gray-300 p-2.5 text-sm"
+                className="w-full bg-white rounded-md border border-gray-300 p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
             />
 
             {message && (
