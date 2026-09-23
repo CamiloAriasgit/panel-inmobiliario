@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { Sidebar } from "@/components/admin/sidebar";
+import { AdminSidebar } from "@/components/admin/admin-sidebar";
+import { AdminBottomNav } from "@/components/admin/admin-bottom-nav";
 
 export default async function AdminLayout({
   children,
@@ -13,10 +14,6 @@ export default async function AdminLayout({
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Segunda capa de protección además del middleware: si por algún
-  // motivo se renderiza este layout sin sesión (ej. el middleware no
-  // corrió, o se invalidó la sesión entre la petición y el render),
-  // no se confía únicamente en el middleware para proteger los datos.
   if (!user) {
     redirect("/admin/login");
   }
@@ -28,9 +25,10 @@ export default async function AdminLayout({
     .single();
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      <Sidebar adminName={profile?.full_name ?? user.email ?? "Admin"} />
-      <main className="flex-1 p-6 lg:p-8">{children}</main>
+    <div className="min-h-screen bg-white sm:flex">
+      <AdminSidebar adminName={profile?.full_name ?? user.email ?? "Admin"} />
+      <main className="flex-1 p-6 pb-28 sm:pb-8 lg:p-8">{children}</main>
+      <AdminBottomNav />
     </div>
   );
 }

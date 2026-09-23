@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { WhatsappConfigForm } from "@/components/admin/whatsapp-config-form";
+import { AccountActions } from "@/components/admin/account-actions";
 
 export default async function AdminConfigPage() {
   const supabase = await createClient();
@@ -33,6 +34,10 @@ export default async function AdminConfigPage() {
           {agency?.name}.
         </p>
         <WhatsappConfigForm currentNumber={agency?.whatsapp_number ?? ""} />
+      </div>
+      <div className="max-w-md rounded-xl border border-gray-200 bg-white p-5 mt-4">
+        <h2 className="mb-1 font-semibold text-neutral-900">Cuenta</h2>
+        <AccountActions />
       </div>
     </div>
   );
