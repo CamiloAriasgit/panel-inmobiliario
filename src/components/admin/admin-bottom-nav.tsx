@@ -25,8 +25,8 @@ export function AdminBottomNav() {
               aria-label={item.label}
               className={`flex h-11 w-11 items-center justify-center rounded-full transition ${
                 isActive
-                  ? "bg-[var(--color-primary)] text-white"
-                  : "text-neutral-500"
+                  ? "bg-[var(--color-primary)] text-white shadow-inner shadow-white"
+                  : "text-neutral-900"
               }`}
             >
               <item.icon size={20} />
