@@ -110,7 +110,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-start">
-        <section className="space-y-4 rounded-2xl border border-gray-200 p-5">
+        <section className="space-y-4 rounded-2xl bg-white p-5">
           <h2 className="font-semibold text-neutral-900">Información básica</h2>
 
           <div>
@@ -120,7 +120,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
               required
               value={form.title}
               onChange={(event) => handleTitleChange(event.target.value)}
-              className="w-full rounded-lg border border-gray-300 p-2.5 text-sm"
+              className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
             />
           </div>
 
@@ -133,7 +133,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
               required
               value={form.slug}
               onChange={(event) => updateField("slug", event.target.value)}
-              className="w-full rounded-lg border border-gray-300 p-2.5 text-sm"
+              className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
             />
           </div>
 
@@ -144,7 +144,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
               rows={4}
               value={form.description}
               onChange={(event) => updateField("description", event.target.value)}
-              className="w-full rounded-lg border border-gray-300 p-2.5 text-sm"
+              className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
             />
           </div>
 
@@ -156,7 +156,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
                 onChange={(event) =>
                   updateField("listingType", event.target.value as "venta" | "renta")
                 }
-                className="w-full rounded-lg border border-gray-300 p-2.5 text-sm"
+                className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
               >
                 <option value="venta">Venta</option>
                 <option value="renta">Renta</option>
@@ -168,7 +168,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
               <select
                 value={form.propertyType}
                 onChange={(event) => updateField("propertyType", event.target.value)}
-                className="w-full rounded-lg border border-gray-300 p-2.5 text-sm"
+                className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
               >
                 {PROPERTY_TYPES.map((type) => (
                   <option key={type.value} value={type.value}>
@@ -186,7 +186,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
               onChange={(event) =>
                 updateField("status", event.target.value as PropertyFormInput["status"])
               }
-              className="w-full rounded-lg border border-gray-300 p-2.5 text-sm"
+              className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
             >
               <option value="draft">Borrador (no visible al público)</option>
               <option value="published">Publicada</option>
@@ -195,7 +195,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
           </div>
         </section>
 
-        <section className="space-y-4 rounded-2xl border border-gray-200 p-5">
+        <section className="space-y-4 rounded-2xl bg-white p-5">
           <h2 className="font-semibold text-neutral-900">Precio y características</h2>
 
           <div>
@@ -206,7 +206,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
               min={0}
               value={form.price || ""}
               onChange={(event) => updateField("price", Number(event.target.value))}
-              className="w-full rounded-lg border border-gray-300 p-2.5 text-sm"
+              className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
             />
           </div>
 
@@ -244,12 +244,12 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
                   }
                 }}
                 placeholder="Ej. Piscina, presiona Enter"
-                className="flex-1 rounded-lg border border-gray-300 p-2.5 text-sm"
+                className="flex-1 rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
               />
               <button
                 type="button"
                 onClick={addFeature}
-                className="rounded-lg border border-gray-300 px-3 hover:bg-gray-50"
+                className="rounded-lg bg-gray-200/70 px-3 hover:bg-gray-200 focus:outline-none"
               >
                 <Plus size={16} />
               </button>
@@ -262,12 +262,12 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
               rows={3}
               value={form.conditions ?? ""}
               onChange={(event) => updateField("conditions", event.target.value || null)}
-              className="w-full rounded-lg border border-gray-300 p-2.5 text-sm"
+              className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
             />
           </div>
         </section>
 
-        <section className="space-y-4 rounded-2xl border border-gray-200 p-5">
+        <section className="space-y-4 rounded-2xl bg-white p-5">
           <h2 className="font-semibold text-neutral-900">Ubicación</h2>
 
           <TextField label="Dirección" value={form.address} onChange={(v) => updateField("address", v)} />
@@ -284,7 +284,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
           </p>
         </section>
 
-        <section className="rounded-2xl border border-gray-200 p-5">
+        <section className="rounded-2xl bg-white p-5">
           <PropertyImagesField
             images={form.images}
             onChange={(images) => updateField("images", images)}
@@ -299,7 +299,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
       <button
         type="submit"
         disabled={isSaving}
-        className="rounded-lg bg-[var(--color-primary)] px-6 py-2.5 text-sm font-medium text-white disabled:opacity-60"
+        className="w-full sm:w-auto rounded-lg bg-[var(--color-primary)] px-6 py-2.5 text-sm font-medium text-white disabled:opacity-60"
       >
         {isSaving ? "Guardando..." : mode === "create" ? "Crear propiedad" : "Guardar cambios"}
       </button>
@@ -323,7 +323,7 @@ function TextField({
         type="text"
         value={value ?? ""}
         onChange={(event) => onChange(event.target.value || null)}
-        className="w-full rounded-lg border border-gray-300 p-2.5 text-sm"
+        className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
       />
     </div>
   );
@@ -348,7 +348,7 @@ function NumberField({
         step={step}
         value={value ?? ""}
         onChange={(event) => onChange(event.target.value === "" ? null : Number(event.target.value))}
-        className="w-full rounded-lg border border-gray-300 p-2.5 text-sm"
+        className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
       />
     </div>
   );

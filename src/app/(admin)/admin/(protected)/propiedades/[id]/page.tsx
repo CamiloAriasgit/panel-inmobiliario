@@ -48,7 +48,7 @@ export default async function EditPropertyPage({ params }: Props) {
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold text-gray-900">
+      <h1 className="mb-6 text-2xl text-gray-900">
         Editar propiedad
       </h1>
       <PropertyForm mode="edit" propertyId={property.id} initialData={initialData} />

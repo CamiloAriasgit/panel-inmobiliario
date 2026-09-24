@@ -100,8 +100,8 @@ export function WhatsappLeadModal({
                 required
                 value={phone}
                 onChange={(event) => setPhone(event.target.value)}
-                className="w-full min-w-0 rounded-r-md border border-gray-300 p-2.5 text-sm
-                           focus:outline-none focus:bg-gray-100"
+                className="w-full bg-gray-200/70 min-w-0 rounded-r-md border-l border-white p-2.5 text-sm
+                           focus:outline-none focus:bg-gray-200"
                 placeholder="3001234567"
               />
             </div>

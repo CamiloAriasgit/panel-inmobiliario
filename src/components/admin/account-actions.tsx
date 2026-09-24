@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Headset, LogOut } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
-const SUPPORT_WHATSAPP_NUMBER = "573000000000"; // tu número, no el de la agencia
+const SUPPORT_WHATSAPP_NUMBER = "573003607632"; // tu número, no el de la agencia
 
 export function AccountActions() {
   const router = useRouter();
