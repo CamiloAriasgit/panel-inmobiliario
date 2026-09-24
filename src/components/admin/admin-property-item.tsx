@@ -34,7 +34,7 @@ export function AdminPropertyItem({ property }: { property: PropertyListItem }) 
   return (
     <>
       {/* Mobile: fila colapsable (acordeón) */}
-      <div className="rounded-2xl border border-gray-200 sm:hidden">
+      <div className="rounded-xl bg-white sm:hidden">
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
@@ -65,7 +65,7 @@ export function AdminPropertyItem({ property }: { property: PropertyListItem }) 
             <div className="flex items-center gap-2">
               <Link
                 href={`/admin/propiedades/${property.id}`}
-                className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-gray-200 py-2 text-sm font-medium text-neutral-700"
+                className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-gray-200/70 py-2 text-sm font-medium text-neutral-700"
               >
                 <Pencil size={14} />
                 Editar
@@ -77,8 +77,8 @@ export function AdminPropertyItem({ property }: { property: PropertyListItem }) 
       </div>
 
       {/* Desktop: card horizontal */}
-      <div className="hidden rounded-3xl border border-gray-200 p-3 sm:flex sm:gap-4">
-        <div className="relative h-24 w-32 shrink-0 overflow-hidden rounded-xl bg-gray-100">
+      <div className="hidden rounded-2xl bg-white p-3 sm:flex sm:gap-4">
+        <div className="relative h-24 w-32 shrink-0 overflow-hidden rounded-lg bg-gray-100">
           <Image src={coverImage} alt={property.title} fill className="object-cover" />
         </div>
 

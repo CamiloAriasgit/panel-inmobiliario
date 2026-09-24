@@ -22,7 +22,7 @@ export default async function AdminPropertiesPage() {
 
       {/* Versión mobile del encabezado: título + botón circular de crear */}
       <div className="mb-4 flex items-center justify-between sm:hidden">
-        <h1 className="text-xl font-semibold text-neutral-900">Propiedades</h1>
+        <h1 className="mb-6 text-2xl font-normal text-neutral-900">Propiedades</h1>
         <Link
           href="/admin/propiedades/nueva"
           aria-label="Nueva propiedad"

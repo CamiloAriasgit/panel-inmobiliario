@@ -9,7 +9,7 @@ export function AdminBottomNav() {
 
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 pb-4 z-30 flex justify-center sm:hidden bg-gradient-to-b from-transparent via-white/80 to-white "
+      className="fixed inset-x-0 bottom-0 pb-4 z-30 flex justify-center sm:hidden bg-gradient-to-b from-transparent via-gray-200/70 to-gray-200 "
       aria-label="Navegación principal"
     >
       <div className="flex items-center gap-1 rounded-full border border-gray-200 bg-white/90 p-1.5 backdrop-blur-md">

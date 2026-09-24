@@ -23,7 +23,7 @@ export default async function AdminConfigPage() {
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold text-gray-900">Configuración</h1>
+      <h1 className="mb-6 text-2xl text-neutral-900">Configuración</h1>
 
       <div className="max-w-md rounded-xl borde border-gray-200 bg-white p-5">
         <h2 className="mb-1 font-semibold text-gray-900">
@@ -35,7 +35,7 @@ export default async function AdminConfigPage() {
         </p>
         <WhatsappConfigForm currentNumber={agency?.whatsapp_number ?? ""} />
       </div>
-      <div className="max-w-md rounded-xl borde border-gray-200 bg-white p-5 mt-4">
+      <div className="max-w-md rounded-xl borde border-gray-200 bg-white p-5 mt-2">
         <h2 className="mb-1 font-semibold text-neutral-900">Cuenta</h2>
         <AccountActions />
       </div>
