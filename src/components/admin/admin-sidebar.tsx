@@ -9,7 +9,7 @@ export function AdminSidebar({ adminName }: { adminName: string }) {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden w-64 shrink-0 flex-col border-r border-gray-200 bg-white p-4 sm:flex">
+    <aside className="hidden w-64 shrink-0 flex-col bg-white p-4 m-4 rounded-2xl sm:flex">
       <div className="mb-6 px-2">
         <p className="font-semibold text-neutral-900">{brandConfig.name}</p>
         <p className="truncate text-xs text-neutral-500">{adminName}</p>
