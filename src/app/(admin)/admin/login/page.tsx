@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 import { brandConfig } from "@/lib/config/brand.config";
 
@@ -35,53 +36,67 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-      <div className="w-full max-w-sm rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
-        <h1 className="mb-1 text-xl font-bold text-gray-900">
-          {brandConfig.name}
-        </h1>
-        <p className="mb-6 text-sm text-gray-500">
-          Ingresa a tu panel administrativo
-        </p>
+    <main className="grid min-h-screen grid-cols-1 md:grid-cols-2 gap-3 bg-gray-200 md:p-3">
+      {/* Contenedor Izquierda: Oculto en mobile, visible en desktop */}
+      <div className="relative hidden md:block overflow-hidden rounded-3xl">
+        <Image
+          src="/login-bg.png"
+          alt="Login background"
+          fill
+          priority
+          className="object-cover"
+        />
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="mb-1 block text-sm font-medium">Correo</label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className="w-full rounded-md border border-gray-300 p-2.5 text-sm
-                         focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
-            />
-          </div>
+      {/* Contenedor Derecha */}
+      <div className="flex items-center justify-center md:rounded-3xl bg-white p-8">
+        <div className="w-full max-w-sm">
+          <h1 className="mb-1 text-xl font-bold text-gray-900">
+            {brandConfig.name}
+          </h1>
+          <p className="mb-6 text-sm text-gray-500">
+            Ingresa a tu panel administrativo
+          </p>
 
-          <div>
-            <label className="mb-1 block text-sm font-medium">
-              Contraseña
-            </label>
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              className="w-full rounded-md border border-gray-300 p-2.5 text-sm
-                         focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
-            />
-          </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="mb-1 block text-sm font-medium">Correo</label>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                className="w-full rounded-full bg-gray-200/70 p-2.5 text-sm
+                           focus:outline-none focus:bg-gray-200"
+              />
+            </div>
 
-          {error && <p className="text-sm text-red-600">{error}</p>}
+            <div>
+              <label className="mb-1 block text-sm font-medium">
+                Contraseña
+              </label>
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                className="w-full rounded-full bg-gray-200/70 p-2.5 text-sm
+                           focus:outline-none focus:bg-gray-200"
+              />
+            </div>
 
-          <button
-            type="submit"
-            disabled={isPending}
-            className="w-full rounded-lg bg-[var(--color-primary)] py-2.5
-                       text-sm font-medium text-white disabled:opacity-60"
-          >
-            {isPending ? "Ingresando..." : "Ingresar"}
-          </button>
-        </form>
+            {error && <p className="text-sm text-red-600">{error}</p>}
+
+            <button
+              type="submit"
+              disabled={isPending}
+              className="w-full rounded-full bg-[var(--color-primary)] py-2.5
+                         text-sm font-medium text-white disabled:opacity-60"
+            >
+              {isPending ? "Ingresando..." : "Ingresar"}
+            </button>
+          </form>
+        </div>
       </div>
     </main>
   );

@@ -5,17 +5,10 @@ type LeadListItem = {
   id: string;
   name: string;
   phone: string;
-  created_at: string;
   properties: { title: string } | null;
 };
 
 export function AdminLeadItem({ lead }: { lead: LeadListItem }) {
-  const formattedDate = new Date(lead.created_at).toLocaleDateString("es-CO", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-
   return (
     <div className="flex flex-col gap-3 rounded-2xl bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
       <div className="min-w-0">
@@ -26,10 +19,7 @@ export function AdminLeadItem({ lead }: { lead: LeadListItem }) {
       </div>
 
       <div className="flex items-center justify-between gap-4 sm:justify-end">
-        <div className="text-sm text-neutral-500">
-          <p>{lead.phone}</p>
-          <p className="text-xs">{formattedDate}</p>
-        </div>
+        <p className="text-sm text-neutral-500">{lead.phone}</p>
 
         <div className="flex items-center gap-1">
           <CopyPhoneButton phone={lead.phone} />
