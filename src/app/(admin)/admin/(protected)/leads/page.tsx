@@ -6,9 +6,9 @@ import { AdminLeadItem } from "@/components/admin/admin-lead-item";
 export default async function AdminLeadsPage() {
   const supabase = await createClient();
 
-  const { data: leads } = await supabase
+    const { data: leads } = await supabase
     .from("leads")
-    .select("id, name, phone, created_at, properties(title)")
+    .select("id, name, phone, country_code, created_at, properties(title, images)")
     .order("created_at", { ascending: false });
 
   const groups = groupByDay(leads ?? []);

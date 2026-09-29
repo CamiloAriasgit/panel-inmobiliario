@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { brandConfig } from "@/lib/config/brand.config";
 import "./globals.css";
+import "flag-icons/css/flag-icons.min.css";
 
 export const metadata: Metadata = {
   title: {

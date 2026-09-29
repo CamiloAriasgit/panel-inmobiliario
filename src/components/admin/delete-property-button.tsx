@@ -26,7 +26,7 @@ export function DeletePropertyButton({
           type="button"
           onClick={handleDelete}
           disabled={isPending}
-          className="rounded-md bg-red-600 px-2 py-1 text-xs font-medium text-white disabled:opacity-60"
+          className="rounded-md bg-red-200 text-red-600 px-2 py-1 text-xs font-medium disabled:opacity-60"
         >
           {isPending ? "..." : "Confirmar"}
         </button>
@@ -34,7 +34,7 @@ export function DeletePropertyButton({
           type="button"
           onClick={() => setIsConfirming(false)}
           disabled={isPending}
-          className="rounded-md px-2 py-1 text-xs font-medium text-gray-500 hover:bg-gray-100"
+          className="rounded-md bg-gray-200 px-2 py-1 text-xs font-medium text-neutral-500 hover:bg-gray-300"
         >
           Cancelar
         </button>
@@ -46,7 +46,7 @@ export function DeletePropertyButton({
     <button
       type="button"
       onClick={() => setIsConfirming(true)}
-      className="rounded-md p-2 text-gray-500 hover:bg-red-50 hover:text-red-600"
+      className="rounded-md p-2 text-gray-500 bg-gray-200/70 hover:bg-red-50 hover:text-red-600"
     >
       <Trash2 size={16} />
     </button>
