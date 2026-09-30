@@ -4,7 +4,7 @@ import type { PropertyLeadCount } from "@/lib/utils/lead-stats";
 export function TopPropertiesCard({ properties }: { properties: PropertyLeadCount[] }) {
   return (
     <div className="rounded-2xl bg-white p-5">
-      <h2 className="mb-4 font-semibold text-neutral-900">Propiedades con más leads</h2>
+      <h2 className="mb-4 text-neutral-900">Propiedades con más leads</h2>
 
       {properties.length === 0 ? (
         <p className="text-sm text-neutral-500">Aún no hay suficientes datos.</p>
