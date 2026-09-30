@@ -37,7 +37,7 @@ export default async function AdminPropertiesPage() {
           Aún no has agregado ninguna propiedad.
         </p>
       ) : (
-        <div className="space-y-3 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0">
+        <div className="space-y-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0">
           {properties.map((property) => (
             <AdminPropertyItem key={property.id} property={property} />
           ))}
