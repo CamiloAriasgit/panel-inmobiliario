@@ -22,7 +22,7 @@ export function LeadsMonthlyChart({
           return (
             <div key={month.key} className="flex min-h-0 flex-1 flex-col items-center gap-1.5">
               <span className="text-xs text-neutral-500">{month.count}</span>
-              <div className={`flex w-full items-end ${fill ? "h-full min-h-[64px]" : "h-24"}`}>
+              <div className={`flex w-full items-end ${fill ? "h-full min-h-[220px] md:min-h-[64px]" : "h-50 md:h-24"}`}>
                 <div
                   className={`w-full rounded-t-md ${isCurrent ? "bg-gradient-to-b from-[var(--color-primary)] to-[var(--color-primary)]/30" : "bg-gradient-to-b from-[var(--color-primary)]/40 bg-[var(--color-primary)]/30"
                     }`}

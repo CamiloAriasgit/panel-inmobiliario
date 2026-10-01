@@ -3,23 +3,41 @@ import type { PropertyLeadCount } from "@/lib/utils/lead-stats";
 
 export function TopPropertiesCard({ properties }: { properties: PropertyLeadCount[] }) {
   return (
-    <div className="rounded-xl bg-white p-5">
+    <div className="rounded-xl lg:bg-white lg:p-5">
       <h2 className="mb-4 text-neutral-900">Propiedades con más leads</h2>
 
       {properties.length === 0 ? (
         <p className="text-sm text-neutral-500">Aún no hay suficientes datos.</p>
       ) : (
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {properties.map((property, index) => (
-            <div key={property.propertyId} className="flex items-center gap-3">
-              <span className="w-4 text-sm text-neutral-400">{index + 1}</span>
-              <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-md bg-gray-100">
-                <Image src={property.image} alt="" fill className="object-cover" />
-              </div>
-              <p className="line-clamp-1 flex-1 text-sm text-neutral-900">{property.title}</p>
-              <span className="rounded-full bg-gray-200/70 px-2 py-0.5 text-xs text-neutral-600">
-                {property.count}
+            <div
+              key={property.propertyId}
+              className="relative aspect-square w-full overflow-hidden rounded-xl bg-neutral-100 shadow-sm"
+            >
+              <Image
+                src={property.image}
+                alt={property.title || "Propiedad"}
+                fill
+                className="object-cover"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+              <span className="absolute top-3 left-3 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-xs text-white backdrop-blur-md">
+                {index + 1}
               </span>
+
+              <div className="absolute bottom-0 inset-x-0 p-3 text-white">
+                <p className="line-clamp-1 text-sm font-medium mb-1" title={property.title}>
+                  {property.title}
+                </p>
+                <div className="flex items-center">
+                  <span className="rounded-full bg-white/20 backdrop-blur-md px-2.5 py-0.5 text-xs text-white border border-white/10">
+                    {property.count} {property.count === 1 ? "lead" : "leads"}
+                  </span>
+                </div>
+              </div>
             </div>
           ))}
         </div>
