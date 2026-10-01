@@ -21,7 +21,7 @@ export function AdminLeadItem({ lead }: { lead: LeadListItem }) {
   const whatsappHref = `https://wa.me/${lead.phone}?text=${encodeURIComponent(message)}`;
 
   return (
-    <div className="flex flex-col gap-3 rounded-xl bg-white p-2 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-3 rounded-xl bg-white p-2 sm:flex-row lg:hover:bg-gray-100 sm:items-center sm:justify-between">
       <div className="flex min-w-0 items-center gap-3">
         <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-md bg-gray-100">
           <Image src={coverImage} alt="" fill className="object-cover" />

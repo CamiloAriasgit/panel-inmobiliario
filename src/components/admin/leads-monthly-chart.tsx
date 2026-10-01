@@ -11,7 +11,7 @@ export function LeadsMonthlyChart({
   const maxCount = Math.max(...months.map((month) => month.count), 1);
 
   return (
-    <div className={`rounded-2xl bg-white p-5 ${fill ? "flex min-h-0 flex-1 flex-col" : ""}`}>
+    <div className={`rounded-xl bg-white p-5 ${fill ? "flex min-h-0 flex-1 flex-col" : ""}`}>
       <h2 className="mb-4 text-neutral-900">Leads por mes</h2>
 
       <div className={`flex min-h-0 items-stretch gap-3 ${fill ? "flex-1" : ""}`}>

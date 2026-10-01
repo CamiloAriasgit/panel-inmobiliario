@@ -26,7 +26,7 @@ export function DeletePropertyButton({
           type="button"
           onClick={handleDelete}
           disabled={isPending}
-          className="rounded-md bg-red-200 text-red-600 px-2 py-1 text-xs font-medium disabled:opacity-60"
+          className="rounded-md bg-red-100 text-red-600 px-2 py-1 text-xs font-medium disabled:opacity-60"
         >
           {isPending ? "..." : "Confirmar"}
         </button>
@@ -34,7 +34,7 @@ export function DeletePropertyButton({
           type="button"
           onClick={() => setIsConfirming(false)}
           disabled={isPending}
-          className="rounded-md bg-gray-200 px-2 py-1 text-xs font-medium text-neutral-500 hover:bg-gray-300"
+          className="rounded-md bg-gray-200/70 px-2 py-1 text-xs font-medium text-neutral-500 hover:bg-gray-200"
         >
           Cancelar
         </button>

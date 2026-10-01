@@ -1,6 +1,6 @@
 const STATUS_STYLES: Record<string, string> = {
   draft: "bg-gray-100 text-neutral-600",
-  published: "bg-[var(--color-primary)]/20 text-[var(--color-primary)]",
+  published: "bg-green-100 text-green-600",
   archived: "bg-red-100 text-red-600",
 };
 
