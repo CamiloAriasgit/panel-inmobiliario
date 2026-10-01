@@ -29,12 +29,12 @@ export function TopPropertiesCard({ properties }: { properties: PropertyLeadCoun
               </span>
 
               {/* Contenedor blanco flotante con blur y transparencia /20 */}
-              <div className="absolute bottom-0 inset-x-0 m-2 p-2 rounded-lg bg-white/70 backdrop-blur-md border border-white/20 shadow-sm">
+              <div className="absolute bottom-0 inset-x-0 m-2 p-2 rounded-lg bg-white/70 backdrop-blur-md shadow-sm">
                 <p className="line-clamp-1 text-sm font-medium text-neutral-900 mb-1" title={property.title}>
                   {property.title}
                 </p>
                 <div className="flex items-center">
-                  <span className="rounded-full bg-neutral-900/10 px-2 py-0.5 text-xs font-medium text-neutral-800">
+                  <span className="rounded-full bg-white px-2 py-0.5 text-xs font-medium text-neutral-800">
                     {property.count} {property.count === 1 ? "lead" : "leads"}
                   </span>
                 </div>
