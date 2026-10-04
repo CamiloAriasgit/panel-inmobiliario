@@ -19,7 +19,7 @@ export function PropertyCard({
 
   return (
     <>
-      <article className="relative overflow-hidden rounded-4xl border border-gray-200 bg-white shadow-sm transition hover:shadow-md">
+      <article className="relative overflow-hidden rounded-4xl border border-gray-200 bg-white transition hover:shadow-md">
         {/* z-10 explícito: ahora sí gana el "empate" de pintado contra
             los contenedores de imagen/contenido que vienen después en
             el HTML, aunque estos tengan `relative` sin z-index propio. */}

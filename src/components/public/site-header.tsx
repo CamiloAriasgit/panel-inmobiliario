@@ -114,7 +114,7 @@ export function SiteHeader({
             </div>
           </div>
 
-          <div className="flex items-center justify-center gap-1 bg-amber-200">
+          <div className="flex items-center justify-center gap-1">
             <SearchBar defaultValue={searchDefaultValue} />
             <FilterPanel currentFilters={currentFilters} />
           </div>

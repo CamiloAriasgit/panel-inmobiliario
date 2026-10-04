@@ -47,18 +47,14 @@ export default async function PropertyDetailPage({ params }: Props) {
 
   return (
     <>
-      <main className="sm:flex sm:h-screen">
-        {/* Columna izquierda: contenido, scrollea de forma independiente en desktop */}
+      <main className="sm:flex sm:h-screen bg-white">
         <div className="sm:h-screen sm:w-1/2 sm:overflow-y-auto scrollbar-hide">
-          {/* Mobile: carrusel a todo el ancho, hasta el borde superior */}
-          {/* Mobile: carrusel cuadrado, sin flechas (gesto de deslizar) */}
           <div className="relative sm:hidden">
             <BackButton />
             <ShareButton title={property.title} slug={property.slug} variant="icon" />
             <PropertyGallery images={images} title={property.title} aspectClassName="aspect-square" />
           </div>
 
-          {/* Desktop: mismo carrusel, con flechas, aspecto más panorámico */}
           <div className="hidden sm:block sm:px-8 sm:pt-8 lg:pl-20 lg:pr-10">
             <BackButton/>
             <PropertyGallery
@@ -81,7 +77,6 @@ export default async function PropertyDetailPage({ params }: Props) {
               </span>
             </div>
 
-            {/* Precio visible arriba en mobile (el aside con precio no se muestra ahí) */}
             <h1 className="mb-2 mt-4 text-2xl font-bold text-gray-900 sm:hidden">
               {formatPrice(property.price)}
               {property.listing_type === "renta" && (
@@ -102,15 +97,6 @@ export default async function PropertyDetailPage({ params }: Props) {
               </p>
             )}
 
-            {/* Precio visible arriba en mobile (el aside con precio no se muestra ahí) 
-            <p className="mb-4 text-2xl font-bold text-gray-900 sm:hidden">
-              {formatPrice(property.price)}
-              {property.listing_type === "renta" && (
-                <span className="text-sm font-normal text-gray-500">/mes</span>
-              )}
-            </p>*/}
-
-            {/* Specs: grid 2x2 en mobile, fila en desktop */}
             <div className="mb-6 grid grid-cols-2 gap-3 border-y border-gray-200 py-4 sm:flex sm:items-center sm:gap-6">
               {property.bedrooms !== null && (
                 <div className="flex items-center gap-2 rounded-lg bg-gray-100 p-3 text-gray-700 sm:bg-transparent sm:p-0">
@@ -172,7 +158,6 @@ export default async function PropertyDetailPage({ params }: Props) {
               </section>
             )}
 
-            {/* Mobile: mapa en el flujo normal, a todo el ancho de la pantalla */}
             {hasLocation && (
               <section className="-mx-4 mb-6 sm:hidden">
                 <h2 className="mb-2 px-4 font-semibold text-gray-900">
@@ -186,7 +171,6 @@ export default async function PropertyDetailPage({ params }: Props) {
               </section>
             )}
 
-            {/* Desktop: precio + contacto + compartir, en el flujo de la columna izquierda */}
             <div className="hidden sm:sticky sm:top-8 sm:mt-8 sm:block sm:rounded-xl sm:border sm:border-gray-200 sm:p-5 sm:shadow-sm">
               <p className="mb-4 text-2xl font-bold text-gray-900">
                 {formatPrice(property.price)}
@@ -218,7 +202,6 @@ export default async function PropertyDetailPage({ params }: Props) {
         </div>
       </main>
 
-      {/* Mobile: botón de contacto fijo en la base de la pantalla */}
       <div className="fixed inset-x-0 bottom-0 z-30 bg-gradient-to-t from-white via-white/80 to-transparent p-4 sm:hidden">
         <WhatsappContactButton property={property} />
       </div>
