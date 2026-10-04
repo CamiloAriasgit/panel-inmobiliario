@@ -62,7 +62,7 @@ export function FilterPanel({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-    const FILTER_KEYS: (keyof RawFilters)[] = [
+  const FILTER_KEYS: (keyof RawFilters)[] = [
     "listing_type",
     "property_type",
     "city",
@@ -149,8 +149,7 @@ export function FilterPanel({
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         aria-label="Filtros"
-        className="relative flex items-center justify-center rounded-full bg-white border border-gray-300
-                   p-4 hover:bg-gray-100 cursor-pointer"
+        className="relative flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-100 cursor-pointer"
       >
         <SlidersHorizontal size={18} />
         {activeCount > 0 && (
@@ -185,11 +184,10 @@ export function FilterPanel({
                     key={option.value}
                     type="button"
                     onClick={() => updateDraft("listing_type", option.value)}
-                    className={`rounded-md border px-3 py-1.5 text-sm ${
-                      (draft.listing_type ?? "") === option.value
-                        ? "border-none bg-gray-200 text-black"
-                        : "border-gray-300"
-                    }`}
+                    className={`rounded-md border px-3 py-1.5 text-sm ${(draft.listing_type ?? "") === option.value
+                      ? "border-none bg-gray-200 text-black"
+                      : "border-gray-300"
+                      }`}
                   >
                     {option.label}
                   </button>
@@ -213,11 +211,10 @@ export function FilterPanel({
                       key={type.value || "all"}
                       type="button"
                       onClick={() => togglePropertyType(type.value)}
-                      className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm ${
-                        isActive
-                          ? "border-none bg-gray-200 text-black"
-                          : "border-gray-300 text-gray-700 hover:bg-gray-50"
-                      }`}
+                      className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm ${isActive
+                        ? "border-none bg-gray-200 text-black"
+                        : "border-gray-300 text-gray-700 hover:bg-gray-50"
+                        }`}
                     >
                       <type.icon size={14} />
                       {type.label}
