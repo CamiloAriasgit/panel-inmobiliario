@@ -5,8 +5,7 @@ import { AdminListHeader } from "@/components/admin/admin-list-header";
 import { AdminLeadItem } from "@/components/admin/admin-lead-item";
 import { LeadsMonthlyChart } from "@/components/admin/leads-monthly-chart";
 import { TopPropertiesCard } from "@/components/admin/top-properties-card";
-import { LeadsViewToggle } from "@/components/admin/leads-view-toggle";
-
+import { AdminViewToggle } from "@/components/admin/admin-view-toggle";
 type SearchParams = { tab?: string };
 
 export default async function AdminLeadsPage({
@@ -33,7 +32,7 @@ export default async function AdminLeadsPage({
       <AdminListHeader title="Leads" />
       <h1 className="mb-4 text-xl text-neutral-900 sm:hidden">Leads</h1>
 
-      <LeadsViewToggle tab={tab} />
+      <AdminViewToggle tab={tab} />
 
       <div className="grid grid-cols-1 gap-6 lg:h-[calc(103vh-140px)] lg:grid-cols-2">
         <div
