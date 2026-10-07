@@ -64,3 +64,62 @@ export function getMostViewedProperties(
       clickCount: property.click_count,
     }));
 }
+
+export type AttentionProperty = {
+  id: string;
+  title: string;
+  image: string;
+  clickCount: number;
+  leadCount: number;
+  conversionRate: number;
+};
+
+export function getPropertiesNeedingAttention(
+  properties: {
+    id: string;
+    title: string;
+    images: string[] | null;
+    click_count: number;
+    status: string;
+  }[],
+  leadCountsByProperty: Map<string, number>,
+  limit = 5
+): AttentionProperty[] {
+  const published = properties.filter((property) => property.status === "published");
+
+  if (published.length === 0) return [];
+
+  const totalViews = published.reduce((sum, property) => sum + property.click_count, 0);
+  const avgViews = totalViews / published.length;
+  const viewsThreshold = Math.max(avgViews * 0.4, 3);
+
+  // La conversión promedio solo se calcula sobre propiedades que ya
+  // cruzan el umbral de vistas — incluir las de muy poco tráfico
+  // distorsionaría el promedio con tasas de 0% o 100% poco confiables.
+  const eligible = published.filter((property) => property.click_count >= viewsThreshold);
+  if (eligible.length === 0) return [];
+
+  const totalEligibleViews = eligible.reduce((sum, property) => sum + property.click_count, 0);
+  const totalEligibleLeads = eligible.reduce(
+    (sum, property) => sum + (leadCountsByProperty.get(property.id) ?? 0),
+    0
+  );
+  const avgConversion = totalEligibleViews > 0 ? totalEligibleLeads / totalEligibleViews : 0;
+  const conversionThreshold = avgConversion * 0.5;
+
+  return eligible
+    .map((property) => {
+      const leadCount = leadCountsByProperty.get(property.id) ?? 0;
+      return {
+        id: property.id,
+        title: property.title,
+        image: property.images?.[0] ?? "/placeholder-property.jpg",
+        clickCount: property.click_count,
+        leadCount,
+        conversionRate: property.click_count > 0 ? leadCount / property.click_count : 0,
+      };
+    })
+    .filter((property) => property.conversionRate < conversionThreshold)
+    .sort((a, b) => b.clickCount - a.clickCount) // las de más tráfico desperdiciado primero
+    .slice(0, limit);
+}

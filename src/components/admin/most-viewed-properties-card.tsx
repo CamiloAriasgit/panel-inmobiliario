@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { MousePointerClick } from "lucide-react";
+import { Eye } from "lucide-react";
 import type { MostViewedProperty } from "@/lib/utils/property-stats";
 
 export function MostViewedPropertiesCard({
@@ -23,9 +23,9 @@ export function MostViewedPropertiesCard({
               </div>
               <p className="line-clamp-1 flex-1 text-sm text-neutral-900">{property.title}</p>
               <span className="flex items-center gap-1 rounded-full bg-gray-200/70 px-2 py-0.5 text-xs text-neutral-600">
-                <MousePointerClick size={12} />
-                {property.clickCount}
-              </span>
+              <Eye size={12} />
+              {property.clickCount}
+            </span>
             </div>
           ))}
         </div>

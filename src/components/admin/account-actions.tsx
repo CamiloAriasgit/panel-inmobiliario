@@ -22,7 +22,7 @@ export function AccountActions() {
         href={`https://wa.me/${SUPPORT_WHATSAPP_NUMBER}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-gray-100"
+        className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-gray-100 md:bg-white md:shadow md:mb-2"
       >
         <Headset size={18} />
         Contactar soporte
@@ -31,7 +31,7 @@ export function AccountActions() {
       <button
         type="button"
         onClick={handleLogout}
-        className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-gray-100"
+        className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-gray-100 md:bg-white md:shadow"
       >
         <LogOut size={18} />
         Cerrar sesión

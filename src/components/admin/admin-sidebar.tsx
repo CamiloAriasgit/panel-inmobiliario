@@ -29,8 +29,8 @@ export function AdminSidebar({ adminName }: { adminName: string }) {
               href={item.href}
               className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium ${
                 isActive
-                  ? "bg-[var(--color-primary)] text-white"
-                  : "text-neutral-600 hover:bg-gray-100"
+                  ? "bg-neutral-800 text-white"
+                  : "text-neutral-600 hover:bg-gray-200/70"
               }`}
             >
               <item.icon size={18} />
@@ -43,15 +43,17 @@ export function AdminSidebar({ adminName }: { adminName: string }) {
       <p className="mb-1 mt-6 px-3 text-xs text-neutral-400">Acción rápida</p>
       <Link
         href="/admin/propiedades/nueva"
-        className="flex items-center gap-3 rounded-full px-3 py-2 text-sm font-medium text-neutral-600 bg-gray-100 hover:bg-gray-200"
+        className="flex items-center gap-3 rounded-full px-1.5 py-1.5 pl-4 text-sm font-medium text-neutral-600 bg-gray-200/70 hover:bg-gray-200 shadow-inner"
       >
         <span className="flex-1">Nueva propiedad</span>
-        <Plus size={18} />
+        <div className="bg-white rounded-full p-2 shadow">
+            <Plus size={18} />
+        </div>
       </Link>
 
      
-      <div className="mt-auto bg-gray-200/70 rounded-lg  p-5">
-        <h2 className="mb-1 font-semibold text-neutral-900">Cuenta</h2>
+      <div className="mt-auto bg-gray-200/70 rounded-lg  p-5 shadow-inner">
+        <h2 className="mb-1 text-neutral-900">Cuenta</h2>
         <AccountActions />
       </div>
     </aside>
