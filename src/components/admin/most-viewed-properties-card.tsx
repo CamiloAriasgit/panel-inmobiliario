@@ -9,7 +9,8 @@ export function MostViewedPropertiesCard({
 }) {
   return (
     <div className="rounded-2xl bg-white p-5">
-      <h2 className="mb-4 font-semibold text-neutral-900">Más vistas</h2>
+      <h2 className="mb-1 font-semibold text-neutral-900">Más vistas</h2>
+      <p className="mb-4 text-xs text-neutral-400">Top 5 por número de visitas</p>
 
       {properties.length === 0 ? (
         <p className="text-sm text-neutral-500">Aún no hay suficientes datos.</p>
@@ -23,9 +24,9 @@ export function MostViewedPropertiesCard({
               </div>
               <p className="line-clamp-1 flex-1 text-sm text-neutral-900">{property.title}</p>
               <span className="flex items-center gap-1 rounded-full bg-gray-200/70 px-2 py-0.5 text-xs text-neutral-600">
-              <Eye size={12} />
-              {property.clickCount}
-            </span>
+                <Eye size={12} />
+                {property.clickCount}
+              </span>
             </div>
           ))}
         </div>

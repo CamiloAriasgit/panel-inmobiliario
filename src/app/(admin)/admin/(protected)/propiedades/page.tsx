@@ -1,13 +1,18 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import { getMostViewedProperties, getPropertiesNeedingAttention } from "@/lib/utils/property-stats";
+import {
+  getMostViewedProperties,
+  getPropertiesNeedingAttention,
+  getBestConvertingProperties,
+} from "@/lib/utils/property-stats";
 import { AdminListHeader } from "@/components/admin/admin-list-header";
 import { AdminPropertyItem } from "@/components/admin/admin-property-item";
 import { AdminViewToggle } from "@/components/admin/admin-view-toggle";
 import { PropertiesByTypeChart } from "@/components/admin/properties-by-type-chart";
 import { MostViewedPropertiesCard } from "@/components/admin/most-viewed-properties-card";
 import { NeedsAttentionCard } from "@/components/admin/needs-attention-card";
+import { BestConversionCard } from "@/components/admin/best-conversion-card";
 
 type SearchParams = { tab?: string };
 
@@ -42,6 +47,7 @@ export default async function AdminPropertiesPage({
 
   const mostViewed = getMostViewedProperties(allProperties);
   const needsAttention = getPropertiesNeedingAttention(allProperties, leadCountsByProperty);
+  const bestConversion = getBestConvertingProperties(allProperties, leadCountsByProperty);
 
   return (
     <div>
@@ -64,17 +70,17 @@ export default async function AdminPropertiesPage({
 
       <AdminViewToggle tab={tab} />
 
-      <div className="grid grid-cols-1 gap-6 lg:h-[calc(100vh-140px)] lg:grid-cols-2">
+      {/* Fila superior: panorama general del inventario (60% del alto en desktop) */}
+      <div className="grid grid-cols-1 gap-6 lg:h-[calc(90vh-140px)] lg:grid-cols-2">
         <div
           className={`${tab === "stats" ? "flex" : "hidden"} min-h-0 flex-col gap-6 overflow-y-auto pr-1 scrollbar-hide lg:flex`}
         >
           <PropertiesByTypeChart properties={allProperties} />
           <MostViewedPropertiesCard properties={mostViewed} />
-          <NeedsAttentionCard properties={needsAttention} />
         </div>
 
         <div className={`${tab === "list" ? "block" : "hidden"} min-h-0 lg:block`}>
-          <div className="h-full overflow-y-auto pr-1 scrollbar-hide">
+          <div className="h-full overflow-y-auto pr-1 scrollbar-hide lg:bg-white rounded-xl">
             {allProperties.length === 0 ? (
               <p className="text-sm text-neutral-500">
                 Aún no has agregado ninguna propiedad.
@@ -87,6 +93,18 @@ export default async function AdminPropertiesPage({
               </div>
             )}
           </div>
+        </div>
+      </div>
+
+      {/* Fila inferior: casos accionables de conversión (40% del alto, solo estadísticas) */}
+      <div
+        className={`${tab === "stats" ? "grid" : "hidden"} mt-6 grid-cols-1 gap-6 lg:grid lg:h-[calc(60vh-40px)] lg:grid-cols-2`}
+      >
+        <div className="min-h-0 overflow-y-auto pr-1 scrollbar-hide">
+          <BestConversionCard properties={bestConversion} />
+        </div>
+        <div className="min-h-0 overflow-y-auto pr-1 scrollbar-hide">
+          <NeedsAttentionCard properties={needsAttention} />
         </div>
       </div>
     </div>

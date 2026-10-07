@@ -1,8 +1,8 @@
 import Image from "next/image";
-import type { AttentionProperty } from "@/lib/utils/property-stats";
+import type { ConversionProperty } from "@/lib/utils/property-stats";
 import { ConversionBars } from "./conversion-bars";
 
-export function NeedsAttentionCard({ properties }: { properties: AttentionProperty[] }) {
+export function BestConversionCard({ properties }: { properties: ConversionProperty[] }) {
   if (properties.length === 0) return null;
 
   const maxViews = Math.max(...properties.map((p) => p.clickCount), 1);
@@ -10,10 +10,8 @@ export function NeedsAttentionCard({ properties }: { properties: AttentionProper
 
   return (
     <div className="rounded-2xl bg-white p-5">
-      <h2 className="mb-1 font-semibold text-neutral-900">Necesita atención</h2>
-      <p className="mb-4 text-xs text-neutral-400">
-        Top 4 — mucho interés, pocos leads en relación
-      </p>
+      <h2 className="mb-1 font-semibold text-neutral-900">Mejor conversión</h2>
+      <p className="mb-4 text-xs text-neutral-400">Top 4 — más leads en relación a sus vistas</p>
 
       <div className="space-y-4">
         {properties.map((property) => (
