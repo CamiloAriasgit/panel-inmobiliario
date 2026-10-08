@@ -65,64 +65,17 @@ export function getMostViewedProperties(
     }));
 }
 
-export type AttentionProperty = {
+// ---------------------------------------------------------------
+// Conversión (vistas vs. leads)
+// ---------------------------------------------------------------
+
+type StatsProperty = {
   id: string;
   title: string;
-  image: string;
-  clickCount: number;
-  leadCount: number;
-  conversionRate: number;
+  images: string[] | null;
+  click_count: number;
+  status: string;
 };
-
-export function getPropertiesNeedingAttention(
-  properties: {
-    id: string;
-    title: string;
-    images: string[] | null;
-    click_count: number;
-    status: string;
-  }[],
-  leadCountsByProperty: Map<string, number>,
-  limit = 4
-): AttentionProperty[] {
-  const published = properties.filter((property) => property.status === "published");
-
-  if (published.length === 0) return [];
-
-  const totalViews = published.reduce((sum, property) => sum + property.click_count, 0);
-  const avgViews = totalViews / published.length;
-  const viewsThreshold = Math.max(avgViews * 0.4, 3);
-
-  // La conversión promedio solo se calcula sobre propiedades que ya
-  // cruzan el umbral de vistas — incluir las de muy poco tráfico
-  // distorsionaría el promedio con tasas de 0% o 100% poco confiables.
-  const eligible = published.filter((property) => property.click_count >= viewsThreshold);
-  if (eligible.length === 0) return [];
-
-  const totalEligibleViews = eligible.reduce((sum, property) => sum + property.click_count, 0);
-  const totalEligibleLeads = eligible.reduce(
-    (sum, property) => sum + (leadCountsByProperty.get(property.id) ?? 0),
-    0
-  );
-  const avgConversion = totalEligibleViews > 0 ? totalEligibleLeads / totalEligibleViews : 0;
-  const conversionThreshold = avgConversion * 0.5;
-
-  return eligible
-    .map((property) => {
-      const leadCount = leadCountsByProperty.get(property.id) ?? 0;
-      return {
-        id: property.id,
-        title: property.title,
-        image: property.images?.[0] ?? "/placeholder-property.jpg",
-        clickCount: property.click_count,
-        leadCount,
-        conversionRate: property.click_count > 0 ? leadCount / property.click_count : 0,
-      };
-    })
-    .filter((property) => property.conversionRate < conversionThreshold)
-    .sort((a, b) => b.clickCount - a.clickCount) // las de más tráfico desperdiciado primero
-    .slice(0, limit);
-}
 
 export type ConversionProperty = {
   id: string;
@@ -130,30 +83,32 @@ export type ConversionProperty = {
   image: string;
   clickCount: number;
   leadCount: number;
-  conversionRate: number;
+  conversionRate: number; // leads / vistas de esta propiedad (0..1)
+  viewsOfTotal: number; // vistas / total de vistas del portal (0..1)
+  leadsOfTotal: number; // leads / total de vistas del portal (0..1)
 };
 
-export function getBestConvertingProperties(
-  properties: {
-    id: string;
-    title: string;
-    images: string[] | null;
-    click_count: number;
-    status: string;
-  }[],
-  leadCountsByProperty: Map<string, number>,
-  limit = 4
-): ConversionProperty[] {
-  const published = properties.filter((property) => property.status === "published");
-  if (published.length === 0) return [];
+export type AttentionProperty = ConversionProperty;
 
+function getConversionRows(
+  properties: StatsProperty[],
+  leadCountsByProperty: Map<string, number>
+) {
+  const published = properties.filter((property) => property.status === "published");
+  if (published.length === 0) {
+    return { rows: [] as ConversionProperty[], avgConversion: 0 };
+  }
+
+  // El total se calcula sobre TODAS las publicadas, no solo sobre las que
+  // terminan mostrándose: la "pista" de las barras representa el 100 % de
+  // las vistas del portal y no cambia según quién quede en el top.
   const totalViews = published.reduce((sum, property) => sum + property.click_count, 0);
+
   const avgViews = totalViews / published.length;
   const viewsThreshold = Math.max(avgViews * 0.4, 3);
 
-  const eligible = published.filter((property) => property.click_count >= viewsThreshold);
-
-  return eligible
+  const rows: ConversionProperty[] = published
+    .filter((property) => property.click_count >= viewsThreshold)
     .map((property) => {
       const leadCount = leadCountsByProperty.get(property.id) ?? 0;
       return {
@@ -163,13 +118,45 @@ export function getBestConvertingProperties(
         clickCount: property.click_count,
         leadCount,
         conversionRate: property.click_count > 0 ? leadCount / property.click_count : 0,
+        viewsOfTotal: totalViews > 0 ? property.click_count / totalViews : 0,
+        leadsOfTotal: totalViews > 0 ? leadCount / totalViews : 0,
       };
-    })
-    // Sin este filtro, una propiedad con 0 leads podía colarse en el
-    // top por descarte (si menos de `limit` propiedades tienen leads
-    // reales) — "mejor conversión" no debería incluir nunca algo con
-    // conversión nula, por definición.
-    .filter((property) => property.leadCount > 0)
+    });
+
+  const eligibleViews = rows.reduce((sum, row) => sum + row.clickCount, 0);
+  const eligibleLeads = rows.reduce((sum, row) => sum + row.leadCount, 0);
+  const avgConversion = eligibleViews > 0 ? eligibleLeads / eligibleViews : 0;
+
+  return { rows, avgConversion };
+}
+
+export function getBestConvertingProperties(
+  properties: StatsProperty[],
+  leadCountsByProperty: Map<string, number>,
+  limit = 4
+): ConversionProperty[] {
+  const { rows } = getConversionRows(properties, leadCountsByProperty);
+
+  return rows
+    .filter((row) => row.leadCount > 0)
     .sort((a, b) => b.conversionRate - a.conversionRate)
     .slice(0, limit);
+}
+
+export function getPropertiesNeedingAttention(
+  properties: StatsProperty[],
+  leadCountsByProperty: Map<string, number>,
+  limit = 4
+): ConversionProperty[] {
+  const { rows, avgConversion } = getConversionRows(properties, leadCountsByProperty);
+  const conversionThreshold = avgConversion * 0.5;
+
+  return rows
+    .filter((row) => row.conversionRate < conversionThreshold)
+    .sort((a, b) => b.clickCount - a.clickCount)
+    .slice(0, limit);
+}
+
+export function formatConversionRate(rate: number): string {
+  return `${new Intl.NumberFormat("es-CO", { maximumFractionDigits: 1 }).format(rate * 100)} %`;
 }
