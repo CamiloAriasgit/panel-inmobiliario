@@ -69,6 +69,10 @@ export function getMostViewedProperties(
 // Conversión (vistas vs. leads)
 // ---------------------------------------------------------------
 
+// ---------------------------------------------------------------
+// Conversión (vistas vs. leads)
+// ---------------------------------------------------------------
+
 type StatsProperty = {
   id: string;
   title: string;
@@ -84,8 +88,6 @@ export type ConversionProperty = {
   clickCount: number;
   leadCount: number;
   conversionRate: number; // leads / vistas de esta propiedad (0..1)
-  viewsOfTotal: number; // vistas / total de vistas del portal (0..1)
-  leadsOfTotal: number; // leads / total de vistas del portal (0..1)
 };
 
 export type AttentionProperty = ConversionProperty;
@@ -99,11 +101,7 @@ function getConversionRows(
     return { rows: [] as ConversionProperty[], avgConversion: 0 };
   }
 
-  // El total se calcula sobre TODAS las publicadas, no solo sobre las que
-  // terminan mostrándose: la "pista" de las barras representa el 100 % de
-  // las vistas del portal y no cambia según quién quede en el top.
   const totalViews = published.reduce((sum, property) => sum + property.click_count, 0);
-
   const avgViews = totalViews / published.length;
   const viewsThreshold = Math.max(avgViews * 0.4, 3);
 
@@ -118,8 +116,6 @@ function getConversionRows(
         clickCount: property.click_count,
         leadCount,
         conversionRate: property.click_count > 0 ? leadCount / property.click_count : 0,
-        viewsOfTotal: totalViews > 0 ? property.click_count / totalViews : 0,
-        leadsOfTotal: totalViews > 0 ? leadCount / totalViews : 0,
       };
     });
 
@@ -159,4 +155,11 @@ export function getPropertiesNeedingAttention(
 
 export function formatConversionRate(rate: number): string {
   return `${new Intl.NumberFormat("es-CO", { maximumFractionDigits: 1 }).format(rate * 100)} %`;
+}
+
+// Referencia común de las dos tablas: las vistas de la propiedad más vista
+// entre todas las que se muestran. Su barra de vistas va llena, y los
+// leads de todas se miden contra esta misma cifra.
+export function getViewsReference(...lists: { clickCount: number }[][]): number {
+  return Math.max(...lists.flat().map((property) => property.clickCount), 1);
 }

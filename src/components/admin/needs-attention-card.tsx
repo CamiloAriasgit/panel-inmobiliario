@@ -2,7 +2,13 @@ import Image from "next/image";
 import { formatConversionRate, type ConversionProperty } from "@/lib/utils/property-stats";
 import { ConversionBars } from "./conversion-bars";
 
-export function NeedsAttentionCard({ properties }: { properties: ConversionProperty[] }) {
+export function NeedsAttentionCard({
+  properties,
+  referenceViews,
+}: {
+  properties: ConversionProperty[];
+  referenceViews: number;
+}) {
   if (properties.length === 0) return null;
 
   return (
@@ -28,8 +34,7 @@ export function NeedsAttentionCard({ properties }: { properties: ConversionPrope
               <ConversionBars
                 views={property.clickCount}
                 leads={property.leadCount}
-                viewsOfTotal={property.viewsOfTotal}
-                leadsOfTotal={property.leadsOfTotal}
+                referenceViews={referenceViews}
               />
             </div>
           </div>

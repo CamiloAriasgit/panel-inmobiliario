@@ -2,14 +2,20 @@ import Image from "next/image";
 import { formatConversionRate, type ConversionProperty } from "@/lib/utils/property-stats";
 import { ConversionBars } from "./conversion-bars";
 
-export function BestConversionCard({ properties }: { properties: ConversionProperty[] }) {
+export function BestConversionCard({
+  properties,
+  referenceViews,
+}: {
+  properties: ConversionProperty[];
+  referenceViews: number;
+}) {
   if (properties.length === 0) return null;
 
   return (
     <div className="rounded-2xl bg-white p-5">
       <h2 className="mb-1 font-semibold text-neutral-900">Mejor conversión</h2>
       <p className="mb-4 text-xs text-neutral-400">
-        Top 4 — barras sobre el total de vistas del portal
+        Top 4 — escala común: la barra llena es la más vista de ambas tablas
       </p>
 
       <div className="space-y-4">
@@ -28,8 +34,7 @@ export function BestConversionCard({ properties }: { properties: ConversionPrope
               <ConversionBars
                 views={property.clickCount}
                 leads={property.leadCount}
-                viewsOfTotal={property.viewsOfTotal}
-                leadsOfTotal={property.leadsOfTotal}
+                referenceViews={referenceViews}
               />
             </div>
           </div>

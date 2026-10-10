@@ -5,6 +5,7 @@ import {
   getMostViewedProperties,
   getPropertiesNeedingAttention,
   getBestConvertingProperties,
+  getViewsReference,
 } from "@/lib/utils/property-stats";
 import { AdminListHeader } from "@/components/admin/admin-list-header";
 import { AdminPropertyItem } from "@/components/admin/admin-property-item";
@@ -48,6 +49,7 @@ export default async function AdminPropertiesPage({
   const mostViewed = getMostViewedProperties(allProperties);
   const needsAttention = getPropertiesNeedingAttention(allProperties, leadCountsByProperty);
   const bestConversion = getBestConvertingProperties(allProperties, leadCountsByProperty);
+  const referenceViews = getViewsReference(bestConversion, needsAttention);
 
   return (
     <div>
@@ -101,10 +103,10 @@ export default async function AdminPropertiesPage({
         className={`${tab === "stats" ? "grid" : "hidden"} mt-6 grid-cols-1 gap-6 lg:grid lg:h-[calc(60vh-40px)] lg:grid-cols-2`}
       >
         <div className="min-h-0 overflow-y-auto pr-1 scrollbar-hide">
-          <BestConversionCard properties={bestConversion} />
+          <BestConversionCard properties={bestConversion} referenceViews={referenceViews} />
         </div>
         <div className="min-h-0 overflow-y-auto pr-1 scrollbar-hide">
-          <NeedsAttentionCard properties={needsAttention} />
+          <NeedsAttentionCard properties={needsAttention} referenceViews={referenceViews} />
         </div>
       </div>
     </div>
