@@ -10,7 +10,7 @@ export function AdminListHeader({
   title: string;
   createHref?: string;
   createLabel?: string;
-  children?: React.ReactNode; // slot para búsqueda/filtros específicos de cada página
+  children?: React.ReactNode; 
 }) {
   return (
     <div className="mb-6 hidden items-center justify-between gap-4 sm:flex">
@@ -22,9 +22,11 @@ export function AdminListHeader({
         {createHref && createLabel && (
           <Link
             href={createHref}
-            className="flex items-center gap-2 rounded-full bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-white hover:opacity-90"
+            className="flex items-center gap-2 rounded-full bg-white px-4 pl-1.5 py-1.5 text-sm font-medium text-neutral-700 hover:opacity-90"
           >
-            <Plus size={16} />
+            <div className="rounded-full bg-gray-200 p-2">
+              <Plus size={16} />
+            </div>
             {createLabel}
           </Link>
         )}

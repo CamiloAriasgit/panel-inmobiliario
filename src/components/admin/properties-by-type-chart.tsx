@@ -12,7 +12,7 @@ export function PropertiesByTypeChart({
   const maxCount = Math.max(...breakdown.map((item) => item.count), 1);
 
   return (
-    <div className={`rounded-2xl bg-white p-5 ${fill ? "flex min-h-0 flex-1 flex-col" : ""}`}>
+    <div className={`rounded-2xl bg-gray-200 p-5 ${fill ? "flex min-h-0 flex-1 flex-col" : ""}`}>
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-neutral-900">Propiedades por tipo</h2>
         <p className="text-xs text-neutral-400">
@@ -33,9 +33,9 @@ export function PropertiesByTypeChart({
 
               {/* Fila con la barra y el número de conteo */}
               <div className="flex items-center gap-3">
-                <div className="h-4 flex-1 overflow-hidden rounded-md bg-gray-100 shadow-inner">
+                <div className="h-4 flex-1 overflow-hidden rounded-full bg-gray-100">
                   <div
-                    className="h-full rounded-md bg-[var(--color-primary)] transition-all duration-300 shadow-inner shadow-white/40"
+                    className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)]/60 to-[var(--color-primary)] transition-all duration-300"
                     style={{ width: `${Math.max((item.count / maxCount) * 100, 6)}%` }}
                   />
                 </div>

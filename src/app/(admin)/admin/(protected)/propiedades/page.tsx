@@ -64,7 +64,7 @@ export default async function AdminPropertiesPage({
         <Link
           href="/admin/propiedades/nueva"
           aria-label="Nueva propiedad"
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary)] text-white"
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-neutral-700"
         >
           <Plus size={18} />
         </Link>
@@ -73,16 +73,16 @@ export default async function AdminPropertiesPage({
       <AdminViewToggle tab={tab} />
 
       {/* Fila superior: panorama general del inventario (60% del alto en desktop) */}
-      <div className="grid grid-cols-1 gap-6 lg:h-[calc(90vh-140px)] lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 lg:h-[calc(90vh-140px)] lg:grid-cols-2">
         <div
-          className={`${tab === "stats" ? "flex" : "hidden"} min-h-0 flex-col gap-6 overflow-y-auto pr-1 scrollbar-hide lg:flex`}
+          className={`${tab === "stats" ? "flex" : "hidden"} min-h-0 flex-col gap-4 overflow-y-auto scrollbar-hide lg:flex`}
         >
           <PropertiesByTypeChart properties={allProperties} />
           <MostViewedPropertiesCard properties={mostViewed} />
         </div>
 
         <div className={`${tab === "list" ? "block" : "hidden"} min-h-0 lg:block`}>
-          <div className="h-full overflow-y-auto pr-1 scrollbar-hide lg:bg-white rounded-xl">
+          <div className="h-full overflow-y-auto scrollbar-hide lg:bg-white rounded-xl">
             {allProperties.length === 0 ? (
               <p className="text-sm text-neutral-500">
                 Aún no has agregado ninguna propiedad.
@@ -100,12 +100,12 @@ export default async function AdminPropertiesPage({
 
       {/* Fila inferior: casos accionables de conversión (40% del alto, solo estadísticas) */}
       <div
-        className={`${tab === "stats" ? "grid" : "hidden"} mt-6 grid-cols-1 gap-6 lg:grid lg:h-[calc(60vh-40px)] lg:grid-cols-2`}
+        className={`${tab === "stats" ? "grid" : "hidden"} mt-4 grid-cols-1 gap-4 lg:grid lg:h-[calc(60vh-40px)] lg:grid-cols-2`}
       >
-        <div className="min-h-0 overflow-y-auto pr-1 scrollbar-hide">
+        <div className="min-h-0 overflow-y-auto scrollbar-hide">
           <BestConversionCard properties={bestConversion} referenceViews={referenceViews} />
         </div>
-        <div className="min-h-0 overflow-y-auto pr-1 scrollbar-hide">
+        <div className="min-h-0 overflow-y-auto scrollbar-hide">
           <NeedsAttentionCard properties={needsAttention} referenceViews={referenceViews} />
         </div>
       </div>

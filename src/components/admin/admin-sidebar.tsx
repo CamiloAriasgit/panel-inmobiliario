@@ -11,7 +11,7 @@ export function AdminSidebar({ adminName }: { adminName: string }) {
   const pathname = usePathname();
 
   return (
-    <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col overflow-y-auto bg-white p-4 scrollbar-hide sm:flex">
+    <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col overflow-y-auto bg-gray-200 p-4 m-2 mr-0 rounded-2xl scrollbar-hide sm:flex">
       <div className="mb-6 px-2">
         <p className="font-semibold text-neutral-900">{brandConfig.name}</p>
         <p className="truncate text-xs text-neutral-500">{adminName}</p>
@@ -43,16 +43,16 @@ export function AdminSidebar({ adminName }: { adminName: string }) {
       <p className="mb-1 mt-6 px-3 text-xs text-neutral-400">Acción rápida</p>
       <Link
         href="/admin/propiedades/nueva"
-        className="flex items-center gap-3 rounded-full px-1.5 py-1.5 pl-4 text-sm font-medium text-neutral-600 bg-gray-200/70 hover:bg-gray-200 shadow-inner"
+        className="flex items-center gap-3 rounded-full px-1.5 py-1.5 pl-4 text-sm font-medium text-neutral-600 bg-white hover:bg-gray-100"
       >
         <span className="flex-1">Nueva propiedad</span>
-        <div className="bg-white rounded-full p-2 shadow">
+        <div className="bg-gray-200 rounded-full p-2">
             <Plus size={18} />
         </div>
       </Link>
 
      
-      <div className="mt-auto bg-gray-200/70 rounded-lg  p-5 shadow-inner">
+      <div className="mt-auto bg-white rounded-lg  p-5">
         <h2 className="mb-1 text-neutral-900">Cuenta</h2>
         <AccountActions />
       </div>

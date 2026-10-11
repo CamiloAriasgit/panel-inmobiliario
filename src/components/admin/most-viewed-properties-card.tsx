@@ -8,10 +8,8 @@ export function MostViewedPropertiesCard({
   properties: MostViewedProperty[];
 }) {
   return (
-    <div className="rounded-2xl bg-white p-5">
-      <h2 className="mb-1 font-semibold text-neutral-900">Más vistas</h2>
-      <p className="mb-4 text-xs text-neutral-400">Top 5 por número de visitas</p>
-
+    <div className="rounded-2xl bg-gray-100 p-5">
+      <h2 className="mb-4 text-neutral-900">Más vistas</h2>
       {properties.length === 0 ? (
         <p className="text-sm text-neutral-500">Aún no hay suficientes datos.</p>
       ) : (
