@@ -12,10 +12,10 @@ export function NeedsAttentionCard({
   if (properties.length === 0) return null;
 
   return (
-    <div className="rounded-2xl bg-white p-5">
-      <h2 className="mb-1 font-semibold text-neutral-900">Necesita atención</h2>
+    <div className="rounded-2xl bg-gray-200 p-5">
+      <h2 className="mb-1 text-neutral-900">Necesita atención</h2>
       <p className="mb-4 text-xs text-neutral-400">
-        Top 4 — mucho tráfico, casi sin leads
+        Tiene tráfico pero pocos leads
       </p>
 
       <div className="space-y-4">

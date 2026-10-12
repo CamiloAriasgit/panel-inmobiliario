@@ -26,22 +26,20 @@ export function PropertiesByTypeChart({
         <div className={`flex flex-col justify-center gap-4 ${fill ? "min-h-0 flex-1 overflow-y-auto" : ""}`}>
           {breakdown.map((item) => (
             <div key={item.type} className="flex flex-col gap-1.5">
-              {/* Etiqueta encima de la barra */}
-              <span className="text-sm font-medium text-neutral-700">
-                {item.label}
-              </span>
-
-              {/* Fila con la barra y el número de conteo */}
-              <div className="flex items-center gap-3">
-                <div className="h-4 flex-1 overflow-hidden rounded-full bg-gray-100">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)]/60 to-[var(--color-primary)] transition-all duration-300"
-                    style={{ width: `${Math.max((item.count / maxCount) * 100, 6)}%` }}
-                  />
-                </div>
-                <span className="min-w-[1.25rem] shrink-0 text-right text-sm text-neutral-500">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-neutral-700">
+                  {item.label}
+                </span>
+                <span className="text-sm text-neutral-500">
                   {item.count}
                 </span>
+              </div>
+
+              <div className="h-1 w-full overflow-hidden rounded-full bg-gray-100">
+                <div
+                  className="h-full rounded-full bg-[var(--color-primary)] transition-all duration-300"
+                  style={{ width: `${Math.max((item.count / maxCount) * 100, 6)}%` }}
+                />
               </div>
             </div>
           ))}

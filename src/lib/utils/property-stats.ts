@@ -52,7 +52,7 @@ export function getMostViewedProperties(
     images: string[] | null;
     click_count: number;
   }[],
-  limit = 5
+  limit = 4
 ): MostViewedProperty[] {
   return [...properties]
     .sort((a, b) => b.click_count - a.click_count)

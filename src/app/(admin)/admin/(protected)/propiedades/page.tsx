@@ -82,13 +82,13 @@ export default async function AdminPropertiesPage({
         </div>
 
         <div className={`${tab === "list" ? "block" : "hidden"} min-h-0 lg:block`}>
-          <div className="h-full overflow-y-auto scrollbar-hide lg:bg-white rounded-xl">
+          <div className="h-full overflow-y-auto scrollbar-hide lg:bg-gray-200 lg:p-2 rounded-xl">
             {allProperties.length === 0 ? (
               <p className="text-sm text-neutral-500">
                 Aún no has agregado ninguna propiedad.
               </p>
             ) : (
-              <div className="space-y-1">
+              <div className="space-y-2">
                 {allProperties.map((property) => (
                   <AdminPropertyItem key={property.id} property={property} />
                 ))}

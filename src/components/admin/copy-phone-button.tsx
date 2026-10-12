@@ -16,7 +16,7 @@ export function CopyPhoneButton({ phone }: { phone: string }) {
     <button
       type="button"
       onClick={handleCopy}
-      className="rounded-md p-2 text-neutral-500 bg-gray-200/70 hover:bg-gray-200"
+      className="rounded-md p-2 text-neutral-500 bg-gray-200/70 lg:bg-gray-300 hover:bg-gray-200"
       title="Copiar teléfono"
     >
       {copied ? (
