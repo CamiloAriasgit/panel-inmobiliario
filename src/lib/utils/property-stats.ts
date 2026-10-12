@@ -6,22 +6,34 @@ const PROPERTY_TYPE_LABELS: Record<string, string> = {
   oficina: "Oficina",
 };
 
-export type PropertyTypeCount = { type: string; label: string; count: number };
+export type PropertyTypeCount = {
+  type: string;
+  label: string;
+  count: number;
+  venta: number;
+  renta: number;
+};
 
 export function getPropertyTypeBreakdown(
-  properties: { property_type: string }[]
+  properties: { property_type: string; listing_type: string }[]
 ): PropertyTypeCount[] {
-  const counts = new Map<string, number>();
+  const groups = new Map<string, { count: number; venta: number; renta: number }>();
 
   for (const property of properties) {
-    counts.set(property.property_type, (counts.get(property.property_type) ?? 0) + 1);
+    const group = groups.get(property.property_type) ?? { count: 0, venta: 0, renta: 0 };
+
+    group.count += 1;
+    if (property.listing_type === "venta") group.venta += 1;
+    else if (property.listing_type === "renta") group.renta += 1;
+
+    groups.set(property.property_type, group);
   }
 
-  return Array.from(counts.entries())
-    .map(([type, count]) => ({
+  return Array.from(groups.entries())
+    .map(([type, group]) => ({
       type,
       label: PROPERTY_TYPE_LABELS[type] ?? type,
-      count,
+      ...group,
     }))
     .sort((a, b) => b.count - a.count);
 }

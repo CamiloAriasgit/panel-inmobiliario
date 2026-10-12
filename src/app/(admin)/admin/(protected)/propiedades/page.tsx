@@ -61,16 +61,25 @@ export default async function AdminPropertiesPage({
 
       <div className="mb-4 flex items-center justify-between sm:hidden">
         <h1 className="text-xl text-neutral-900">Propiedades</h1>
-        <Link
+        {/*<Link
           href="/admin/propiedades/nueva"
           aria-label="Nueva propiedad"
           className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-neutral-700"
         >
           <Plus size={18} />
-        </Link>
+        </Link>*/}
       </div>
 
-      <AdminViewToggle tab={tab} />
+      <div className="flex w-full justify-between">
+        <AdminViewToggle tab={tab} />
+        <Link
+          href="/admin/propiedades/nueva"
+          aria-label="Nueva propiedad"
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-white md:hidden text-neutral-700"
+        >
+          <Plus size={18} />
+        </Link>
+      </div>
 
       {/* Fila superior: panorama general del inventario (60% del alto en desktop) */}
       <div className="grid grid-cols-1 gap-4 lg:h-[calc(90vh-140px)] lg:grid-cols-2">
