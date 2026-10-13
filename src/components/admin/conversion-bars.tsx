@@ -30,7 +30,7 @@ export function ConversionBars({
       title={`${views} vistas · ${leads} leads`}
       className="space-y-1"
     >
-      <div className="flex items-center gap-3 text-xs font-medium text-neutral-600">
+      <div className="flex items-center justify-end gap-3 text-xs font-medium text-neutral-600">
         <span className="flex items-center gap-1">
           <Eye size={12} className="text-[var(--color-primary)]/40" />
           {numberFormatter.format(views)}

@@ -11,7 +11,7 @@ export function NeedsAttentionCard({
   return (
     <ConversionCard
       title="Necesita atención"
-      subtitle="Mucho tráfico, casi sin leads"
+      subtitle="Mucho tráfico, pocos leads"
       properties={properties}
       referenceViews={referenceViews}
     />

@@ -21,7 +21,7 @@ export function ConversionCard({
       <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between">
         <div>
           <h2 className="text-neutral-900">{title}</h2>
-          <p className="text-xs text-neutral-400">{subtitle}</p>
+          <p className="text-xs text-neutral-500">{subtitle}</p>
         </div>
         <ConversionLegend />
       </div>
