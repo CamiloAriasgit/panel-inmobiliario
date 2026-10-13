@@ -32,11 +32,15 @@ export function ConversionBars({
     >
       <div className="flex items-center justify-end gap-3 text-xs font-medium text-neutral-600">
         <span className="flex items-center gap-1">
-          <Eye size={12} className="text-[var(--color-primary)]/40" />
+          <div className="bg-[var(--color-primary)]/40 rounded-full">
+            <Eye size={12} className="text-[var(--color-primary)]/0" />
+          </div>
           {numberFormatter.format(views)}
         </span>
         <span className="flex items-center gap-1">
-          <Users size={12} className="text-[var(--color-primary)]" />
+          <div className="bg-[var(--color-primary)] rounded-full">
+            <Users size={12} className="text-[var(--color-primary)]/0" />
+          </div>
           {numberFormatter.format(leads)}
         </span>
       </div>

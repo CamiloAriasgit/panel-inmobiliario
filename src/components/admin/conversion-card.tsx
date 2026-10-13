@@ -18,7 +18,7 @@ export function ConversionCard({
   return (
     <div className="rounded-2xl bg-gray-200 p-5">
       {/* Móvil: la leyenda baja bajo el título. Desktop: misma fila. */}
-      <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between">
+      <div className="mb-4 flex gap-2 sm:flex-row sm:flex-wrap justify-between">
         <div>
           <h2 className="text-neutral-900">{title}</h2>
           <p className="text-xs text-neutral-500">{subtitle}</p>
