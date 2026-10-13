@@ -49,7 +49,7 @@ export function PropertiesByTypeChart({
                 role="img"
                 aria-label={`${item.venta} en venta, ${item.renta} en renta`}
                 title={`${item.venta} en venta · ${item.renta} en renta`}
-                className="h-1 w-full overflow-hidden rounded-full bg-gray-100"
+                className="h-1 w-full overflow-hidden rounded-full bg-gray-00"
               >
                 {/* Barra clara: total del tipo (lo que queda visible es venta) */}
                 <div

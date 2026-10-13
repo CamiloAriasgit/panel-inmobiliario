@@ -93,7 +93,7 @@ export function AdminPropertyItem({ property }: { property: PropertyListItem }) 
             <div className="flex items-center gap-1">
               <Link
                 href={`/admin/propiedades/${property.id}`}
-                className="rounded-md p-2 text-neutral-500 bg-gray-300/70 hover:bg-gray-200"
+                className="rounded-md p-2 text-neutral-500 bg-gray-300/70 hover:bg-gray-300"
               >
                 <Pencil size={16} />
               </Link>

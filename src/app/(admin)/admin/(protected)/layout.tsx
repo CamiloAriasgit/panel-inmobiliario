@@ -27,7 +27,7 @@ export default async function AdminLayout({
   return (
     <div className="min-h-screen bg-gray-300 sm:flex">
       <AdminSidebar adminName={profile?.full_name ?? user.email ?? "Admin"} />
-      <main className="flex-1 p-6 pb-28 sm:pb-8 lg:py-8 lg:px-4">{children}</main>
+      <main className="flex-1 p-4 pb-28 sm:pb-8 lg:py-8 md:px-4">{children}</main>
       <AdminBottomNav />
     </div>
   );

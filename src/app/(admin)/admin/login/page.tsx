@@ -83,7 +83,7 @@ export default function AdminLoginPage() {
                 onChange={(event) => setPassword(event.target.value)}
                 className="w-full rounded-full bg-gray-200/70 p-2.5 text-sm
                            focus:outline-none focus:bg-gray-200"
-                placeholder="******"
+                placeholder="Tu contraseña segura"
               />
             </div>
 

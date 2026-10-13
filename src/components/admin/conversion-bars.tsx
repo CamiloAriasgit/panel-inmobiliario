@@ -1,5 +1,7 @@
 import { Eye, Users } from "lucide-react";
 
+const numberFormatter = new Intl.NumberFormat("es-CO");
+
 export function ConversionBars({
   views,
   leads,
@@ -9,39 +11,47 @@ export function ConversionBars({
   leads: number;
   referenceViews: number;
 }) {
-  const toWidth = (value: number) => `${Math.min(value / referenceViews, 1) * 100}%`;
+  // Largo de la barra translúcida. Normalmente son las vistas, pero un lead
+  // puede llegar desde la card sin que se abra el detalle y haber más leads
+  // que vistas; en ese caso se usa el mayor de los dos para que la parte
+  // sólida nunca sobrepase a la translúcida.
+  const total = Math.max(views, leads);
+
+  const outerWidth = `${Math.min(total / referenceViews, 1) * 100}%`;
+
+  // La parte sólida se mide contra la translúcida (leads / total). Como las
+  // dos usan la misma referencia, su largo real es leads / referenceViews.
+  const innerWidth = total > 0 ? `${(leads / total) * 100}%` : "0%";
 
   return (
-    <div className="space-y-3">
-      {/* Views */}
-      <div className="flex flex-col gap-1">
-        <div className="flex justify-end">
-          <span className="text-xs font-medium text-neutral-500">{views}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Eye size={12} className="shrink-0 text-neutral-400" />
-          <div className="h-1 flex-1 overflow-hidden rounded-full bg-gray-100">
-            <div
-              className="h-full rounded-full bg-[var(--color-primary)]/40"
-              style={{ width: toWidth(views), minWidth: views > 0 ? 2 : 0 }}
-            />
-          </div>
-        </div>
+    <div
+      role="img"
+      aria-label={`${views} vistas, ${leads} leads`}
+      title={`${views} vistas · ${leads} leads`}
+      className="space-y-1"
+    >
+      <div className="flex items-center gap-3 text-xs font-medium text-neutral-600">
+        <span className="flex items-center gap-1">
+          <Eye size={12} className="text-[var(--color-primary)]/40" />
+          {numberFormatter.format(views)}
+        </span>
+        <span className="flex items-center gap-1">
+          <Users size={12} className="text-[var(--color-primary)]" />
+          {numberFormatter.format(leads)}
+        </span>
       </div>
 
-      {/* Leads */}
-      <div className="flex flex-col gap-1">
-        <div className="flex justify-end">
-          <span className="text-xs font-medium text-neutral-500">{leads}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Users size={12} className="shrink-0 text-[var(--color-primary)]" />
-          <div className="h-1 flex-1 overflow-hidden rounded-full bg-gray-100">
-            <div
-              className="h-full rounded-full bg-[var(--color-primary)]"
-              style={{ width: toWidth(leads), minWidth: leads > 0 ? 2 : 0 }}
-            />
-          </div>
+      <div className="h-1 w-full overflow-hidden rounded-full bg-gray-100">
+        {/* Translúcida: vistas */}
+        <div
+          className="h-full overflow-hidden rounded-full bg-[var(--color-primary)]/40"
+          style={{ width: outerWidth, minWidth: total > 0 ? 2 : 0 }}
+        >
+          {/* Sólida, dentro de la anterior: leads */}
+          <div
+            className="h-full rounded-full bg-[var(--color-primary)]"
+            style={{ width: innerWidth, minWidth: leads > 0 ? 2 : 0 }}
+          />
         </div>
       </div>
     </div>

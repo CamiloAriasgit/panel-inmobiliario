@@ -25,7 +25,7 @@ export default async function AdminConfigPage() {
     <div>
       <h1 className="mb-6 text-2xl text-neutral-900">Configuración</h1>
 
-      <div className="max-w-md rounded-xl borde border-gray-200 bg-white p-5">
+      <div className="max-w-md rounded-xl bg-gray-200 p-5">
         <h2 className="mb-1 font-semibold text-gray-900">
           Número de WhatsApp
         </h2>

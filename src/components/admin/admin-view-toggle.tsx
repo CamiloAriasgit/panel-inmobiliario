@@ -3,7 +3,7 @@ import { List, BarChart2 } from "lucide-react";
 
 export function AdminViewToggle({ tab }: { tab: "list" | "stats" }) {
   return (
-    <div className="mb-4 inline-flex rounded-full bg-gray-200/70 p-1 sm:hidden">
+    <div className="mb-4 inline-flex rounded-full bg-gray-200/70 p-1 lg:hidden">
       <Link
         href="?tab=list"
         className={`flex items-center gap-1.5 rounded-full px-4 py-2 text-sm ${
