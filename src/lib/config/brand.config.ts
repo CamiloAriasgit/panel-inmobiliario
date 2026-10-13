@@ -28,7 +28,7 @@ export const brandConfig: BrandConfig = {
   logoUrl: "/brand/logo.png",
   faviconUrl: "/brand/favicon.ico",
 
-  siteTitle: "Encuentra tu próximo hogar",
+  siteTitle: "Real Estate Agency",
   siteSubtitle: "Propiedades en venta y renta seleccionadas para ti",
 
   whatsappNumber: "573001234567",
