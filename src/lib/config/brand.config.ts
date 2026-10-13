@@ -26,7 +26,7 @@ export const brandConfig: BrandConfig = {
   secondaryColor: "#f8fafc",
 
   logoUrl: "/brand/logo.png",
-  faviconUrl: "/brand/favicon.ico",
+  faviconUrl: "/brand/favicon.png",
 
   siteTitle: "Real Estate Agency",
   siteSubtitle: "Propiedades en venta y renta seleccionadas para ti",
