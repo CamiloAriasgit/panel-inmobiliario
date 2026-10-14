@@ -38,7 +38,7 @@ export function DeletePropertyButton({
           aria-labelledby="modal-title"
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
         >
-          <div className="w-full max-w-sm rounded-xl bg-white p-6 shadow-2xl text-center space-y-4">
+          <div className="w-full max-w-sm rounded-3xl bg-white p-6 shadow-2xl text-center space-y-4">
             {/* Ícono superior centrado */}
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600">
               <AlertTriangle size={24} />
@@ -59,9 +59,9 @@ export function DeletePropertyButton({
                 type="button"
                 onClick={() => setIsConfirming(false)}
                 disabled={isPending}
-                className="w-full rounded-md bg-gray-200 px-4 py-2.5 text-xs font-medium text-neutral-700 hover:bg-gray-200 disabled:opacity-60 transition-colors"
+                className="w-full rounded-md bg-gray-200 px-4 py-2.5 text-xs font-medium text-neutral-800 hover:bg-gray-200 disabled:opacity-60 transition-colors"
               >
-                Cancelar
+                No, Cancelar
               </button>
               <button
                 type="button"
