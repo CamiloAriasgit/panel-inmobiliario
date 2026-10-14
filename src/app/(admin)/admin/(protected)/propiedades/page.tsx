@@ -101,7 +101,7 @@ export default async function AdminPropertiesPage({
 
       {/* Fila inferior: casos accionables de conversión (40% del alto, solo estadísticas) */}
       <div
-        className={`${tab === "stats" ? "grid" : "hidden"} mt-4 grid-cols-1 gap-4 lg:grid lg:h-[calc(60vh-40px)] lg:grid-cols-2`}
+        className={`${tab === "stats" ? "grid" : "hidden"} mt-4 grid-cols-1 gap-4 lg:grid lg:grid-cols-1`}
       >
         <div className="min-h-0 overflow-y-auto scrollbar-hide">
           <BestConversionCard properties={bestConversion} referenceViews={referenceViews} />

@@ -13,7 +13,7 @@ export function MostViewedPropertiesCard({
       {properties.length === 0 ? (
         <p className="text-sm text-neutral-500">Aún no hay suficientes datos.</p>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {properties.map((property, index) => (
             <div
               key={property.id}
