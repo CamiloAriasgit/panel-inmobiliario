@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Headset, LogOut } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
-const SUPPORT_WHATSAPP_NUMBER = "573003607632"; 
+const SUPPORT_WHATSAPP_NUMBER = "573235619283"; 
 
 export function AccountActions({ isCollapsed = false }: { isCollapsed?: boolean }) {
   const router = useRouter();
