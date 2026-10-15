@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { MoveUpRight } from "lucide-react";
 import { CopyPhoneButton } from "./copy-phone-button";
-import { CountryFlag } from "./country-flag";
+import { CountryFlag } from "../ui/country-flag";
 
 type LeadListItem = {
   id: string;

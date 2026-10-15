@@ -24,3 +24,20 @@ export const DEFAULT_COUNTRY_ISO = "CO";
 export function getCountryByIso(iso: string): Country {
   return COUNTRY_CODES.find((country) => country.iso === iso) ?? COUNTRY_CODES[0];
 }
+
+// Separa un número internacional guardado (solo dígitos, ej. "573001234567")
+// en país y número local. Prueba primero los prefijos más largos, por si algún
+// día un código resulta ser prefijo de otro. Devuelve null si el prefijo no
+// corresponde a ningún país de la lista.
+export function splitInternationalNumber(
+  digits: string
+): { country: Country; localNumber: string } | null {
+  const byPrefixLength = [...COUNTRY_CODES].sort(
+    (a, b) => b.dialCode.length - a.dialCode.length
+  );
+  const country = byPrefixLength.find((item) => digits.startsWith(item.dialCode));
+
+  if (!country) return null;
+
+  return { country, localNumber: digits.slice(country.dialCode.length) };
+}

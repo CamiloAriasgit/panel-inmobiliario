@@ -2,20 +2,24 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { createServiceClient } from "@/lib/supabase/service";
+import { getCountryByIso } from "@/lib/data/country-codes";
 import { revalidatePath } from "next/cache";
 
 export async function updateAgencyWhatsapp(
-  whatsappNumber: string
+  countryIso: string,
+  localNumber: string
 ): Promise<{ success: boolean; error?: string }> {
-  const digits = whatsappNumber.replace(/\D/g, "");
+  const localDigits = localNumber.replace(/\D/g, "");
 
-  if (digits.length < 10) {
+  if (localDigits.length < 7) {
     return { success: false, error: "Número de WhatsApp inválido." };
   }
 
-  // Se resuelve la agencia desde la sesión real del admin (cliente
-  // normal, con RLS) — nunca se confía en un agencyId enviado desde
-  // el formulario.
+  const country = getCountryByIso(countryIso);
+  const fullNumber = `${country.dialCode}${localDigits}`;
+
+  // La agencia se resuelve desde la sesión real del admin (cliente normal,
+  // con RLS), nunca desde un dato enviado por el formulario.
   const supabase = await createClient();
   const {
     data: { user },
@@ -35,12 +39,12 @@ export async function updateAgencyWhatsapp(
     return { success: false, error: "Perfil no encontrado." };
   }
 
-  // Solo aquí, ya con el agencyId verificado desde la sesión, se usa
-  // service_role para actualizar EXCLUSIVAMENTE whatsapp_number.
+  // Con el agencyId ya verificado, service_role actualiza EXCLUSIVAMENTE
+  // whatsapp_number.
   const serviceClient = createServiceClient();
   const { error } = await serviceClient
     .from("agencies")
-    .update({ whatsapp_number: digits })
+    .update({ whatsapp_number: fullNumber })
     .eq("id", profile.agency_id);
 
   if (error) {

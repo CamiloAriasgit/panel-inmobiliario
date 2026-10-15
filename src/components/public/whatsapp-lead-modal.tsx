@@ -6,7 +6,7 @@ import Link from "next/link";
 import { X } from "lucide-react";
 import { createLead } from "@/lib/actions/leads";
 import { brandConfig } from "@/lib/config/brand.config";
-import { CountryCodeSelect } from "./country-code-select";
+import { CountryCodeSelect } from "@/components/ui/country-code-select";
 import { DEFAULT_COUNTRY_ISO } from "@/lib/data/country-codes";
 import type { Tables } from "@/types/database.types";
 
