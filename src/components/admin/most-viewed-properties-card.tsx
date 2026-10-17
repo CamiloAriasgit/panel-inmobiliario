@@ -31,7 +31,7 @@ export function MostViewedPropertiesCard({
               </span>
 
               <div className="absolute bottom-0 inset-x-0 m-2 p-2 rounded-lg bg-black/25 backdrop-blur-xs">
-                <p className="line-clamp-1 text-sm font-medium text-white mb-1" title={property.title}>
+                <p className="line-clamp-1 text-sm font-medium text-gray-100 mb-1" title={property.title}>
                   {property.title}
                 </p>
                 <div className="flex items-center">
