@@ -30,12 +30,12 @@ export function MostViewedPropertiesCard({
                 {index + 1}
               </span>
 
-              <div className="absolute bottom-0 inset-x-0 m-2 p-2 rounded-lg bg-white backdrop-blur-md">
-                <p className="line-clamp-1 text-sm font-medium text-neutral-900 mb-1" title={property.title}>
+              <div className="absolute bottom-0 inset-x-0 m-2 p-2 rounded-lg bg-black/25 backdrop-blur-xs">
+                <p className="line-clamp-1 text-sm font-medium text-white mb-1" title={property.title}>
                   {property.title}
                 </p>
                 <div className="flex items-center">
-                  <span className="flex items-center gap-1 rounded-full bg-gray-200 px-2 py-0.5 text-xs font-medium text-neutral-800">
+                  <span className="flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-xs font-medium text-neutral-800">
                     <Eye size={12} />
                     {property.clickCount} {property.clickCount === 1 ? "vista" : "vistas"}
                   </span>

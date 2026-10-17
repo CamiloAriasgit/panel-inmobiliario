@@ -11,16 +11,11 @@ export function ConversionBars({
   leads: number;
   referenceViews: number;
 }) {
-  // Largo de la barra translúcida. Normalmente son las vistas, pero un lead
-  // puede llegar desde la card sin que se abra el detalle y haber más leads
-  // que vistas; en ese caso se usa el mayor de los dos para que la parte
-  // sólida nunca sobrepase a la translúcida.
+ 
   const total = Math.max(views, leads);
 
   const outerWidth = `${Math.min(total / referenceViews, 1) * 100}%`;
 
-  // La parte sólida se mide contra la translúcida (leads / total). Como las
-  // dos usan la misma referencia, su largo real es leads / referenceViews.
   const innerWidth = total > 0 ? `${(leads / total) * 100}%` : "0%";
 
   return (

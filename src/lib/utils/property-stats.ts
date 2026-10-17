@@ -85,6 +85,10 @@ export function getMostViewedProperties(
 // Conversión (vistas vs. leads)
 // ---------------------------------------------------------------
 
+// ---------------------------------------------------------------
+// Conversión (vistas vs. leads)
+// ---------------------------------------------------------------
+
 type StatsProperty = {
   id: string;
   title: string;
@@ -104,17 +108,16 @@ export type ConversionProperty = {
 
 export type AttentionProperty = ConversionProperty;
 
-function getConversionRows(
+function getConversionAnalysis(
   properties: StatsProperty[],
   leadCountsByProperty: Map<string, number>
 ) {
   const published = properties.filter((property) => property.status === "published");
-  if (published.length === 0) {
-    return { rows: [] as ConversionProperty[], avgConversion: 0 };
-  }
 
+  // Mínimo de vistas para que una conversión sea confiable: 40 % del promedio
+  // de vistas de la agencia, con un piso de 3.
   const totalViews = published.reduce((sum, property) => sum + property.click_count, 0);
-  const avgViews = totalViews / published.length;
+  const avgViews = published.length > 0 ? totalViews / published.length : 0;
   const viewsThreshold = Math.max(avgViews * 0.4, 3);
 
   const rows: ConversionProperty[] = published
@@ -135,19 +138,27 @@ function getConversionRows(
   const eligibleLeads = rows.reduce((sum, row) => sum + row.leadCount, 0);
   const avgConversion = eligibleViews > 0 ? eligibleLeads / eligibleViews : 0;
 
-  return { rows, avgConversion };
+  // Las vistas son enteras, así que el mínimo que se muestra se redondea hacia arriba.
+  return { rows, avgConversion, minViews: Math.ceil(viewsThreshold) };
 }
+
+// Las dos listas se arman con criterios que no pueden cumplirse a la vez, así
+// que una propiedad nunca aparece en ambas:
+//   - Mejor conversión: convierte al menos como el promedio de la agencia.
+//   - Necesita atención: convierte menos de la mitad del promedio.
+// Las que quedan en medio no aparecen en ninguna.
 
 export function getBestConvertingProperties(
   properties: StatsProperty[],
   leadCountsByProperty: Map<string, number>,
   limit = 4
 ): ConversionProperty[] {
-  const { rows } = getConversionRows(properties, leadCountsByProperty);
+  const { rows, avgConversion } = getConversionAnalysis(properties, leadCountsByProperty);
 
   return rows
-    .filter((row) => row.leadCount > 0)
-    .sort((a, b) => b.conversionRate - a.conversionRate)
+    .filter((row) => row.leadCount > 0 && row.conversionRate >= avgConversion)
+    // A igual conversión, primero la que tiene más vistas (evidencia más sólida).
+    .sort((a, b) => b.conversionRate - a.conversionRate || b.clickCount - a.clickCount)
     .slice(0, limit);
 }
 
@@ -156,13 +167,21 @@ export function getPropertiesNeedingAttention(
   leadCountsByProperty: Map<string, number>,
   limit = 4
 ): ConversionProperty[] {
-  const { rows, avgConversion } = getConversionRows(properties, leadCountsByProperty);
+  const { rows, avgConversion } = getConversionAnalysis(properties, leadCountsByProperty);
   const conversionThreshold = avgConversion * 0.5;
 
   return rows
     .filter((row) => row.conversionRate < conversionThreshold)
     .sort((a, b) => b.clickCount - a.clickCount)
     .slice(0, limit);
+}
+
+// Mínimo de vistas vigente para esta agencia, para mostrarlo en las cards.
+export function getConversionMinViews(
+  properties: StatsProperty[],
+  leadCountsByProperty: Map<string, number> = new Map()
+): number {
+  return getConversionAnalysis(properties, leadCountsByProperty).minViews;
 }
 
 export function formatConversionRate(rate: number): string {

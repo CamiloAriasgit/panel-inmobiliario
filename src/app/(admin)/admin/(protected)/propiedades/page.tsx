@@ -1,12 +1,15 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
+
 import {
   getMostViewedProperties,
   getPropertiesNeedingAttention,
   getBestConvertingProperties,
   getViewsReference,
+  getConversionMinViews,
 } from "@/lib/utils/property-stats";
+
 import { AdminListHeader } from "@/components/admin/admin-list-header";
 import { AdminPropertyItem } from "@/components/admin/admin-property-item";
 import { AdminViewToggle } from "@/components/admin/admin-view-toggle";
@@ -50,6 +53,7 @@ export default async function AdminPropertiesPage({
   const needsAttention = getPropertiesNeedingAttention(allProperties, leadCountsByProperty);
   const bestConversion = getBestConvertingProperties(allProperties, leadCountsByProperty);
   const referenceViews = getViewsReference(bestConversion, needsAttention);
+  const minViews = getConversionMinViews(allProperties);
 
   return (
     <div>
@@ -104,10 +108,10 @@ export default async function AdminPropertiesPage({
         className={`${tab === "stats" ? "grid" : "hidden"} mt-4 grid-cols-1 gap-4 lg:grid lg:grid-cols-1`}
       >
         <div className="min-h-0 overflow-y-auto scrollbar-hide">
-          <BestConversionCard properties={bestConversion} referenceViews={referenceViews} />
+          <BestConversionCard properties={bestConversion} referenceViews={referenceViews} minViews={minViews} />
         </div>
         <div className="min-h-0 overflow-y-auto scrollbar-hide">
-          <NeedsAttentionCard properties={needsAttention} referenceViews={referenceViews} />
+          <NeedsAttentionCard properties={needsAttention} referenceViews={referenceViews} minViews={minViews} />
         </div>
       </div>
     </div>

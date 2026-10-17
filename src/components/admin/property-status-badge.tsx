@@ -14,7 +14,7 @@ const STATUS_CONFIG: Record<string, StatusConfig> = {
   },
   published: {
     label: "Publicada",
-    styles: "bg-green-100 text-green-600",
+    styles: "bg-white text-green-400",
     icon: CheckCircle2,
   },
   archived: {
@@ -40,7 +40,7 @@ export function PropertyStatusBadge({ status }: { status: string }) {
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full px-1 py-0.5 text-xs font-medium ${config.styles}`}
+      className={`inline-flex items-center gap-1.5 rounded-full px-1 pr-2 py-0.5 text-xs font-medium ${config.styles}`}
     >
       <Icon className="h-3.5 w-3.5 shrink-0" />
       <span>{config.label}</span>
