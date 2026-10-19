@@ -1,4 +1,5 @@
 import type { ConversionProperty } from "@/lib/utils/property-stats";
+import { SnapCarousel } from "@/components/ui/snap-carousel";
 import { ConversionLegend } from "./conversion-legend";
 import { ConversionRow } from "./conversion-row";
 
@@ -36,19 +37,15 @@ export function ConversionCard({
                     {emptyMessage}
                 </p>
             ) : (
-                <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
+                <SnapCarousel>
                     {properties.map((property) => (
-                        <div
+                        <ConversionRow
                             key={property.id}
-                            className="min-w-[85%] sm:min-w-[70%] md:min-w-[calc(50%-0.5rem)] lg:min-w-0 snap-start flex-shrink-0 lg:flex-shrink"
-                        >
-                            <ConversionRow
-                                property={property}
-                                referenceViews={referenceViews}
-                            />
-                        </div>
+                            property={property}
+                            referenceViews={referenceViews}
+                        />
                     ))}
-                </div>
+                </SnapCarousel>
             )}
         </div>
     );
