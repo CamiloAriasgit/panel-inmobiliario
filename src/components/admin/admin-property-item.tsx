@@ -75,7 +75,7 @@ export function AdminPropertyItem({ property }: { property: PropertyListItem }) 
         )}
       </div>
 
-      <div className="hidden rounded-2xl bg-gray-00 p-2 sm:flex sm:gap-4 hover:bg-gradient-to-br from-gray-100 to-transparent">
+      <div className="hidden rounded-2xl p-2 sm:flex sm:gap-4 bg-gray-200 lg:bg-transparent lg:hover:bg-gradient-to-br lg:from-gray-100 lg:to-transparent">
         <div className="relative h-24 w-32 shrink-0 overflow-hidden rounded-lg bg-gray-100">
           <Image src={coverImage} alt={property.title} fill className="object-cover" />
         </div>

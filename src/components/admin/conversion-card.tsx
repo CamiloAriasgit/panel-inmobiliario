@@ -36,13 +36,17 @@ export function ConversionCard({
                     {emptyMessage}
                 </p>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
                     {properties.map((property) => (
-                        <ConversionRow
+                        <div
                             key={property.id}
-                            property={property}
-                            referenceViews={referenceViews}
-                        />
+                            className="min-w-[85%] sm:min-w-[70%] md:min-w-[calc(50%-0.5rem)] lg:min-w-0 snap-start flex-shrink-0 lg:flex-shrink"
+                        >
+                            <ConversionRow
+                                property={property}
+                                referenceViews={referenceViews}
+                            />
+                        </div>
                     ))}
                 </div>
             )}
