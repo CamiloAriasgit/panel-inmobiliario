@@ -68,7 +68,7 @@ export default async function AdminDashboardPage() {
         </div>
       )}
 
-      <div className="mt-6 rounded-2xl bg-gray-200 p-5">
+      <div className="mt-6 rounded-2xl lg:bg-gray-200 lg:p-5">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-neutral-900">Leads recientes</h2>
           <Link
