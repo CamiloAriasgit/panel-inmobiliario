@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { brandConfig } from "@/lib/config/brand.config";
+import { urbanist } from "@/lib/fonts"; // 1. Importas la fuente
 import "./globals.css";
 import "flag-icons/css/flag-icons.min.css";
 
@@ -20,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
+    <html lang="es" className={urbanist.className}>
       <body
         style={
           {

@@ -14,7 +14,7 @@ const STATUS_CONFIG: Record<string, StatusConfig> = {
   },
   published: {
     label: "Publicada",
-    styles: "bg-white text-green-400",
+    styles: "bg-green-200 text-green-500",
     icon: CheckCircle2,
   },
   archived: {

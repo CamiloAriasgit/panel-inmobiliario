@@ -57,63 +57,73 @@ export default async function AdminPropertiesPage({
 
   return (
     <div>
+      {/* Desde sm: título, toggle y acción de crear en una sola fila. El toggle
+          va antes del botón para que la acción principal quede en el extremo. */}
       <AdminListHeader
         title="Propiedades"
         createHref="/admin/propiedades/nueva"
         createLabel="Nueva propiedad"
-      />
-
-      <div className="mb-4 flex items-center justify-between sm:hidden">
-        <h1 className="text-xl text-neutral-900">Propiedades</h1>
-      </div>
-
-      <div className="flex w-full justify-between">
-        <AdminViewToggle tab={tab} />
+      >
+        <AdminViewToggle tab={tab} className="" />
         <Link
           href="/admin/propiedades/nueva"
           aria-label="Nueva propiedad"
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-white lg:hidden text-neutral-700"
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-neutral-700 lg:hidden"
         >
           <Plus size={18} />
         </Link>
+      </AdminListHeader>
+
+      {/* Móvil: título y, debajo, toggle + crear */}
+      <div className="sm:hidden">
+        <div className="mb-4 flex items-center justify-between">
+          <h1 className="text-xl text-neutral-900">Propiedades</h1>
+        </div>
+        <div className="mb-4 flex w-full items-center justify-between">
+          <AdminViewToggle tab={tab} className="" />
+          <Link
+            href="/admin/propiedades/nueva"
+            aria-label="Nueva propiedad"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-neutral-700"
+          >
+            <Plus size={18} />
+          </Link>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <div
-          className={`${tab === "stats" ? "flex" : "hidden"} min-h-0 flex-col gap-4 lg:flex`}
-        >
-          <PropertiesByTypeChart properties={allProperties} />
-          <MostViewedPropertiesCard properties={mostViewed} />
-        </div>
-
-        <div className={`${tab === "list" ? "block" : "hidden"} relative lg:block`}>
-          <div className="overflow-y-auto scrollbar-hide rounded-2xl lg:absolute lg:inset-0 lg:bg-gray-200 lg:p-2">
-            {allProperties.length === 0 ? (
-              <p className="text-sm text-neutral-500">
-                Aún no has agregado ninguna propiedad.
-              </p>
-            ) : (
-              <div className="space-y-2">
-                {allProperties.map((property) => (
-                  <AdminPropertyItem key={property.id} property={property} />
-                ))}
-              </div>
-            )}
+      {tab === "stats" ? (
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <PropertiesByTypeChart properties={allProperties} />
+            <MostViewedPropertiesCard properties={mostViewed} />
           </div>
-        </div>
-      </div>
 
-      {/* Fila inferior: casos accionables de conversión (40% del alto, solo estadísticas) */}
-      <div
-        className={`${tab === "stats" ? "grid" : "hidden"} mt-4 grid-cols-1 gap-4 lg:grid lg:grid-cols-1`}
-      >
-        <div className="min-h-0 overflow-y-auto scrollbar-hide">
-          <BestConversionCard properties={bestConversion} referenceViews={referenceViews} minViews={minViews} />
+          <BestConversionCard
+            properties={bestConversion}
+            referenceViews={referenceViews}
+            minViews={minViews}
+          />
+          <NeedsAttentionCard
+            properties={needsAttention}
+            referenceViews={referenceViews}
+            minViews={minViews}
+          />
         </div>
-        <div className="min-h-0 overflow-y-auto scrollbar-hide">
-          <NeedsAttentionCard properties={needsAttention} referenceViews={referenceViews} minViews={minViews} />
+      ) : (
+        <div className="">
+          {allProperties.length === 0 ? (
+            <p className="text-sm text-neutral-500">
+              Aún no has agregado ninguna propiedad.
+            </p>
+          ) : (
+            <div className="space-y-2 xl:grid xl:grid-cols-2 xl:gap-2 xl:space-y-0">
+              {allProperties.map((property) => (
+                <AdminPropertyItem key={property.id} property={property} />
+              ))}
+            </div>
+          )}
         </div>
-      </div>
+      )}
     </div>
   );
 }

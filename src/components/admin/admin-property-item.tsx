@@ -52,9 +52,8 @@ export function AdminPropertyItem({ property }: { property: PropertyListItem }) 
           </div>
           <ChevronDown
             size={18}
-            className={`shrink-0 text-neutral-400 transition-transform ${
-              isOpen ? "rotate-180" : ""
-            }`}
+            className={`shrink-0 text-neutral-400 transition-transform ${isOpen ? "rotate-180" : ""
+              }`}
           />
         </button>
 
@@ -75,7 +74,7 @@ export function AdminPropertyItem({ property }: { property: PropertyListItem }) 
         )}
       </div>
 
-      <div className="hidden rounded-2xl p-2 sm:flex sm:gap-4 bg-gray-200 lg:bg-transparent lg:hover:bg-gradient-to-br lg:from-gray-100 lg:to-transparent">
+      <div className="hidden rounded-2xl p-2 sm:flex sm:gap-4 bg-gray-100 hover:bg-gray-200">
         <div className="relative h-24 w-32 shrink-0 overflow-hidden rounded-lg bg-gray-100">
           <Image src={coverImage} alt={property.title} fill className="object-cover" />
         </div>
@@ -88,9 +87,9 @@ export function AdminPropertyItem({ property }: { property: PropertyListItem }) 
             </p>
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
             {metaRow}
-            <div className="flex items-center gap-1">
+            <div className="ml-auto flex items-center gap-1">
               <Link
                 href={`/admin/propiedades/${property.id}`}
                 className="rounded-md p-2 text-neutral-500 bg-gray-300/70 hover:bg-gray-300"

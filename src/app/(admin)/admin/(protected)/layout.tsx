@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
 import { AdminBottomNav } from "@/components/admin/admin-bottom-nav";
 
+import { urbanist } from "@/lib/fonts";
+
 export default async function AdminLayout({
   children,
 }: {
@@ -25,9 +27,9 @@ export default async function AdminLayout({
     .single();
 
   return (
-    <div className="min-h-screen bg-gray-300 sm:flex">
+    <div className="min-h-screen bg-gray-300 sm:flex ">
       <AdminSidebar adminName={profile?.full_name ?? user.email ?? "Admin"} />
-      <main className="flex-1 p-4 pb-28 sm:pb-8 lg:py-8 md:px-4">{children}</main>
+      <main className="flex-1 min-w-0 p-4 pb-28 sm:pb-8 lg:py-8 md:px-4">{children}</main>
       <AdminBottomNav />
     </div>
   );

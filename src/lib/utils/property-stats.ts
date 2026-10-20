@@ -64,7 +64,7 @@ export function getMostViewedProperties(
     images: string[] | null;
     click_count: number;
   }[],
-  limit = 4
+  limit = 3
 ): MostViewedProperty[] {
   return [...properties]
     .sort((a, b) => b.click_count - a.click_count)
@@ -76,14 +76,6 @@ export function getMostViewedProperties(
       clickCount: property.click_count,
     }));
 }
-
-// ---------------------------------------------------------------
-// Conversión (vistas vs. leads)
-// ---------------------------------------------------------------
-
-// ---------------------------------------------------------------
-// Conversión (vistas vs. leads)
-// ---------------------------------------------------------------
 
 // ---------------------------------------------------------------
 // Conversión (vistas vs. leads)
