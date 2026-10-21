@@ -3,19 +3,17 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Plus, ChevronLeft, ChevronRight } from "lucide-react";
+import { Plus, ChevronLeft, ChevronRight, User } from "lucide-react";
 import { brandConfig } from "@/lib/config/brand.config";
 import { NAV_ITEMS } from "./nav-items";
 import { AccountActions } from "./account-actions";
 
 export function AdminSidebar({ adminName }: { adminName: string }) {
   const pathname = usePathname();
-  
-  // Inicializamos el estado detectando si la pantalla es de tamaño tablet (< 1024px)
+
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   useEffect(() => {
-    // Si el ancho inicial de la ventana es menor a 1024px (tablets), lo colapsamos por defecto
     if (window.innerWidth < 1024) {
       setIsCollapsed(true);
     }
@@ -23,9 +21,8 @@ export function AdminSidebar({ adminName }: { adminName: string }) {
 
   return (
     <aside
-      className={`sticky top-0 hidden shrink-0 p-2 pr-0 sm:flex sm:flex-col transition-all duration-300 relative ${
-        isCollapsed ? "h-screen justify-center w-[4.2rem]" : "h-screen w-[16.5rem]"
-      }`}
+      className={`sticky top-0 hidden shrink-0 p-2 pr-0 sm:flex sm:flex-col transition-all duration-300 relative ${isCollapsed ? "h-screen justify-center w-[4.2rem]" : "h-screen w-[16.5rem]"
+        }`}
     >
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
@@ -35,15 +32,19 @@ export function AdminSidebar({ adminName }: { adminName: string }) {
         {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
       </button>
 
-      <div 
-        className={`relative flex flex-col overflow-y-auto rounded-2xl bg-gray-200 p-4 scrollbar-hide transition-all duration-300 ${
-          isCollapsed ? "h-2/3 py-2 px-2 items-center" : "h-full"
-        }`}
+      <div
+        className={`relative flex flex-col overflow-y-auto rounded-2xl bg-gray-200 p-4 scrollbar-hide transition-all duration-300 ${isCollapsed ? "h-2/3 py-2 px-2 items-center" : "h-full"
+          }`}
       >
 
-        <div className={`mb-6 px-2 transition-opacity duration-200 ${isCollapsed ? "opacity-0 pointer-events-none hidden" : "opacity-100"}`}>
-          <p className="font-semibold text-neutral-900">{brandConfig.name}</p>
-          <p className="truncate text-xs text-neutral-500">{adminName}</p>
+        <div className={`flex items-center mb-6 pr-2 transition-opacity duration-200 ${isCollapsed ? "opacity-0 pointer-events-none hidden" : "opacity-100"}`}>
+          <div className="bg-gradient-to-b from-[var(--color-primary)]/40 via-[var(--color-primary)]/60 to-[var(--color-primary)] text-white p-3 rounded-full mr-2 shadow-inner shadow-[var(--color-primary)]">
+            <User className="" size={16}/>
+            </div>
+          <div>
+            <p className="font-semibold text-neutral-900">{brandConfig.name}</p>
+            <p className="truncate text-xs text-neutral-500">{adminName}</p>
+          </div>
         </div>
 
         <nav className={`space-y-1 ${isCollapsed ? "w-full flex flex-col items-center" : ""}`}>
@@ -57,15 +58,13 @@ export function AdminSidebar({ adminName }: { adminName: string }) {
                 key={item.href}
                 href={item.href}
                 title={isCollapsed ? item.label : undefined}
-                className={`flex items-center gap-3 rounded-lg text-sm font-medium transition-colors ${
-                  isActive
+                className={`flex items-center gap-3 rounded-lg text-sm font-medium transition-colors ${isActive
                     ? "bg-neutral-800 text-white"
                     : "text-neutral-600 hover:bg-gray-300/70"
-                } ${
-                  isCollapsed 
-                    ? "h-11 w-11 justify-center p-0" 
+                  } ${isCollapsed
+                    ? "h-11 w-11 justify-center p-0"
                     : "px-3 py-2"
-                }`}
+                  }`}
               >
                 <item.icon size={18} className="shrink-0" />
                 <span className={`${isCollapsed ? "hidden" : "inline"}`}>
@@ -82,11 +81,10 @@ export function AdminSidebar({ adminName }: { adminName: string }) {
         <Link
           href="/admin/propiedades/nueva"
           title={isCollapsed ? "Nueva propiedad" : undefined}
-          className={`flex items-center gap-3 rounded-full bg-white text-sm font-medium text-neutral-600 hover:bg-gray-100 ${
-            isCollapsed 
-              ? "mt-6 h-11 w-11 justify-center p-0" 
+          className={`flex items-center gap-3 rounded-full bg-white text-sm font-medium text-neutral-600 hover:bg-gray-100 ${isCollapsed
+              ? "mt-6 h-11 w-11 justify-center p-0"
               : "px-1.5 py-1.5 pl-4"
-          }`}
+            }`}
         >
           <span className={`flex-1 ${isCollapsed ? "hidden" : "inline"}`}>Nueva propiedad</span>
           <div className={`${isCollapsed ? "flex items-center justify-center" : "rounded-full bg-gray-200 p-2"}`}>

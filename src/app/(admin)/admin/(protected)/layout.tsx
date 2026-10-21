@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
 import { AdminBottomNav } from "@/components/admin/admin-bottom-nav";
 
-import { urbanist } from "@/lib/fonts";
+import { inter } from "@/lib/fonts";
 
 export default async function AdminLayout({
   children,

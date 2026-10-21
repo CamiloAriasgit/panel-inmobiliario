@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { brandConfig } from "@/lib/config/brand.config";
-import { urbanist } from "@/lib/fonts";
+import { inter } from "@/lib/fonts";
 import "./globals.css";
 import "flag-icons/css/flag-icons.min.css";
 
@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className={`${urbanist.variable} font-sans`}>
+    <html lang="es" className={`${inter.variable} font-sans`}>
       <body
         style={
           {
