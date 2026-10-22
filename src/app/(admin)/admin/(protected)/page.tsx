@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Building2, Eye, Users, Plus } from "lucide-react";
+import { Building2, Eye, Users, Plus, SquareArrowOutUpRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { groupByDay } from "@/lib/utils/group-by-day";
 import { AdminListHeader } from "@/components/admin/admin-list-header";
@@ -38,7 +38,7 @@ export default async function AdminDashboardPage() {
       <AdminListHeader title="Panel" />
       <h1 className="mb-4 text-xl text-neutral-900 sm:hidden">Panel</h1>
 
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 lg:gap-6">
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 lg:gap-4">
         <StatTile
           className="col-span-2 lg:col-span-1"
           icon={Building2}
@@ -51,7 +51,7 @@ export default async function AdminDashboardPage() {
 
       {/* Primer ingreso de una agencia nueva: el Panel arranca vacío */}
       {totalProperties === 0 && (
-        <div className="mt-6 flex flex-col gap-3 rounded-2xl bg-gray-200 p-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-4 flex flex-col gap-3 rounded-2xl bg-gray-200 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="text-neutral-900">Agrega tu primera propiedad</h2>
             <p className="text-sm text-neutral-500">
@@ -73,9 +73,10 @@ export default async function AdminDashboardPage() {
           <h2 className="text-neutral-900">Leads recientes</h2>
           <Link
             href="/admin/leads"
-            className="rounded-full bg-white px-3 py-1 text-xs text-neutral-700 hover:bg-gray-100"
+            className="flex items-center gap-1.5 rounded-md bg-white px-2 py-1 text-xs text-neutral-700 hover:bg-gray-100"
           >
             Ver todos
+            <SquareArrowOutUpRight size={12}/>
           </Link>
         </div>
 

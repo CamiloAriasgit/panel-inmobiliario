@@ -109,8 +109,8 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-start">
-        <section className="space-y-4 rounded-2xl bg-white p-5">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:items-start">
+        <section className="space-y-4 rounded-2xl bg-gray-100 p-5">
           <h2 className="font-semibold text-neutral-900">Información básica</h2>
 
           <div>
@@ -120,7 +120,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
               required
               value={form.title}
               onChange={(event) => handleTitleChange(event.target.value)}
-              className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
+              className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
             />
           </div>
 
@@ -133,7 +133,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
               required
               value={form.slug}
               onChange={(event) => updateField("slug", event.target.value)}
-              className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
+              className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
             />
           </div>
 
@@ -156,7 +156,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
                 onChange={(event) =>
                   updateField("listingType", event.target.value as "venta" | "renta")
                 }
-                className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
+                className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
               >
                 <option value="venta">Venta</option>
                 <option value="renta">Renta</option>
@@ -168,7 +168,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
               <select
                 value={form.propertyType}
                 onChange={(event) => updateField("propertyType", event.target.value)}
-                className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
+                className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
               >
                 {PROPERTY_TYPES.map((type) => (
                   <option key={type.value} value={type.value}>
@@ -186,7 +186,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
               onChange={(event) =>
                 updateField("status", event.target.value as PropertyFormInput["status"])
               }
-              className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
+              className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
             >
               <option value="draft">Borrador (no visible al público)</option>
               <option value="published">Publicada</option>
@@ -195,7 +195,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
           </div>
         </section>
 
-        <section className="space-y-4 rounded-2xl bg-white p-5">
+        <section className="space-y-4 rounded-2xl bg-gray-100 p-5">
           <h2 className="font-semibold text-neutral-900">Precio y características</h2>
 
           <div>
@@ -206,7 +206,8 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
               min={0}
               value={form.price || ""}
               onChange={(event) => updateField("price", Number(event.target.value))}
-              className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
+              placeholder="No uses puntos ni comas"
+              className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
             />
           </div>
 
@@ -267,7 +268,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
           </div>
         </section>
 
-        <section className="space-y-4 rounded-2xl bg-white p-5">
+        <section className="space-y-4 rounded-2xl bg-gray-100 p-5">
           <h2 className="font-semibold text-neutral-900">Ubicación</h2>
 
           <TextField label="Dirección" value={form.address} onChange={(v) => updateField("address", v)} />
@@ -284,7 +285,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
           </p>
         </section>
 
-        <section className="rounded-2xl bg-white p-5">
+        <section className="rounded-2xl bg-gray-100 p-5">
           <PropertyImagesField
             images={form.images}
             onChange={(images) => updateField("images", images)}
@@ -323,7 +324,7 @@ function TextField({
         type="text"
         value={value ?? ""}
         onChange={(event) => onChange(event.target.value || null)}
-        className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
+        className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
       />
     </div>
   );
@@ -348,7 +349,7 @@ function NumberField({
         step={step}
         value={value ?? ""}
         onChange={(event) => onChange(event.target.value === "" ? null : Number(event.target.value))}
-        className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
+        className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
       />
     </div>
   );

@@ -38,7 +38,7 @@ export function AdminSidebar({ adminName }: { adminName: string }) {
       >
 
         <div className={`flex items-center mb-6 pr-2 transition-opacity duration-200 ${isCollapsed ? "opacity-0 pointer-events-none hidden" : "opacity-100"}`}>
-          <div className="bg-gradient-to-b from-[var(--color-primary)]/40 via-[var(--color-primary)]/60 to-[var(--color-primary)] text-white p-3 rounded-full mr-2 shadow-inner shadow-[var(--color-primary)]">
+          <div className="bg-gradient-to-b from-[var(--color-primary)]/30 via-[var(--color-primary)]/60 to-[var(--color-primary)] text-white p-3 rounded-full mr-2 shadow-inner shadow-[var(--color-primary)]">
             <User className="" size={16}/>
             </div>
           <div>
