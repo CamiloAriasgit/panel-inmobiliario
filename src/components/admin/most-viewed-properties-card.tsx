@@ -13,7 +13,7 @@ export function MostViewedPropertiesCard({
   const [activePropertyId, setActivePropertyId] = useState<string | null>(null);
 
   return (
-    <div className="rounded-xl md:bg-gray-200 md:p-5">
+    <div className="rounded-xl bg-gray-200 p-5">
       <h2 className="mb-4 text-neutral-900">Más vistas</h2>
       {properties.length === 0 ? (
         <p className="text-sm text-neutral-500">Aún no hay suficientes datos.</p>

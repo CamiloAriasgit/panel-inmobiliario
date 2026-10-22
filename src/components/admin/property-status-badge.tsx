@@ -9,17 +9,17 @@ interface StatusConfig {
 const STATUS_CONFIG: Record<string, StatusConfig> = {
   draft: {
     label: "Borrador",
-    styles: "bg-gradient-to-tr from-amber-200 via-white/60 to-amber-200 text-amber-700",
+    styles: "bg-neutral-800/90 text-amber-500",
     icon: CircleFadingArrowUp,
   },
   published: {
     label: "Publicada",
-    styles: "bg-green-200 text-green-500",
+    styles: "bg-neutral-800/90 text-green-500",
     icon: CheckCircle2,
   },
   archived: {
     label: "Archivada",
-    styles: "bg-gradient-to-tr from-gray-300 via-white/60 to-gray-300 text-slate-600",
+    styles: "bg-neutral-800/90 text-slate-500",
     icon: CirclePause,
   },
 };
@@ -40,10 +40,10 @@ export function PropertyStatusBadge({ status }: { status: string }) {
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full px-1 pr-2 py-0.5 text-xs font-medium ${config.styles}`}
+      className={`inline-flex items-center gap-1.5 rounded-full px-0.5 md:px-1 md:pr-2 py-0.5 text-xs font-medium ${config.styles}`}
     >
       <Icon className="h-3.5 w-3.5 shrink-0" />
-      <span>{config.label}</span>
+      <span className="hidden md:flex">{config.label}</span>
     </span>
   );
 }

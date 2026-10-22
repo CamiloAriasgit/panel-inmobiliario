@@ -20,7 +20,6 @@ export function AdminPropertyItem({ property }: { property: PropertyListItem }) 
 
   const metaRow = (
     <div className="flex items-center gap-2">
-      <PropertyStatusBadge status={property.status} />
       <span className="text-xs capitalize text-neutral-500">
         {property.listing_type}
       </span>
@@ -41,6 +40,9 @@ export function AdminPropertyItem({ property }: { property: PropertyListItem }) 
         >
           <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md bg-gray-100">
             <Image src={coverImage} alt={property.title} fill className="object-cover" />
+            <div className="absolute bottom-0.5 left-0.5">
+              <PropertyStatusBadge status={property.status} />
+            </div>
           </div>
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium text-neutral-900">
@@ -52,8 +54,9 @@ export function AdminPropertyItem({ property }: { property: PropertyListItem }) 
           </div>
           <ChevronDown
             size={18}
-            className={`shrink-0 text-neutral-400 transition-transform ${isOpen ? "rotate-180" : ""
-              }`}
+            className={`shrink-0 text-neutral-400 transition-transform ${
+              isOpen ? "rotate-180" : ""
+            }`}
           />
         </button>
 
@@ -74,9 +77,12 @@ export function AdminPropertyItem({ property }: { property: PropertyListItem }) 
         )}
       </div>
 
-      <div className="hidden rounded-2xl p-2 sm:flex sm:gap-4 bg-gray-100 hover:bg-gray-200">
+      <div className="hidden rounded-2xl p-2 sm:flex sm:gap-4 bg-gray-200 hover:bg-gray-200">
         <div className="relative h-24 w-32 shrink-0 overflow-hidden rounded-lg bg-gray-100">
           <Image src={coverImage} alt={property.title} fill className="object-cover" />
+          <div className="absolute bottom-1 left-1">
+            <PropertyStatusBadge status={property.status} />
+          </div>
         </div>
 
         <div className="flex min-w-0 flex-1 flex-col justify-between">
