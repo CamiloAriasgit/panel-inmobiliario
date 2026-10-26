@@ -66,11 +66,11 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
       slug:
         mode === "create"
           ? title
-              .toLowerCase()
-              .normalize("NFD")
-              .replace(/[\u0300-\u036f]/g, "")
-              .replace(/[^a-z0-9]+/g, "-")
-              .replace(/(^-|-$)/g, "")
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/(^-|-$)/g, "")
           : prev.slug,
     }));
   }
@@ -111,7 +111,7 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
     <form onSubmit={handleSubmit} className="space-y-4 pb-28 lg:pb-0">
       {/* Contenedor general que agrupa las filas */}
       <div className="space-y-4">
-        
+
         {/* Fila 1: Información básica y Precio / características */}
         <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch">
           <section className="flex flex-col justify-between space-y-4 rounded-2xl bg-gray-100 p-5 lg:w-1/2">
@@ -312,14 +312,15 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
 
       {error && <p className="text-sm text-red-600">{error}</p>}
 
-      {/* Contenedor fijo en mobile/tablet y estático en desktop */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 p-4 pb-24">
-        <div className="max-w-7xl mx-auto flex flex-col gap-2">
+      {/* Contenedor fijo en móvil/tablet y estático con flex justify-end en desktop */}
+      {/* Botón fijo: centrado en móvil/tablet, abajo a la derecha en desktop */}
+      <div className="pointer-events-none fixed bottom-0 left-0 right-0 z-30 flex justify-center p-4 pb-24 lg:justify-end lg:p-6">
+        <div className="pointer-events-auto flex flex-col items-center gap-2 lg:items-end">
           {error && <p className="text-sm text-red-600 block lg:hidden">{error}</p>}
           <button
             type="submit"
             disabled={isSaving}
-            className="w-auto rounded-full bg-neutral-900/80 border border-nwutral-700 backdrop-blur-xs px-6 py-3 lg:py-2.5 text-sm text-white disabled:opacity-65 text-center shadow-sm"
+            className="w-auto rounded-full bg-neutral-800 border border-neutral-700 px-6 py-3 lg:py-2.5 text-sm text-white disabled:opacity-65 text-center shadow-sm"
           >
             {isSaving ? "Guardando..." : mode === "create" ? "Crear propiedad" : "Guardar cambios"}
           </button>
