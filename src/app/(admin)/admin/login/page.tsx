@@ -40,7 +40,7 @@ export default function AdminLoginPage() {
       {/* Contenedor Izquierda: Oculto en mobile, visible en desktop */}
       <div className="relative hidden md:block overflow-hidden rounded-3xl">
         <Image
-          src="/login-bg.png"
+          src="/sky-login-bg.png"
           alt="Login background"
           fill
           priority

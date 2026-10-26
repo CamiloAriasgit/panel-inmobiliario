@@ -108,202 +108,223 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:items-start">
-        <section className="space-y-4 rounded-2xl bg-gray-100 p-5">
-          <h2 className="font-semibold text-neutral-900">Información básica</h2>
+    <form onSubmit={handleSubmit} className="space-y-4 pb-28 lg:pb-0">
+      {/* Contenedor general que agrupa las filas */}
+      <div className="space-y-4">
+        
+        {/* Fila 1: Información básica y Precio / características */}
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch">
+          <section className="flex flex-col justify-between space-y-4 rounded-2xl bg-gray-100 p-5 lg:w-1/2">
+            <div className="space-y-4">
+              <h2 className="font-semibold text-neutral-900">Información básica</h2>
 
-          <div>
-            <label className="mb-1 block text-sm font-medium text-neutral-700">Título</label>
-            <input
-              type="text"
-              required
-              value={form.title}
-              onChange={(event) => handleTitleChange(event.target.value)}
-              className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
-            />
-          </div>
+              <div>
+                <label className="mb-1 block text-sm font-medium text-neutral-700">Título</label>
+                <input
+                  type="text"
+                  required
+                  value={form.title}
+                  onChange={(event) => handleTitleChange(event.target.value)}
+                  className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
+                />
+              </div>
 
-          <div>
-            <label className="mb-1 block text-sm font-medium text-neutral-700">
-              Slug (URL) <span className="text-neutral-400">— editable</span>
-            </label>
-            <input
-              type="text"
-              required
-              value={form.slug}
-              onChange={(event) => updateField("slug", event.target.value)}
-              className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
-            />
-          </div>
+              <div>
+                <label className="mb-1 block text-sm font-medium text-neutral-700">
+                  Slug (URL) <span className="text-neutral-400">— editable</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={form.slug}
+                  onChange={(event) => updateField("slug", event.target.value)}
+                  className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
+                />
+              </div>
 
-          <div>
-            <label className="mb-1 block text-sm font-medium text-neutral-700">Descripción</label>
-            <textarea
-              required
-              rows={4}
-              value={form.description}
-              onChange={(event) => updateField("description", event.target.value)}
-              className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
-            />
-          </div>
+              <div>
+                <label className="mb-1 block text-sm font-medium text-neutral-700">Descripción</label>
+                <textarea
+                  required
+                  rows={4}
+                  value={form.description}
+                  onChange={(event) => updateField("description", event.target.value)}
+                  className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
+                />
+              </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="mb-1 block text-sm font-medium text-neutral-700">Negocio</label>
-              <select
-                value={form.listingType}
-                onChange={(event) =>
-                  updateField("listingType", event.target.value as "venta" | "renta")
-                }
-                className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
-              >
-                <option value="venta">Venta</option>
-                <option value="renta">Renta</option>
-              </select>
-            </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-neutral-700">Negocio</label>
+                  <select
+                    value={form.listingType}
+                    onChange={(event) =>
+                      updateField("listingType", event.target.value as "venta" | "renta")
+                    }
+                    className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
+                  >
+                    <option value="venta">Venta</option>
+                    <option value="renta">Renta</option>
+                  </select>
+                </div>
 
-            <div>
-              <label className="mb-1 block text-sm font-medium text-neutral-700">Tipo de propiedad</label>
-              <select
-                value={form.propertyType}
-                onChange={(event) => updateField("propertyType", event.target.value)}
-                className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
-              >
-                {PROPERTY_TYPES.map((type) => (
-                  <option key={type.value} value={type.value}>
-                    {type.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-neutral-700">Tipo de propiedad</label>
+                  <select
+                    value={form.propertyType}
+                    onChange={(event) => updateField("propertyType", event.target.value)}
+                    className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
+                  >
+                    {PROPERTY_TYPES.map((type) => (
+                      <option key={type.value} value={type.value}>
+                        {type.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
-          <div>
-            <label className="mb-1 block text-sm font-medium text-neutral-700">Estado</label>
-            <select
-              value={form.status}
-              onChange={(event) =>
-                updateField("status", event.target.value as PropertyFormInput["status"])
-              }
-              className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
-            >
-              <option value="draft">Borrador (no visible al público)</option>
-              <option value="published">Publicada</option>
-              <option value="archived">Archivada</option>
-            </select>
-          </div>
-        </section>
-
-        <section className="space-y-4 rounded-2xl bg-gray-100 p-5">
-          <h2 className="font-semibold text-neutral-900">Precio y características</h2>
-
-          <div>
-            <label className="mb-1 block text-sm font-medium text-neutral-700">Precio (COP)</label>
-            <input
-              type="number"
-              required
-              min={0}
-              value={form.price || ""}
-              onChange={(event) => updateField("price", Number(event.target.value))}
-              placeholder="No uses puntos ni comas"
-              className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            <NumberField label="Área (m²)" value={form.areaM2} onChange={(v) => updateField("areaM2", v)} />
-            <NumberField label="Habitaciones" value={form.bedrooms} onChange={(v) => updateField("bedrooms", v)} />
-            <NumberField label="Baños" value={form.bathrooms} onChange={(v) => updateField("bathrooms", v)} />
-            <NumberField label="Parqueaderos" value={form.parkingSpots} onChange={(v) => updateField("parkingSpots", v)} />
-          </div>
-
-          <div>
-            <label className="mb-1 block text-sm font-medium text-neutral-700">Características</label>
-            <div className="mb-2 flex flex-wrap gap-2">
-              {form.features.map((feature) => (
-                <span
-                  key={feature}
-                  className="flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-xs text-neutral-700"
-                >
-                  {feature}
-                  <button type="button" onClick={() => removeFeature(feature)}>
-                    <X size={12} />
-                  </button>
-                </span>
-              ))}
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={featureDraft}
-                onChange={(event) => setFeatureDraft(event.target.value)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter") {
-                    event.preventDefault();
-                    addFeature();
+              <div>
+                <label className="mb-1 block text-sm font-medium text-neutral-700">Estado</label>
+                <select
+                  value={form.status}
+                  onChange={(event) =>
+                    updateField("status", event.target.value as PropertyFormInput["status"])
                   }
-                }}
-                placeholder="Ej. Piscina, presiona Enter"
-                className="flex-1 rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
-              />
-              <button
-                type="button"
-                onClick={addFeature}
-                className="rounded-lg bg-gray-200/70 px-3 hover:bg-gray-200 focus:outline-none"
-              >
-                <Plus size={16} />
-              </button>
+                  className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
+                >
+                  <option value="draft">Borrador (no visible al público)</option>
+                  <option value="published">Publicada</option>
+                  <option value="archived">Archivada</option>
+                </select>
+              </div>
             </div>
-          </div>
+          </section>
 
-          <div>
-            <label className="mb-1 block text-sm font-medium text-neutral-700">Condiciones</label>
-            <textarea
-              rows={3}
-              value={form.conditions ?? ""}
-              onChange={(event) => updateField("conditions", event.target.value || null)}
-              className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
+          <section className="flex flex-col justify-between space-y-4 rounded-2xl bg-gray-100 p-5 lg:w-1/2">
+            <div className="space-y-4">
+              <h2 className="font-semibold text-neutral-900">Precio y características</h2>
+
+              <div>
+                <label className="mb-1 block text-sm font-medium text-neutral-700">Precio (COP)</label>
+                <input
+                  type="number"
+                  required
+                  min={0}
+                  value={form.price || ""}
+                  onChange={(event) => updateField("price", Number(event.target.value))}
+                  placeholder="No uses puntos ni comas"
+                  className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                <NumberField label="Área (m²)" value={form.areaM2} onChange={(v) => updateField("areaM2", v)} />
+                <NumberField label="Habitaciones" value={form.bedrooms} onChange={(v) => updateField("bedrooms", v)} />
+                <NumberField label="Baños" value={form.bathrooms} onChange={(v) => updateField("bathrooms", v)} />
+                <NumberField label="Parqueaderos" value={form.parkingSpots} onChange={(v) => updateField("parkingSpots", v)} />
+              </div>
+
+              <div>
+                <label className="mb-1 block text-sm font-medium text-neutral-700">Características</label>
+                <div className="mb-2 flex flex-wrap gap-2">
+                  {form.features.map((feature) => (
+                    <span
+                      key={feature}
+                      className="flex items-center gap-1 rounded-full bg-gray-200 px-3 py-1 text-xs text-neutral-700"
+                    >
+                      {feature}
+                      <button type="button" onClick={() => removeFeature(feature)}>
+                        <X size={12} />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={featureDraft}
+                    onChange={(event) => setFeatureDraft(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        event.preventDefault();
+                        addFeature();
+                      }
+                    }}
+                    placeholder="Ej. Piscina, presiona Enter"
+                    className="flex-1 rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
+                  />
+                  <button
+                    type="button"
+                    onClick={addFeature}
+                    className="rounded-lg bg-gray-200/70 px-3 hover:bg-gray-200 focus:outline-none"
+                  >
+                    <Plus size={16} />
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="mb-1 block text-sm font-medium text-neutral-700">Condiciones</label>
+                <textarea
+                  rows={3}
+                  value={form.conditions ?? ""}
+                  onChange={(event) => updateField("conditions", event.target.value || null)}
+                  className="w-full rounded-lg bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
+                />
+              </div>
+            </div>
+          </section>
+        </div>
+
+        {/* Fila 2: Ubicación e Imágenes */}
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch">
+          <section className="flex flex-col justify-between space-y-4 rounded-2xl bg-gray-100 p-5 lg:w-1/2">
+            <div className="space-y-4">
+              <h2 className="font-semibold text-neutral-900">Ubicación</h2>
+
+              <TextField label="Dirección" value={form.address} onChange={(v) => updateField("address", v)} />
+              <div className="grid grid-cols-2 gap-4">
+                <TextField label="Barrio" value={form.neighborhood} onChange={(v) => updateField("neighborhood", v)} />
+                <TextField label="Ciudad" value={form.city} onChange={(v) => updateField("city", v)} />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <NumberField label="Latitud" value={form.latitude} onChange={(v) => updateField("latitude", v)} step="any" />
+                <NumberField label="Longitud" value={form.longitude} onChange={(v) => updateField("longitude", v)} step="any" />
+              </div>
+              <p className="text-xs text-neutral-400">
+                Por ahora, la latitud/longitud se ingresan manualmente (clic derecho en Google Maps → &quot;¿Qué hay aquí?&quot;).
+              </p>
+            </div>
+          </section>
+
+          <section className="flex flex-col justify-between rounded-2xl bg-gray-100 p-5 lg:w-1/2">
+            <PropertyImagesField
+              images={form.images}
+              onChange={(images) => updateField("images", images)}
+              agencyId={brandConfig.agencyId}
+              propertyId={tempId}
             />
-          </div>
-        </section>
+          </section>
+        </div>
 
-        <section className="space-y-4 rounded-2xl bg-gray-100 p-5">
-          <h2 className="font-semibold text-neutral-900">Ubicación</h2>
-
-          <TextField label="Dirección" value={form.address} onChange={(v) => updateField("address", v)} />
-          <div className="grid grid-cols-2 gap-4">
-            <TextField label="Barrio" value={form.neighborhood} onChange={(v) => updateField("neighborhood", v)} />
-            <TextField label="Ciudad" value={form.city} onChange={(v) => updateField("city", v)} />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <NumberField label="Latitud" value={form.latitude} onChange={(v) => updateField("latitude", v)} step="any" />
-            <NumberField label="Longitud" value={form.longitude} onChange={(v) => updateField("longitude", v)} step="any" />
-          </div>
-          <p className="text-xs text-neutral-400">
-            Por ahora, la latitud/longitud se ingresan manualmente (clic derecho en Google Maps → &quot;¿Qué hay aquí?&quot;).
-          </p>
-        </section>
-
-        <section className="rounded-2xl bg-gray-100 p-5">
-          <PropertyImagesField
-            images={form.images}
-            onChange={(images) => updateField("images", images)}
-            agencyId={brandConfig.agencyId}
-            propertyId={tempId}
-          />
-        </section>
       </div>
 
       {error && <p className="text-sm text-red-600">{error}</p>}
 
-      <button
-        type="submit"
-        disabled={isSaving}
-        className="w-full sm:w-auto rounded-lg bg-[var(--color-primary)] px-6 py-2.5 text-sm font-medium text-white disabled:opacity-60"
-      >
-        {isSaving ? "Guardando..." : mode === "create" ? "Crear propiedad" : "Guardar cambios"}
-      </button>
+      {/* Contenedor fijo en mobile/tablet y estático en desktop */}
+      <div className="fixed bottom-0 left-0 right-0 z-30 p-4 pb-24">
+        <div className="max-w-7xl mx-auto flex flex-col gap-2">
+          {error && <p className="text-sm text-red-600 block lg:hidden">{error}</p>}
+          <button
+            type="submit"
+            disabled={isSaving}
+            className="w-auto rounded-full bg-neutral-900/80 border border-nwutral-700 backdrop-blur-xs px-6 py-3 lg:py-2.5 text-sm text-white disabled:opacity-65 text-center shadow-sm"
+          >
+            {isSaving ? "Guardando..." : mode === "create" ? "Crear propiedad" : "Guardar cambios"}
+          </button>
+        </div>
+      </div>
     </form>
   );
 }
