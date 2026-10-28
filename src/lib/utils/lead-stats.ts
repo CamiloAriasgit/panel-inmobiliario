@@ -12,6 +12,14 @@ function getLeadMonthKey(dateString: string): string {
   return monthKeyFormatter.format(new Date(dateString));
 }
 
+// Inicio del mes actual en hora de Colombia, en formato ISO (UTC) para
+// filtrar en la base de datos. Colombia no tiene horario de verano, así que
+// la medianoche de Bogotá siempre es 05:00 UTC.
+export function getCurrentMonthStartISO(): string {
+  const [year, month] = monthKeyFormatter.format(new Date()).split("-").map(Number);
+  return new Date(Date.UTC(year, month - 1, 1, 5)).toISOString();
+}
+
 function shiftMonthKey(year: number, month: number, delta: number) {
   const totalMonths = month - 1 + delta;
   const newYear = year + Math.floor(totalMonths / 12);
