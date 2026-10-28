@@ -48,7 +48,7 @@ export function StatTile({
     </>
   );
 
-  const baseClassName = `rounded-2xl bg-gray-200 p-5 ${className}`;
+  const baseClassName = `rounded-4xl bg-gray-200 p-5 ${className}`;
 
   if (href) {
     return (
