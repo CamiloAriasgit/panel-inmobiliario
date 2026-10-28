@@ -15,6 +15,12 @@ const PROPERTY_TYPES = [
   { value: "oficina", label: "Oficina" },
 ];
 
+const STATUS_OPTIONS: { value: PropertyFormInput["status"]; label: string }[] = [
+  { value: "published", label: "Publicada" },
+  { value: "draft", label: "Borrador" },
+  { value: "archived", label: "Archivada" },
+];
+
 type PropertyFormProps = {
   mode: "create" | "edit";
   propertyId?: string;
@@ -27,7 +33,7 @@ const EMPTY_FORM: PropertyFormInput = {
   description: "",
   listingType: "venta",
   propertyType: "apartamento",
-  status: "draft",
+  status: "published",
   price: 0,
   areaM2: null,
   bedrooms: null,
@@ -186,17 +192,28 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
 
               <div>
                 <label className="mb-1 block text-sm font-medium text-neutral-700">Estado</label>
-                <select
-                  value={form.status}
-                  onChange={(event) =>
-                    updateField("status", event.target.value as PropertyFormInput["status"])
-                  }
-                  className="w-full border-b border-neutral-300 bg-transparent p-2.5 text-sm focus:outline-none focus:border-[var(--color-primary)]"
-                >
-                  <option value="draft">Borrador (no visible al público)</option>
-                  <option value="published">Publicada</option>
-                  <option value="archived">Archivada</option>
-                </select>
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {STATUS_OPTIONS.map((option) => {
+                    const isActive = form.status === option.value;
+                    return (
+                      <button
+                        key={option.value}
+                        type="button"
+                        onClick={() => updateField("status", option.value)}
+                        aria-pressed={isActive}
+                        className={`rounded-full px-4 py-1.5 text-sm transition-colors focus:outline-none ${isActive
+                            ? "bg-gray-200 text-neutral-700"
+                            : "border border-neutral-300 text-neutral-700 hover:border-neutral-600"
+                          }`}
+                      >
+                        {option.label}
+                      </button>
+                    );
+                  })}
+                </div>
+                {form.status === "draft" && (
+                  <p className="mt-2 text-xs text-neutral-400">No será visible al público.</p>
+                )}
               </div>
             </div>
           </section>
@@ -312,8 +329,6 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
 
       {error && <p className="text-sm text-red-600">{error}</p>}
 
-      {/* Contenedor fijo en móvil/tablet y estático con flex justify-end en desktop */}
-      {/* Botón fijo: centrado en móvil/tablet, abajo a la derecha en desktop */}
       <div className="pointer-events-none fixed bottom-0 left-0 right-0 z-30 flex justify-center p-4 pb-24 lg:justify-end lg:p-6">
         <div className="pointer-events-auto flex flex-col items-center gap-2 lg:items-end">
           {error && <p className="text-sm text-red-600 block lg:hidden">{error}</p>}
