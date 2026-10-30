@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { createProperty, updateProperty, type PropertyFormInput } from "@/lib/actions/properties";
 import { PropertyImagesField } from "./property-images-field";
 import { brandConfig } from "@/lib/config/brand.config";
-import { X, Plus } from "lucide-react";
+import { X, Plus, Save } from "lucide-react";
 
 const PROPERTY_TYPES = [
   { value: "apartamento", label: "Apartamento" },
@@ -72,11 +72,11 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
       slug:
         mode === "create"
           ? title
-            .toLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/[^a-z0-9]+/g, "-")
-            .replace(/(^-|-$)/g, "")
+              .toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .replace(/[^a-z0-9]+/g, "-")
+              .replace(/(^-|-$)/g, "")
           : prev.slug,
     }));
   }
@@ -335,8 +335,9 @@ export function PropertyForm({ mode, propertyId, initialData }: PropertyFormProp
           <button
             type="submit"
             disabled={isSaving}
-            className="w-auto rounded-full bg-neutral-800 border border-neutral-700 px-6 py-3 lg:py-2.5 text-sm text-white disabled:opacity-65 text-center shadow-sm"
+            className="w-auto flex items-center justify-center gap-2 rounded-full bg-neutral-800 border border-neutral-700 px-6 py-3 lg:py-2.5 text-sm text-white disabled:opacity-65 text-center shadow-sm"
           >
+            {mode === "create" ? <Plus size={16} /> : <Save size={16} />}
             {isSaving ? "Guardando..." : mode === "create" ? "Crear propiedad" : "Guardar cambios"}
           </button>
         </div>

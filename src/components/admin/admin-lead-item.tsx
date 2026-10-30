@@ -36,7 +36,7 @@ export function AdminLeadItem({ lead }: { lead: LeadListItem }) {
 
       <div className="flex items-center justify-between gap-4 sm:justify-end">
         <div className="flex gap-1">
-          <div className="flex items-center gap-1.5 rounded-md bg-gray-300 px-2">
+          <div className="flex items-center gap-1.5 rounded-md bg-gray-300 lg:bg-gray-300/70 px-2">
             <CountryFlag iso={lead.country_code} />
             <p className="text-sm text-neutral-500">{lead.phone}</p>
           </div>

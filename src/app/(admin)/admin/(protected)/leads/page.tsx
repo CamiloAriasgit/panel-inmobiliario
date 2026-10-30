@@ -43,7 +43,7 @@ export default async function AdminLeadsPage({
         </div>
 
         <div className={`${tab === "list" ? "block" : "hidden"} min-h-0 lg:block`}>
-          <div className="h-full space-y-6 lg:bg-gray-200 overflow-y-auto lg:p-5 lg:px-2 scrollbar-hide rounded-xl">
+          <div className="h-full space-y-6 lg:bg-gray-200 overflow-y-auto lg:p-5 lg:px-2 scrollbar-hide lg:rounded-4xl">
             {groups.length === 0 ? (
               <p className="text-sm text-neutral-500">Aún no has recibido leads.</p>
             ) : (

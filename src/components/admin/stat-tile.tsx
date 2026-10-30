@@ -21,7 +21,7 @@ export function StatTile({
   const content = (
     <>
       <div className="mb-4 flex items-start justify-between">
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-neutral-700">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-300/40 border border-gray-300 text-neutral-700">
           <Icon size={16} />
         </div>
 
@@ -40,7 +40,7 @@ export function StatTile({
       <div className="flex flex-wrap items-end justify-between gap-x-2 gap-y-1">
         <p className="text-sm text-neutral-500">{label}</p>
         {corner && (
-          <p className="shrink-0 rounded-full bg-white px-2 py-0.5 text-xs text-neutral-600">
+          <p className="shrink-0 rounded-md bg-gray-300/60 px-2 py-0.5 text-xs text-neutral-600">
             {corner}
           </p>
         )}
