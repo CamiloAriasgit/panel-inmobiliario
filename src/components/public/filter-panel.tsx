@@ -13,7 +13,7 @@ import {
   Briefcase,
 } from "lucide-react";
 
-const PROPERTY_TYPES = [
+export const PROPERTY_TYPES = [
   { value: "", label: "Todos", icon: LayoutGrid },
   { value: "apartamento", label: "Apartamento", icon: Building2 },
   { value: "casa", label: "Casa", icon: Home },
@@ -33,6 +33,7 @@ export type RawFilters = {
   min_area?: string;
   max_area?: string;
 };
+
 
 // Forma del estado interno del formulario mientras el usuario edita
 // (property_type ya convertido a array para las pills seleccionables).

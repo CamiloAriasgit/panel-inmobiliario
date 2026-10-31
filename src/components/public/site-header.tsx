@@ -6,6 +6,7 @@ import { brandConfig } from "@/lib/config/brand.config";
 import { SearchBar } from "./search-bar";
 import { FilterPanel, type RawFilters } from "./filter-panel";
 import { ViewTogglePill, type QueryParams } from "./view-toggle-pill";
+import { QuickFilterPills } from "./quick-filter-pills";
 
 export function SiteHeader({
   view,
@@ -25,6 +26,21 @@ export function SiteHeader({
   const [spacerHeight, setSpacerHeight] = useState(0);
   const hasMeasuredSpacer = useRef(false);
 
+  const isMapView = view === "map";
+
+  // El panel de filtros copia los filtros a su estado interno solo al
+  // montarse. Al usar esta clave se vuelve a montar cuando cambian (por
+  // ejemplo, desde las píldoras) y siempre muestra lo que está aplicado.
+  const filtersKey = [
+    currentFilters.listing_type,
+    currentFilters.property_type,
+    currentFilters.city,
+    currentFilters.min_price,
+    currentFilters.max_price,
+    currentFilters.min_area,
+    currentFilters.max_area,
+  ].join("|");
+
   useLayoutEffect(() => {
     const el = headerRef.current;
     if (!el) return;
@@ -32,17 +48,14 @@ export function SiteHeader({
     function updateHeight() {
       const height = el!.offsetHeight;
 
-      // La variable CSS se mantiene siempre en vivo (la usa el
-      // cálculo de alto del mapa, que no tiene scroll y por lo tanto
-      // no sufre este problema).
+      // La variable CSS se mantiene siempre en vivo (la usa el cálculo de
+      // alto del mapa).
       document.documentElement.style.setProperty("--header-height", `${height}px`);
 
-      // El spacer se mide UNA sola vez, en el primer render — antes
-      // de que exista cualquier scroll, y por lo tanto antes de que
-      // cualquier colapso/transición del logo haya podido empezar.
-      // Nunca se vuelve a remedir después, pase lo que pase con el
-      // colapso — así es imposible que capture un valor intermedio
-      // de una animación a medio terminar.
+      // El spacer se mide UNA sola vez, en el primer render, antes de que
+      // exista cualquier scroll o transición. Sirve para las dos vistas
+      // porque el header mide lo mismo en lista (con logo) y en mapa (con
+      // píldoras): el espacio del logo lo ocupa la fila de píldoras.
       if (!hasMeasuredSpacer.current) {
         setSpacerHeight(height);
         hasMeasuredSpacer.current = true;
@@ -55,7 +68,10 @@ export function SiteHeader({
     return () => observer.disconnect();
   }, []);
 
+  // El encogimiento por scroll solo existe en la vista lista.
   useEffect(() => {
+    if (isMapView) return;
+
     function update() {
       const currentY = window.scrollY;
 
@@ -76,13 +92,14 @@ export function SiteHeader({
       }
     }
 
+    // Al entrar a la lista (por ejemplo, al volver del mapa) se sincroniza
+    // con la posición actual para no quedar con un estado viejo.
+    lastY.current = window.scrollY;
+    window.requestAnimationFrame(update);
+
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const isMapView = view === "map";
-  const showMobileLogo = !isMapView && !collapsed;
-  const showDesktopLogo = true;
+  }, [isMapView]);
 
   return (
     <>
@@ -97,46 +114,50 @@ export function SiteHeader({
         className="fixed inset-x-0 top-0 z-50 border-b border-gray-100 bg-white px-4 py-4 lg:px-20"
       >
         <div className="sm:hidden">
-          <div
-            className={`overflow-hidden transition-all duration-300 ${
-              showMobileLogo ? "mb-4 max-h-16 opacity-100" : "max-h-0 opacity-0"
-            }`}
-          >
-            <div className="flex justify-center">
-              <Image
-                src={brandConfig.logoUrl}
-                alt={brandConfig.name}
-                width={140}
-                height={40}
-                className="h-10 w-auto"
-                priority
-              />
+          {/* Lista: logo que se encoge al hacer scroll. En el mapa no se
+              renderiza: su lugar lo toman las píldoras de abajo. */}
+          {!isMapView && (
+            <div
+              className={`overflow-hidden transition-all duration-300 ${
+                collapsed ? "max-h-0 opacity-0" : "mb-4 max-h-16 opacity-100"
+              }`}
+            >
+              <div className="flex justify-center">
+                <Image
+                  src={brandConfig.logoUrl}
+                  alt={brandConfig.name}
+                  width={140}
+                  height={40}
+                  className="h-10 w-auto"
+                  priority
+                />
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="flex items-center justify-center gap-1">
             <SearchBar defaultValue={searchDefaultValue} />
-            <FilterPanel currentFilters={currentFilters} />
+            <FilterPanel key={`mobile-${filtersKey}`} currentFilters={currentFilters} />
           </div>
+
+          {isMapView && <QuickFilterPills params={allParams} />}
         </div>
 
         <div className="hidden sm:flex sm:items-center sm:justify-between">
           <div className="flex w-[140px] justify-start">
-            {showDesktopLogo && (
-              <Image
-                src={brandConfig.logoUrl}
-                alt={brandConfig.name}
-                width={140}
-                height={40}
-                className="h-10 w-auto"
-                priority
-              />
-            )}
+            <Image
+              src={brandConfig.logoUrl}
+              alt={brandConfig.name}
+              width={140}
+              height={40}
+              className="h-10 w-auto"
+              priority
+            />
           </div>
 
           <div className="flex flex-1 items-center justify-center gap-1 px-6">
             <SearchBar defaultValue={searchDefaultValue} />
-            <FilterPanel currentFilters={currentFilters} />
+            <FilterPanel key={`desktop-${filtersKey}`} currentFilters={currentFilters} />
           </div>
 
           <div className="flex w-[140px] justify-end">
