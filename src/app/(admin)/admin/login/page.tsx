@@ -3,9 +3,11 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { User } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { brandConfig } from "@/lib/config/brand.config";
+import Link from "next/link";
+import { User, ArrowUpRight, Headset } from "lucide-react";
+import { getSupportWhatsappUrl } from "@/lib/config/support";
 
 function FloatingInput({
   id,
@@ -88,6 +90,34 @@ export default function AdminLoginPage() {
             priority
             className="object-cover object-top"
           />
+
+          <div className="absolute inset-x-3 top-3 flex justify-end">
+            <Link
+              href="/"
+              className="flex items-center gap-1.5 rounded-full bg-neutral-950/80 py-2 pl-3.5 pr-3 text-xs text-white backdrop-blur-md transition hover:bg-neutral-950/65"
+            >
+              Ver mi portal
+              <ArrowUpRight size={14} />
+            </Link>
+          </div>
+
+          <a
+            href={getSupportWhatsappUrl(
+              `Hola, no puedo ingresar al panel de ${brandConfig.name}.`
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute inset-x-3 bottom-3 flex items-center gap-3 rounded-2xl bg-neutral-800 p-3 text-white backdrop-blur-md transition hover:bg-neutral-950/75"
+          >
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-white/5">
+              <Headset size={16} />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-sm">¿Problemas para ingresar?</span>
+              <span className="block text-xs text-white/70">Escríbenos por WhatsApp</span>
+            </span>
+            <ArrowUpRight size={16} className="shrink-0 text-white/70" />
+          </a>
         </div>
 
         <div className="flex items-center justify-center rounded-3xl bg-white p-6 sm:p-8">
