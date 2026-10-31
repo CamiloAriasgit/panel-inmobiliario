@@ -36,11 +36,10 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-200 p-3 flex items-center justify-center">
-      <div className="grid w-full max-w-4xl h-[calc(100vh-1.5rem)] gap-3 overflow-hidden">
-        
-        {/* Contenedor de la imagen (Prioriza la parte superior con object-top) */}
-        <div className="relative h-full min-h-[250px] overflow-hidden rounded-3xl">
+    <main className="h-svh overflow-hidden bg-neutral-900 lg:bg-gray-200 p-3 flex items-center justify-center">
+      <div className="grid w-full max-w-4xl h-full grid-rows-[1fr_auto] gap-3 overflow-hidden">
+
+        <div className="relative min-h-0 overflow-hidden rounded-3xl">
           <Image
             src="/sky-login-bg.png"
             alt="Login background"
@@ -50,8 +49,7 @@ export default function AdminLoginPage() {
           />
         </div>
 
-        {/* Contenedor del formulario */}
-        <div className="flex items-center justify-center p-8 bg-white rounded-3xl h-full">
+        <div className="flex items-center justify-center p-8 bg-white rounded-3xl">
           <div className="w-full max-w-sm">
             <h1 className="mb-1 text-xl font-bold text-gray-900">
               {brandConfig.name}
@@ -68,7 +66,7 @@ export default function AdminLoginPage() {
                   required
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  className="w-full rounded-full bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
+                  className="w-full rounded-xl bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
                   placeholder="tucorreo@agencia.com"
                 />
               </div>
@@ -82,7 +80,7 @@ export default function AdminLoginPage() {
                   required
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
-                  className="w-full rounded-full bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
+                  className="w-full rounded-xl bg-gray-200/70 p-2.5 text-sm focus:outline-none focus:bg-gray-200"
                   placeholder="Tu contraseña segura"
                 />
               </div>
