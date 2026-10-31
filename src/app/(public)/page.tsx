@@ -24,7 +24,10 @@ export default async function HomePage({
   searchParams: Promise<SearchParams>;
 }) {
   const params = await searchParams;
-  const properties = await getProperties(params);
+  const [properties, typeImages] = await Promise.all([
+    getProperties(params),
+    getLatestImageByType(),
+  ]);
   const view = params.view === "map" ? "map" : "list";
 
   return (
@@ -34,6 +37,7 @@ export default async function HomePage({
         searchDefaultValue={params.q}
         currentFilters={params}
         allParams={params}
+        typeImages={typeImages}
       />
 
       <main
@@ -51,7 +55,7 @@ export default async function HomePage({
           <p className="text-center text-gray-500 py-12">
             No encontramos propiedades con esos criterios.
           </p>
-                ) : view === "map" ? (
+        ) : view === "map" ? (
           <div
             className="relative isolate w-full"
             style={{ height: "calc(100vh - var(--header-height))" }}
@@ -128,4 +132,30 @@ async function getProperties(
   }
 
   return data;
+}
+
+// Portada de la propiedad publicada más reciente de cada tipo, sin importar
+// los filtros activos. Si un tipo no tiene ninguna con foto, no aparece.
+async function getLatestImageByType(): Promise<Record<string, string>> {
+  const supabase = await createClient();
+
+  const { data } = await supabase
+    .from("properties")
+    .select("property_type, images")
+    .eq("agency_id", brandConfig.agencyId)
+    .eq("status", "published")
+    .order("created_at", { ascending: false });
+
+  const latestByType: Record<string, string> = {};
+
+  for (const property of data ?? []) {
+    const cover = property.images?.[0];
+    // Los resultados vienen de la más nueva a la más vieja: la primera foto
+    // que aparece de cada tipo es la de la publicación más reciente.
+    if (cover && !(property.property_type in latestByType)) {
+      latestByType[property.property_type] = cover;
+    }
+  }
+
+  return latestByType;
 }

@@ -96,12 +96,14 @@ export default function AdminLoginPage() {
               <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-b from-[var(--color-primary)]/30 via-[var(--color-primary)]/60 to-[var(--color-primary)] text-white shadow-inner shadow-[var(--color-primary)]">
                 <User size={16} />
               </div>
-              <h1 className="min-w-0 truncate font-semibold text-gray-900">
-                {brandConfig.name}
-              </h1>
-              <span className="ml-auto rounded-full bg-[var(--color-primary)]/10 px-2.5 py-1 text-xs font-medium text-[var(--color-primary)]">
-                Admin
-              </span>
+              <div className="min-w-0">
+                <h1 className="truncate font-semibold leading-tight text-gray-900">
+                  {brandConfig.name}
+                </h1>
+                <span className="mt-0.5 inline-block rounded-full bg-[var(--color-primary)]/10 px-2 py-0.5 text-[11px] font-medium text-[var(--color-primary)]">
+                  Admin
+                </span>
+              </div>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-3">

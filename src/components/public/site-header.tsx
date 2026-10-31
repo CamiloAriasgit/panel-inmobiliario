@@ -13,11 +13,13 @@ export function SiteHeader({
   searchDefaultValue,
   currentFilters,
   allParams,
+  typeImages,
 }: {
   view: "list" | "map";
   searchDefaultValue?: string;
   currentFilters: RawFilters;
   allParams: QueryParams;
+  typeImages: Record<string, string>;
 }) {
   const [collapsed, setCollapsed] = useState(false);
   const lastY = useRef(0);
@@ -140,7 +142,7 @@ export function SiteHeader({
             <FilterPanel key={`mobile-${filtersKey}`} currentFilters={currentFilters} />
           </div>
 
-          {isMapView && <QuickFilterPills params={allParams} />}
+          {isMapView && <QuickFilterPills params={allParams} typeImages={typeImages} />}
         </div>
 
         <div className="hidden sm:flex sm:items-center sm:justify-between">

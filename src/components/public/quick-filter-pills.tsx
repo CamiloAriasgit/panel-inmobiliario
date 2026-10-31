@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { PROPERTY_TYPES } from "./filter-panel";
 import type { QueryParams } from "./view-toggle-pill";
@@ -38,14 +39,21 @@ function toggleHref(
   return `?${search.toString()}`;
 }
 
+// Todas las píldoras miden lo mismo (h-9), tengan foto, ícono o solo texto.
 const PILL_BASE =
-  "flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-1.5 text-sm";
+  "flex h-9 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border text-sm";
 const PILL_ACTIVE = "border-transparent bg-gray-200 text-black";
 const PILL_IDLE = "border-gray-300 text-gray-700 hover:bg-gray-50";
 
 // Altura fija (h-10 + mt-4): debe coincidir con la fila del logo del header
 // (h-10 + mb-4) para que el header mida lo mismo en lista y en mapa.
-export function QuickFilterPills({ params }: { params: QueryParams }) {
+export function QuickFilterPills({
+  params,
+  typeImages,
+}: {
+  params: QueryParams;
+  typeImages: Record<string, string>;
+}) {
   const activeTypes = (params.property_type ?? "").split(",").filter(Boolean);
 
   return (
@@ -63,7 +71,7 @@ export function QuickFilterPills({ params }: { params: QueryParams }) {
             href={toggleHref(params, "listing_type", type.value, isActive)}
             scroll={false}
             aria-current={isActive ? "true" : undefined}
-            className={`${PILL_BASE} ${isActive ? PILL_ACTIVE : PILL_IDLE}`}
+            className={`${PILL_BASE} px-3 ${isActive ? PILL_ACTIVE : PILL_IDLE}`}
           >
             {type.label}
           </Link>
@@ -74,6 +82,7 @@ export function QuickFilterPills({ params }: { params: QueryParams }) {
 
       {PROPERTY_TYPES.filter((type) => type.value !== "").map((type) => {
         const isActive = activeTypes.includes(type.value);
+        const image = typeImages[type.value];
 
         return (
           <Link
@@ -81,9 +90,17 @@ export function QuickFilterPills({ params }: { params: QueryParams }) {
             href={toggleHref(params, "property_type", type.value, isActive)}
             scroll={false}
             aria-current={isActive ? "true" : undefined}
-            className={`${PILL_BASE} ${isActive ? PILL_ACTIVE : PILL_IDLE}`}
+            className={`${PILL_BASE} ${image ? "pl-1 pr-3" : "px-3"} ${
+              isActive ? PILL_ACTIVE : PILL_IDLE
+            }`}
           >
-            <type.icon size={14} />
+            {image ? (
+              <span className="relative h-6 w-6 shrink-0 overflow-hidden rounded-full bg-gray-200">
+                <Image src={image} alt="" fill sizes="24px" className="object-cover" />
+              </span>
+            ) : (
+              <type.icon size={14} />
+            )}
             {type.label}
           </Link>
         );
