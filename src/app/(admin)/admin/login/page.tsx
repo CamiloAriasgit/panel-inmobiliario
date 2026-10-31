@@ -94,7 +94,7 @@ export default function AdminLoginPage() {
           <div className="absolute inset-x-3 top-3 flex justify-end">
             <Link
               href="/"
-              className="flex items-center gap-1.5 rounded-full bg-neutral-950/80 py-2 pl-3.5 pr-3 text-xs text-white backdrop-blur-md transition hover:bg-neutral-950/65"
+              className="flex items-center gap-1.5 rounded-full bg-neutral-900 py-2 pl-3.5 pr-3 text-xs text-white backdrop-blur-md transition hover:bg-neutral-800"
             >
               Ver mi portal
               <ArrowUpRight size={14} />
@@ -107,7 +107,7 @@ export default function AdminLoginPage() {
             )}
             target="_blank"
             rel="noopener noreferrer"
-            className="absolute inset-x-3 bottom-3 flex items-center gap-3 rounded-2xl bg-neutral-800 p-3 text-white backdrop-blur-md transition hover:bg-neutral-950/75"
+            className="absolute inset-x-3 bottom-3 flex items-center gap-3 rounded-2xl bg-neutral-900 p-3 text-white backdrop-blur-md transition hover:bg-neutral-800"
           >
             <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-white/5">
               <Headset size={16} />
@@ -159,7 +159,7 @@ export default function AdminLoginPage() {
               <button
                 type="submit"
                 disabled={isPending}
-                className="w-full rounded-full bg-neutral-800 py-2.5 text-sm font-medium text-white transition-opacity disabled:opacity-60"
+                className="w-full rounded-full bg-[var(--color-primary)] py-2.5 text-sm font-medium text-white transition-opacity disabled:opacity-60"
               >
                 {isPending ? "Ingresando..." : "Ingresar"}
               </button>
